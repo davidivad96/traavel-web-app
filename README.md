@@ -1,3 +1,3 @@
-# traavel web app
+# Traavel web app
 
-**Traavel** seeks to simplify the travel planning process for independent travelers by providing a consolidated web platform for creating custom travel itineraries and exploring popular travel destinations.
+**Traavel** seeks to simplify the travel planning process for independent travelers by providing a consolidated web platform for creating custom itineraries and exploring popular destinations.
