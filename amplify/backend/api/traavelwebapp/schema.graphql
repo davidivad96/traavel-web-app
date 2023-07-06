@@ -1,6 +1,7 @@
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
-  cognitoId: ID!
+  email: String
   name: String
-  avatar: String
+  avatarUrl: String
 }
+ 

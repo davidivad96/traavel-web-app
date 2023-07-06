@@ -23,24 +23,24 @@ export default function UserCreateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    cognitoId: "",
+    email: "",
     name: "",
-    avatar: "",
+    avatarUrl: "",
   };
-  const [cognitoId, setCognitoId] = React.useState(initialValues.cognitoId);
+  const [email, setEmail] = React.useState(initialValues.email);
   const [name, setName] = React.useState(initialValues.name);
-  const [avatar, setAvatar] = React.useState(initialValues.avatar);
+  const [avatarUrl, setAvatarUrl] = React.useState(initialValues.avatarUrl);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    setCognitoId(initialValues.cognitoId);
+    setEmail(initialValues.email);
     setName(initialValues.name);
-    setAvatar(initialValues.avatar);
+    setAvatarUrl(initialValues.avatarUrl);
     setErrors({});
   };
   const validations = {
-    cognitoId: [{ type: "Required" }],
+    email: [],
     name: [],
-    avatar: [],
+    avatarUrl: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -68,9 +68,9 @@ export default function UserCreateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          cognitoId,
+          email,
           name,
-          avatar,
+          avatarUrl,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -117,30 +117,30 @@ export default function UserCreateForm(props) {
       {...rest}
     >
       <TextField
-        label="Cognito id"
-        isRequired={true}
+        label="Email"
+        isRequired={false}
         isReadOnly={false}
-        value={cognitoId}
+        value={email}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              cognitoId: value,
+              email: value,
               name,
-              avatar,
+              avatarUrl,
             };
             const result = onChange(modelFields);
-            value = result?.cognitoId ?? value;
+            value = result?.email ?? value;
           }
-          if (errors.cognitoId?.hasError) {
-            runValidationTasks("cognitoId", value);
+          if (errors.email?.hasError) {
+            runValidationTasks("email", value);
           }
-          setCognitoId(value);
+          setEmail(value);
         }}
-        onBlur={() => runValidationTasks("cognitoId", cognitoId)}
-        errorMessage={errors.cognitoId?.errorMessage}
-        hasError={errors.cognitoId?.hasError}
-        {...getOverrideProps(overrides, "cognitoId")}
+        onBlur={() => runValidationTasks("email", email)}
+        errorMessage={errors.email?.errorMessage}
+        hasError={errors.email?.hasError}
+        {...getOverrideProps(overrides, "email")}
       ></TextField>
       <TextField
         label="Name"
@@ -151,9 +151,9 @@ export default function UserCreateForm(props) {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              cognitoId,
+              email,
               name: value,
-              avatar,
+              avatarUrl,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -169,30 +169,30 @@ export default function UserCreateForm(props) {
         {...getOverrideProps(overrides, "name")}
       ></TextField>
       <TextField
-        label="Avatar"
+        label="Avatar url"
         isRequired={false}
         isReadOnly={false}
-        value={avatar}
+        value={avatarUrl}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              cognitoId,
+              email,
               name,
-              avatar: value,
+              avatarUrl: value,
             };
             const result = onChange(modelFields);
-            value = result?.avatar ?? value;
+            value = result?.avatarUrl ?? value;
           }
-          if (errors.avatar?.hasError) {
-            runValidationTasks("avatar", value);
+          if (errors.avatarUrl?.hasError) {
+            runValidationTasks("avatarUrl", value);
           }
-          setAvatar(value);
+          setAvatarUrl(value);
         }}
-        onBlur={() => runValidationTasks("avatar", avatar)}
-        errorMessage={errors.avatar?.errorMessage}
-        hasError={errors.avatar?.hasError}
-        {...getOverrideProps(overrides, "avatar")}
+        onBlur={() => runValidationTasks("avatarUrl", avatarUrl)}
+        errorMessage={errors.avatarUrl?.errorMessage}
+        hasError={errors.avatarUrl?.hasError}
+        {...getOverrideProps(overrides, "avatarUrl")}
       ></TextField>
       <Flex
         justifyContent="space-between"

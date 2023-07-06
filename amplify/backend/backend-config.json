@@ -32,12 +32,13 @@
           "SMS"
         ],
         "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [
-            "REQUIRES_LOWERCASE"
-          ],
+          "passwordPolicyCharacters": [],
           "passwordPolicyMinLength": 6
         },
-        "signupAttributes": [],
+        "signupAttributes": [
+          "EMAIL",
+          "NAME"
+        ],
         "socialProviders": [],
         "usernameAttributes": [
           "EMAIL"
@@ -48,6 +49,40 @@
       },
       "providerPlugin": "awscloudformation",
       "service": "Cognito"
+    }
+  },
+  "function": {
+    "traavelcognitosignuppostconfirmationtrigger": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "traavelwebapp"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_traavelcognitosignuppostconfirmationtrigger_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "traavelcognitosignuppostconfirmationtrigger"
+        }
+      ]
+    },
+    "AMPLIFY_function_traavelcognitosignuppostconfirmationtrigger_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "traavelcognitosignuppostconfirmationtrigger"
+        }
+      ]
     }
   }
 }

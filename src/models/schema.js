@@ -10,11 +10,11 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "cognitoId": {
-                    "name": "cognitoId",
+                "email": {
+                    "name": "email",
                     "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
+                    "type": "String",
+                    "isRequired": false,
                     "attributes": []
                 },
                 "name": {
@@ -24,8 +24,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "avatar": {
-                    "name": "avatar",
+                "avatarUrl": {
+                    "name": "avatarUrl",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -77,5 +77,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "e93d2263a4b77bfe5ba12cc5ac9d95b3"
+    "version": "56d85c47341f43f63d9ef1de9d939ff5"
 };
