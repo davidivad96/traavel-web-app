@@ -1,3 +1,3 @@
 # Traavel web app
 
-**Traavel** seeks to simplify the travel planning process for independent travelers by providing a consolidated web platform for creating custom itineraries and exploring popular destinations.
+**Traavel** is a user-friendly web application that enables independent travelers to plan their travels, create custom itineraries, explore popular destinations, and access flight and hotel booking options.
