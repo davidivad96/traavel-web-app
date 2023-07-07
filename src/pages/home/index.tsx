@@ -1,9 +1,14 @@
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { withSSRContext } from "aws-amplify";
-import { useAuthenticator } from "@aws-amplify/ui-react";
+import {
+  useAuthenticator,
+  Button,
+  Heading,
+  Image,
+} from "@aws-amplify/ui-react";
 import { User } from "@/models";
-import { getUser } from "@/graphql/queries";
+import { getUserData } from "@/utils";
 
 interface Props {
   user: User;
@@ -14,13 +19,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 }) => {
   const SSR = withSSRContext({ req });
   try {
-    const currentUser = await SSR.Auth.currentAuthenticatedUser();
-    const response = await SSR.API.graphql({
-      query: getUser,
-      variables: { id: currentUser.attributes.sub },
-      authMode: "API_KEY",
-    });
-    return { props: { user: response.data.getUser } };
+    const user = await getUserData(SSR);
+    return { props: { user } };
   } catch (error) {
     return { redirect: { permanent: false, destination: "/" } };
   }
@@ -37,8 +37,13 @@ const Home = ({ user }: Props) => {
 
   return (
     <>
-      <h1>Hello {user.name}</h1>
-      <button onClick={handleSignOut}>Sign out</button>
+      <Heading level={1}>Hello {user.name}</Heading>
+      <Image
+        src={user.avatarUrl || "/images/default_avatar_image.png"}
+        alt="Profile image"
+        width="50px"
+      />
+      <Button onClick={handleSignOut}>Sign out</Button>
     </>
   );
 };
