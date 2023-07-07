@@ -1,20 +1,19 @@
-import { Amplify } from "aws-amplify";
-import {
-  WithAuthenticatorProps,
-  withAuthenticator,
-} from "@aws-amplify/ui-react";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
+import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
-import awsconfig from "../aws-exports";
 
-Amplify.configure(awsconfig);
+const Auth = () => {
+  const { route } = useAuthenticator((context) => [context.route]);
+  const router = useRouter();
 
-const Home = ({ user, signOut }: WithAuthenticatorProps) => {
-  return (
-    <>
-      <h1>Hello {user?.username}</h1>
-      <button onClick={signOut}>Sign out</button>
-    </>
-  );
+  useEffect(() => {
+    if (route === "authenticated") {
+      router.push("/home");
+    }
+  }, [route, router]);
+
+  return <Authenticator variation="modal" />;
 };
 
-export default withAuthenticator(Home);
+export default Auth;

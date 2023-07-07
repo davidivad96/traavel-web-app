@@ -38,7 +38,7 @@ export default function UserCreateForm(props) {
     setErrors({});
   };
   const validations = {
-    email: [],
+    email: [{ type: "Required" }],
     name: [],
     avatarUrl: [],
   };
@@ -118,7 +118,7 @@ export default function UserCreateForm(props) {
     >
       <TextField
         label="Email"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         value={email}
         onChange={(e) => {

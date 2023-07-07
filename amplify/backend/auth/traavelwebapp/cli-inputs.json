@@ -1,9 +1,7 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "testAuthIdentityPool",
-    "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "traavece1f0f85",
+    "resourceNameTruncated": "traave4dc4554d",
     "userPoolName": "traavelwebapp",
     "autoVerifiedAttributes": [
       "email"
@@ -28,11 +26,11 @@
     "userpoolClientRefreshTokenValidity": 30,
     "userpoolClientWriteAttributes": [],
     "userpoolClientReadAttributes": [],
-    "userpoolClientLambdaRole": "traavece1f0f85_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "traave4dc4554d_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "ce1f0f85",
+    "sharedId": "4dc4554d",
     "resourceName": "traavelwebapp",
-    "authSelections": "identityPoolAndUserPool",
+    "authSelections": "userPoolOnly",
     "serviceName": "Cognito",
     "usernameAttributes": [
       "email"
@@ -41,9 +39,43 @@
     "userPoolGroups": false,
     "userPoolGroupList": [],
     "adminQueries": false,
-    "thirdPartyAuth": false,
-    "authProviders": [],
     "usernameCaseSensitive": false,
-    "useEnabledMfas": true
+    "useEnabledMfas": true,
+    "authRoleArn": {
+      "Fn::GetAtt": [
+        "AuthRole",
+        "Arn"
+      ]
+    },
+    "unauthRoleArn": {
+      "Fn::GetAtt": [
+        "UnauthRole",
+        "Arn"
+      ]
+    },
+    "breakCircularDependency": true,
+    "dependsOn": [
+      {
+        "category": "function",
+        "resourceName": "traavelwebappPostConfirmation",
+        "triggerProvider": "Cognito",
+        "attributes": [
+          "Arn",
+          "Name"
+        ]
+      }
+    ],
+    "triggers": {
+      "PostConfirmation": [
+        "custom"
+      ]
+    },
+    "hostedUI": false,
+    "authProviders": [],
+    "parentStack": {
+      "Ref": "AWS::StackId"
+    },
+    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"traavelwebappPostConfirmation\"\n  }\n]",
+    "permissions": []
   }
 }

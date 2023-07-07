@@ -25,7 +25,17 @@
   "auth": {
     "traavelwebapp": {
       "customAuth": false,
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "Arn",
+            "Name"
+          ],
+          "category": "function",
+          "resourceName": "traavelwebappPostConfirmation",
+          "triggerProvider": "Cognito"
+        }
+      ],
       "frontendAuthConfig": {
         "mfaConfiguration": "OFF",
         "mfaTypes": [
@@ -52,7 +62,7 @@
     }
   },
   "function": {
-    "traavelcognitosignuppostconfirmationtrigger": {
+    "traavelwebappPostConfirmation": {
       "build": true,
       "dependsOn": [
         {
@@ -68,19 +78,19 @@
     }
   },
   "parameters": {
-    "AMPLIFY_function_traavelcognitosignuppostconfirmationtrigger_deploymentBucketName": {
+    "AMPLIFY_function_traavelwebappPostConfirmation_deploymentBucketName": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "traavelcognitosignuppostconfirmationtrigger"
+          "resourceName": "traavelwebappPostConfirmation"
         }
       ]
     },
-    "AMPLIFY_function_traavelcognitosignuppostconfirmationtrigger_s3Key": {
+    "AMPLIFY_function_traavelwebappPostConfirmation_s3Key": {
       "usedBy": [
         {
           "category": "function",
-          "resourceName": "traavelcognitosignuppostconfirmationtrigger"
+          "resourceName": "traavelwebappPostConfirmation"
         }
       ]
     }

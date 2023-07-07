@@ -2,7 +2,7 @@
   "providers": [
     "awscloudformation"
   ],
-  "projectName": "traavel",
+  "projectName": "traavelwebapp",
   "version": "3.1",
   "frontend": "javascript",
   "javascript": {
