@@ -1,14 +1,10 @@
 import { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
 import { withSSRContext } from "aws-amplify";
-import {
-  useAuthenticator,
-  Button,
-  Heading,
-  Image,
-} from "@aws-amplify/ui-react";
+import { Button } from "@aws-amplify/ui-react";
 import { User } from "@/models";
+import { Navbar } from "@/components/Navbar";
 import { getUserData } from "@/utils";
+import { AiOutlinePlus } from "react-icons/ai";
 
 interface Props {
   user: User;
@@ -27,23 +23,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 };
 
 const Home = ({ user }: Props) => {
-  const { signOut } = useAuthenticator((context) => [context.signOut]);
-  const router = useRouter();
-
-  const handleSignOut = async () => {
-    signOut();
-    router.push("/");
-  };
-
   return (
     <>
-      <Heading level={1}>Hello {user.name}</Heading>
-      <Image
-        src={user.avatarUrl || "/images/default_avatar_image.png"}
-        alt="Profile image"
-        width="50px"
-      />
-      <Button onClick={handleSignOut}>Sign out</Button>
+      <Navbar name={user.name} avatarUrl={user.avatarUrl} />
+      <Button variation="primary">
+        <AiOutlinePlus size={22} style={{ marginRight: "5px" }} /> New plan
+      </Button>
     </>
   );
 };

@@ -1,6 +1,8 @@
 {
   "version": "1",
   "cognitoConfig": {
+    "identityPoolName": "traavelwebapp_identitypool_9a1203be",
+    "allowUnauthenticatedIdentities": false,
     "resourceNameTruncated": "traave4dc4554d",
     "userPoolName": "traavelwebapp",
     "autoVerifiedAttributes": [
@@ -30,7 +32,7 @@
     "userpoolClientSetAttributes": false,
     "sharedId": "4dc4554d",
     "resourceName": "traavelwebapp",
-    "authSelections": "userPoolOnly",
+    "authSelections": "identityPoolAndUserPool",
     "serviceName": "Cognito",
     "usernameAttributes": [
       "email"
@@ -75,7 +77,9 @@
     "parentStack": {
       "Ref": "AWS::StackId"
     },
-    "authTriggerConnections": "[\n  {\n    \"triggerType\": \"PostConfirmation\",\n    \"lambdaFunctionName\": \"traavelwebappPostConfirmation\"\n  }\n]",
+    "authTriggerConnections": [
+      "{\"triggerType\":\"PostConfirmation\",\"lambdaFunctionName\":\"traavelwebappPostConfirmation\"}"
+    ],
     "permissions": []
   }
 }
