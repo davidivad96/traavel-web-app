@@ -1,10 +1,48 @@
 import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
-import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
+import { LazyLoading, LazyLoadingDisabled, AsyncItem } from "@aws-amplify/datastore";
 
 
 
 
+
+type EagerPlan = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Plan, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly owner?: User | null;
+  readonly name: string;
+  readonly destination?: string | null;
+  readonly startDate?: string | null;
+  readonly endDate?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly planOwnerId?: string | null;
+}
+
+type LazyPlan = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<Plan, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly owner: AsyncItem<User | undefined>;
+  readonly name: string;
+  readonly destination?: string | null;
+  readonly startDate?: string | null;
+  readonly endDate?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly planOwnerId?: string | null;
+}
+
+export declare type Plan = LazyLoading extends LazyLoadingDisabled ? EagerPlan : LazyPlan
+
+export declare const Plan: (new (init: ModelInit<Plan>) => Plan) & {
+  copyOf(source: Plan, mutator: (draft: MutableModel<Plan>) => MutableModel<Plan> | void): Plan;
+}
 
 type EagerUser = {
   readonly [__modelMeta__]: {

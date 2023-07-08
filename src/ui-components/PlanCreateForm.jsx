@@ -8,13 +8,12 @@
 import * as React from "react";
 import { Button, Flex, Grid, TextField } from "@aws-amplify/ui-react";
 import { getOverrideProps } from "@aws-amplify/ui-react/internal";
-import { User } from "../models";
+import { Plan } from "../models";
 import { fetchByPath, validateField } from "./utils";
 import { DataStore } from "aws-amplify";
-export default function UserUpdateForm(props) {
+export default function PlanCreateForm(props) {
   const {
-    id: idProp,
-    user: userModelProp,
+    clearOnSuccess = true,
     onSuccess,
     onError,
     onSubmit,
@@ -24,38 +23,30 @@ export default function UserUpdateForm(props) {
     ...rest
   } = props;
   const initialValues = {
-    email: "",
     name: "",
-    avatarUrl: "",
+    destination: "",
+    startDate: "",
+    endDate: "",
   };
-  const [email, setEmail] = React.useState(initialValues.email);
   const [name, setName] = React.useState(initialValues.name);
-  const [avatarUrl, setAvatarUrl] = React.useState(initialValues.avatarUrl);
+  const [destination, setDestination] = React.useState(
+    initialValues.destination
+  );
+  const [startDate, setStartDate] = React.useState(initialValues.startDate);
+  const [endDate, setEndDate] = React.useState(initialValues.endDate);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
-    const cleanValues = userRecord
-      ? { ...initialValues, ...userRecord }
-      : initialValues;
-    setEmail(cleanValues.email);
-    setName(cleanValues.name);
-    setAvatarUrl(cleanValues.avatarUrl);
+    setName(initialValues.name);
+    setDestination(initialValues.destination);
+    setStartDate(initialValues.startDate);
+    setEndDate(initialValues.endDate);
     setErrors({});
   };
-  const [userRecord, setUserRecord] = React.useState(userModelProp);
-  React.useEffect(() => {
-    const queryData = async () => {
-      const record = idProp
-        ? await DataStore.query(User, idProp)
-        : userModelProp;
-      setUserRecord(record);
-    };
-    queryData();
-  }, [idProp, userModelProp]);
-  React.useEffect(resetStateValues, [userRecord]);
   const validations = {
-    email: [{ type: "Required" }, { type: "Email" }],
-    name: [],
-    avatarUrl: [{ type: "URL" }],
+    name: [{ type: "Required" }],
+    destination: [],
+    startDate: [],
+    endDate: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -83,9 +74,10 @@ export default function UserUpdateForm(props) {
       onSubmit={async (event) => {
         event.preventDefault();
         let modelFields = {
-          email,
           name,
-          avatarUrl,
+          destination,
+          startDate,
+          endDate,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -115,13 +107,12 @@ export default function UserUpdateForm(props) {
               modelFields[key] = undefined;
             }
           });
-          await DataStore.save(
-            User.copyOf(userRecord, (updated) => {
-              Object.assign(updated, modelFields);
-            })
-          );
+          await DataStore.save(new Plan(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
+          }
+          if (clearOnSuccess) {
+            resetStateValues();
           }
         } catch (err) {
           if (onError) {
@@ -129,47 +120,22 @@ export default function UserUpdateForm(props) {
           }
         }
       }}
-      {...getOverrideProps(overrides, "UserUpdateForm")}
+      {...getOverrideProps(overrides, "PlanCreateForm")}
       {...rest}
     >
       <TextField
-        label="Email"
-        isRequired={true}
-        isReadOnly={false}
-        value={email}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              email: value,
-              name,
-              avatarUrl,
-            };
-            const result = onChange(modelFields);
-            value = result?.email ?? value;
-          }
-          if (errors.email?.hasError) {
-            runValidationTasks("email", value);
-          }
-          setEmail(value);
-        }}
-        onBlur={() => runValidationTasks("email", email)}
-        errorMessage={errors.email?.errorMessage}
-        hasError={errors.email?.hasError}
-        {...getOverrideProps(overrides, "email")}
-      ></TextField>
-      <TextField
         label="Name"
-        isRequired={false}
+        isRequired={true}
         isReadOnly={false}
         value={name}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              email,
               name: value,
-              avatarUrl,
+              destination,
+              startDate,
+              endDate,
             };
             const result = onChange(modelFields);
             value = result?.name ?? value;
@@ -185,44 +151,100 @@ export default function UserUpdateForm(props) {
         {...getOverrideProps(overrides, "name")}
       ></TextField>
       <TextField
-        label="Avatar url"
+        label="Destination"
         isRequired={false}
         isReadOnly={false}
-        value={avatarUrl}
+        value={destination}
         onChange={(e) => {
           let { value } = e.target;
           if (onChange) {
             const modelFields = {
-              email,
               name,
-              avatarUrl: value,
+              destination: value,
+              startDate,
+              endDate,
             };
             const result = onChange(modelFields);
-            value = result?.avatarUrl ?? value;
+            value = result?.destination ?? value;
           }
-          if (errors.avatarUrl?.hasError) {
-            runValidationTasks("avatarUrl", value);
+          if (errors.destination?.hasError) {
+            runValidationTasks("destination", value);
           }
-          setAvatarUrl(value);
+          setDestination(value);
         }}
-        onBlur={() => runValidationTasks("avatarUrl", avatarUrl)}
-        errorMessage={errors.avatarUrl?.errorMessage}
-        hasError={errors.avatarUrl?.hasError}
-        {...getOverrideProps(overrides, "avatarUrl")}
+        onBlur={() => runValidationTasks("destination", destination)}
+        errorMessage={errors.destination?.errorMessage}
+        hasError={errors.destination?.hasError}
+        {...getOverrideProps(overrides, "destination")}
+      ></TextField>
+      <TextField
+        label="Start date"
+        isRequired={false}
+        isReadOnly={false}
+        type="date"
+        value={startDate}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              destination,
+              startDate: value,
+              endDate,
+            };
+            const result = onChange(modelFields);
+            value = result?.startDate ?? value;
+          }
+          if (errors.startDate?.hasError) {
+            runValidationTasks("startDate", value);
+          }
+          setStartDate(value);
+        }}
+        onBlur={() => runValidationTasks("startDate", startDate)}
+        errorMessage={errors.startDate?.errorMessage}
+        hasError={errors.startDate?.hasError}
+        {...getOverrideProps(overrides, "startDate")}
+      ></TextField>
+      <TextField
+        label="End date"
+        isRequired={false}
+        isReadOnly={false}
+        type="date"
+        value={endDate}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              name,
+              destination,
+              startDate,
+              endDate: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.endDate ?? value;
+          }
+          if (errors.endDate?.hasError) {
+            runValidationTasks("endDate", value);
+          }
+          setEndDate(value);
+        }}
+        onBlur={() => runValidationTasks("endDate", endDate)}
+        errorMessage={errors.endDate?.errorMessage}
+        hasError={errors.endDate?.hasError}
+        {...getOverrideProps(overrides, "endDate")}
       ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}
       >
         <Button
-          children="Reset"
+          children="Clear"
           type="reset"
           onClick={(event) => {
             event.preventDefault();
             resetStateValues();
           }}
-          isDisabled={!(idProp || userModelProp)}
-          {...getOverrideProps(overrides, "ResetButton")}
+          {...getOverrideProps(overrides, "ClearButton")}
         ></Button>
         <Flex
           gap="15px"
@@ -232,10 +254,7 @@ export default function UserUpdateForm(props) {
             children="Submit"
             type="submit"
             variation="primary"
-            isDisabled={
-              !(idProp || userModelProp) ||
-              Object.values(errors).some((e) => e?.hasError)
-            }
+            isDisabled={Object.values(errors).some((e) => e?.hasError)}
             {...getOverrideProps(overrides, "SubmitButton")}
           ></Button>
         </Flex>

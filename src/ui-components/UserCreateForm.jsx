@@ -38,9 +38,9 @@ export default function UserCreateForm(props) {
     setErrors({});
   };
   const validations = {
-    email: [{ type: "Required" }],
+    email: [{ type: "Required" }, { type: "Email" }],
     name: [],
-    avatarUrl: [],
+    avatarUrl: [{ type: "URL" }],
   };
   const runValidationTasks = async (
     fieldName,
