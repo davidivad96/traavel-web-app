@@ -37,7 +37,7 @@ export const Modal = ({
         padding="1.2rem"
         borderRadius="0.5rem"
         minWidth="300px"
-        maxWidth="400px"
+        maxWidth="500px"
         onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}
       >
         <Flex justifyContent="space-between" alignItems="center">

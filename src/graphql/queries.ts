@@ -9,6 +9,11 @@ export const getUser = /* GraphQL */ `
       email
       name
       avatarUrl
+      plans {
+        nextToken
+        startedAt
+        __typename
+      }
       createdAt
       updatedAt
       _version
@@ -61,6 +66,131 @@ export const syncUsers = /* GraphQL */ `
         email
         name
         avatarUrl
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const getPlan = /* GraphQL */ `
+  query GetPlan($id: ID!) {
+    getPlan(id: $id) {
+      id
+      name
+      destination
+      startDate
+      endDate
+      owner {
+        id
+        email
+        name
+        avatarUrl
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      ownerId
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+  }
+`;
+export const listPlans = /* GraphQL */ `
+  query ListPlans(
+    $filter: ModelPlanFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPlans(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        destination
+        startDate
+        endDate
+        ownerId
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const syncPlans = /* GraphQL */ `
+  query SyncPlans(
+    $filter: ModelPlanFilterInput
+    $limit: Int
+    $nextToken: String
+    $lastSync: AWSTimestamp
+  ) {
+    syncPlans(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
+      items {
+        id
+        name
+        destination
+        startDate
+        endDate
+        ownerId
+        createdAt
+        updatedAt
+        _version
+        _deleted
+        _lastChangedAt
+        __typename
+      }
+      nextToken
+      startedAt
+      __typename
+    }
+  }
+`;
+export const plansByOwnerId = /* GraphQL */ `
+  query PlansByOwnerId(
+    $ownerId: ID!
+    $sortDirection: ModelSortDirection
+    $filter: ModelPlanFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    plansByOwnerId(
+      ownerId: $ownerId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        name
+        destination
+        startDate
+        endDate
+        ownerId
         createdAt
         updatedAt
         _version

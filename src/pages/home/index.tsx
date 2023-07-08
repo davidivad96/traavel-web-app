@@ -33,7 +33,7 @@ const Home = ({ user }: Props) => {
       <Button variation="primary" onClick={() => setIsOpen(true)}>
         <AiOutlinePlus size={22} style={{ marginRight: "5px" }} /> New plan
       </Button>
-      <NewPlanModal isOpen={isOpen} setIsOpen={setIsOpen} />
+      <NewPlanModal isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
     </>
   );
 };

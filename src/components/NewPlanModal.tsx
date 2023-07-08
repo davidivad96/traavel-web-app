@@ -1,4 +1,7 @@
+import { API } from "aws-amplify";
 import { Flex, Button } from "@aws-amplify/ui-react";
+import { createPlan } from "@/graphql/mutations";
+import { User } from "@/models";
 import { Modal } from "./Modal";
 
 const Content = () => <p>Content</p>;
@@ -18,11 +21,20 @@ const Footer = ({ onClick }: FooterProps) => (
 interface Props {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
+  user: User;
 }
 
-export const NewPlanModal = ({ isOpen, setIsOpen }: Props) => {
-  const handleCreatePlan = () => {
-    // TODO: create plan
+export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
+  const handleCreatePlan = async () => {
+    await API.graphql({
+      query: createPlan,
+      variables: {
+        input: {
+          name: "My plan",
+          ownerId: user.id,
+        },
+      },
+    });
     setIsOpen(false);
   };
 
