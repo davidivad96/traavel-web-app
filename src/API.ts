@@ -79,11 +79,12 @@ export type Plan = {
   __typename: "Plan",
   id: string,
   name: string,
-  destination?: string | null,
+  destination: string,
   startDate?: string | null,
   endDate?: string | null,
   owner?: User | null,
   ownerId: string,
+  placeId: string,
   createdAt: string,
   updatedAt: string,
 };
@@ -102,10 +103,11 @@ export type DeleteUserInput = {
 export type CreatePlanInput = {
   id?: string | null,
   name: string,
-  destination?: string | null,
+  destination: string,
   startDate?: string | null,
   endDate?: string | null,
   ownerId: string,
+  placeId: string,
 };
 
 export type ModelPlanConditionInput = {
@@ -114,6 +116,7 @@ export type ModelPlanConditionInput = {
   startDate?: ModelStringInput | null,
   endDate?: ModelStringInput | null,
   ownerId?: ModelIDInput | null,
+  placeId?: ModelStringInput | null,
   and?: Array< ModelPlanConditionInput | null > | null,
   or?: Array< ModelPlanConditionInput | null > | null,
   not?: ModelPlanConditionInput | null,
@@ -142,6 +145,7 @@ export type UpdatePlanInput = {
   startDate?: string | null,
   endDate?: string | null,
   ownerId?: string | null,
+  placeId?: string | null,
 };
 
 export type DeletePlanInput = {
@@ -171,6 +175,7 @@ export type ModelPlanFilterInput = {
   startDate?: ModelStringInput | null,
   endDate?: ModelStringInput | null,
   ownerId?: ModelIDInput | null,
+  placeId?: ModelStringInput | null,
   and?: Array< ModelPlanFilterInput | null > | null,
   or?: Array< ModelPlanFilterInput | null > | null,
   not?: ModelPlanFilterInput | null,
@@ -228,6 +233,7 @@ export type ModelSubscriptionPlanFilterInput = {
   startDate?: ModelSubscriptionStringInput | null,
   endDate?: ModelSubscriptionStringInput | null,
   ownerId?: ModelSubscriptionIDInput | null,
+  placeId?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionPlanFilterInput | null > | null,
   or?: Array< ModelSubscriptionPlanFilterInput | null > | null,
 };
@@ -317,7 +323,7 @@ export type UpdatePlanMutation = {
     __typename: "Plan",
     id: string,
     name: string,
-    destination?: string | null,
+    destination: string,
     startDate?: string | null,
     endDate?: string | null,
     owner?:  {
@@ -401,7 +407,7 @@ export type GetPlanQuery = {
     __typename: "Plan",
     id: string,
     name: string,
-    destination?: string | null,
+    destination: string,
     startDate?: string | null,
     endDate?: string | null,
     owner?:  {
@@ -432,7 +438,7 @@ export type ListPlansQuery = {
       __typename: "Plan",
       id: string,
       name: string,
-      destination?: string | null,
+      destination: string,
       startDate?: string | null,
       endDate?: string | null,
       ownerId: string,
@@ -458,7 +464,7 @@ export type PlansByOwnerIdQuery = {
       __typename: "Plan",
       id: string,
       name: string,
-      destination?: string | null,
+      destination: string,
       startDate?: string | null,
       endDate?: string | null,
       ownerId: string,
@@ -538,7 +544,7 @@ export type OnCreatePlanSubscription = {
     __typename: "Plan",
     id: string,
     name: string,
-    destination?: string | null,
+    destination: string,
     startDate?: string | null,
     endDate?: string | null,
     owner?:  {
@@ -565,7 +571,7 @@ export type OnUpdatePlanSubscription = {
     __typename: "Plan",
     id: string,
     name: string,
-    destination?: string | null,
+    destination: string,
     startDate?: string | null,
     endDate?: string | null,
     owner?:  {
@@ -592,7 +598,7 @@ export type OnDeletePlanSubscription = {
     __typename: "Plan",
     id: string,
     name: string,
-    destination?: string | null,
+    destination: string,
     startDate?: string | null,
     endDate?: string | null,
     owner?:  {

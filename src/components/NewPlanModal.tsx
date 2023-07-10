@@ -22,6 +22,7 @@ interface Props {
 
 export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
   const router = useRouter();
+  const [placeId, setPlaceId] = useState<string>("");
   const [destination, setDestination] = useState<string>("");
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -33,6 +34,7 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
         variables: {
           input: {
             name: `Trip to ${destination}`,
+            placeId,
             destination,
             startDate: toISODateString(startDate!),
             endDate: toISODateString(endDate!),
@@ -42,12 +44,13 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
       });
       router.push(`/plan/${response.data?.createPlan?.id}`);
     } catch (error) {
+      console.log(error);
       toast.error("There was an error!", { theme: "colored" });
     }
   };
 
   const handleOnCloseModal = () => {
-    setDestination("");
+    setPlaceId("");
     setStartDate(null);
     setEndDate(null);
     setIsOpen(false);
@@ -62,9 +65,11 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
       <>
         <View padding="30px 0">
           <GooglePlacesAutocomplete
-            apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}
             selectProps={{
-              onChange: (e) => setDestination(e?.label || ""),
+              onChange: (e) => {
+                setPlaceId(e?.value?.place_id || "");
+                setDestination(e?.label || "");
+              },
               placeholder: "Search destination",
               styles: {
                 input: (provided) => ({
@@ -103,7 +108,7 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
           <Button
             variation="primary"
             onClick={handleCreatePlan}
-            disabled={!destination || !startDate || !endDate}
+            disabled={!placeId || !startDate || !endDate}
           >
             Create my plan
           </Button>

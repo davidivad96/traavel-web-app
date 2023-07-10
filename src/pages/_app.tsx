@@ -3,8 +3,8 @@ import { Inter } from "next/font/google";
 import { Amplify } from "aws-amplify";
 import { Authenticator } from "@aws-amplify/ui-react";
 import awsconfig from "../aws-exports";
-import "../styles/globals.css";
 import "@aws-amplify/ui-react/styles.css";
+import "../styles/globals.css";
 
 Amplify.configure({ ...awsconfig, ssr: true });
 

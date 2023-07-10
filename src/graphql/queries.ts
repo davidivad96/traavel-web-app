@@ -47,6 +47,7 @@ export const getPlan = /* GraphQL */ `
       id
       name
       destination
+      placeId
       startDate
       endDate
       owner {
@@ -76,6 +77,7 @@ export const listPlans = /* GraphQL */ `
         id
         name
         destination
+        placeId
         startDate
         endDate
         ownerId
@@ -107,6 +109,7 @@ export const plansByOwnerId = /* GraphQL */ `
         id
         name
         destination
+        placeId
         startDate
         endDate
         ownerId
