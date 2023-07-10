@@ -46,11 +46,18 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
     }
   };
 
+  const handleOnCloseModal = () => {
+    setDestination("");
+    setStartDate(null);
+    setEndDate(null);
+    setIsOpen(false);
+  };
+
   return (
     <Modal
       isOpen={isOpen}
       title="Create your plan!"
-      onClose={() => setIsOpen(false)}
+      onClose={handleOnCloseModal}
     >
       <>
         <View padding="30px 0">

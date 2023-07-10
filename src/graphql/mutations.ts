@@ -81,29 +81,6 @@ export const createPlan = /* GraphQL */ `
   ) {
     createPlan(input: $input, condition: $condition) {
       id
-      name
-      destination
-      startDate
-      endDate
-      owner {
-        id
-        email
-        name
-        avatarUrl
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        __typename
-      }
-      ownerId
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      __typename
     }
   }
 `;

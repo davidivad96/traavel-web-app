@@ -10,16 +10,11 @@ export const getUser = /* GraphQL */ `
       name
       avatarUrl
       plans {
-        nextToken
-        startedAt
-        __typename
+        items {
+          id
+          name
+        }
       }
-      createdAt
-      updatedAt
-      _version
-      _deleted
-      _lastChangedAt
-      __typename
     }
   }
 `;

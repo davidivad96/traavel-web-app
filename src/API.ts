@@ -343,28 +343,6 @@ export type CreatePlanMutation = {
   createPlan?:  {
     __typename: "Plan",
     id: string,
-    name: string,
-    destination?: string | null,
-    startDate?: string | null,
-    endDate?: string | null,
-    owner?:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name?: string | null,
-      avatarUrl?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
-    ownerId: string,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -449,14 +427,12 @@ export type GetUserQuery = {
     avatarUrl?: string | null,
     plans?:  {
       __typename: "ModelPlanConnection",
-      nextToken?: string | null,
-      startedAt?: number | null,
+      items:  Array< {
+        __typename: "Plan",
+        id: string,
+        name: string,
+      } | null >,
     } | null,
-    createdAt: string,
-    updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
