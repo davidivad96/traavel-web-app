@@ -1,14 +1,30 @@
-import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
+import { Plan } from "@/models";
+import { withSSRContext } from "aws-amplify";
+import { Navbar } from "@/components/Navbar";
+import { getPlanData } from "@/utils/api";
 
-const Plan = () => {
-  const router = useRouter();
-  const { id } = router.query;
+interface Props {
+  plan: Plan;
+}
 
-  return (
-    <div>
-      <h1>Plan {id}</h1>
-    </div>
-  );
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  req,
+  res,
+  query,
+}) => {
+  const SSR = withSSRContext({ req });
+  const planId = query.id as string;
+  try {
+    const plan = await getPlanData(SSR, planId);
+    return { props: { plan } };
+  } catch (error) {
+    return { redirect: { permanent: false, destination: "/" } };
+  }
 };
 
-export default Plan;
+const PlanPage = ({ plan }: Props) => {
+  return <Navbar title={plan.name} showGoBack />;
+};
+
+export default PlanPage;

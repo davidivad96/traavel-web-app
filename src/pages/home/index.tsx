@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { API, withSSRContext } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
-import { Button, Card, Collection, Text } from "@aws-amplify/ui-react";
+import { Button, Card, Collection, Heading } from "@aws-amplify/ui-react";
 import { ToastContainer, toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
 import { DeletePlanMutation } from "@/API";
@@ -52,7 +52,12 @@ const Home = ({ user, userPlans }: Props) => {
 
   return (
     <>
-      <Navbar name={user.name} avatarUrl={user.avatarUrl} />
+      <Navbar
+        title={`Hello, ${user.name}`}
+        showAvatar
+        avatarUrl={user.avatarUrl}
+        showSignOut
+      />
       <Button
         variation="primary"
         onClick={() => setIsOpen(true)}
@@ -77,7 +82,7 @@ const Home = ({ user, userPlans }: Props) => {
             style={{ cursor: "pointer" }}
           >
             <>
-              <Text>{plan.name}</Text>
+              <Heading level={6}>{plan.name}</Heading>
               <Button
                 variation="destructive"
                 isFullWidth

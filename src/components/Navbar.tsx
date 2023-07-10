@@ -1,13 +1,23 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { Button, Flex, Heading, useAuthenticator } from "@aws-amplify/ui-react";
+import { BiArrowBack } from "react-icons/bi";
 
 interface Props {
-  name?: string | null;
+  title: string;
+  showAvatar?: boolean;
+  showGoBack?: boolean;
+  showSignOut?: boolean;
   avatarUrl?: string | null;
 }
 
-export const Navbar = ({ name, avatarUrl }: Props) => {
+export const Navbar = ({
+  title,
+  showAvatar = false,
+  showGoBack = false,
+  showSignOut = false,
+  avatarUrl,
+}: Props) => {
   const { signOut } = useAuthenticator((context) => [context.signOut]);
   const router = useRouter();
 
@@ -19,15 +29,22 @@ export const Navbar = ({ name, avatarUrl }: Props) => {
   return (
     <Flex direction="row" justifyContent="space-between" alignItems="center">
       <Flex direction="row">
-        <Heading level={1}>Hello {name}</Heading>
-        <Image
-          src={avatarUrl || "/images/default_avatar_image.png"}
-          alt="Profile image"
-          width={60}
-          height={60}
-        />
+        {showGoBack && (
+          <Button variation="link" size="large" onClick={() => router.back()}>
+            <BiArrowBack />
+          </Button>
+        )}
+        <Heading level={1}>{title}</Heading>
+        {showAvatar && (
+          <Image
+            src={avatarUrl || "/images/default_avatar_image.png"}
+            alt="Profile image"
+            width={60}
+            height={60}
+          />
+        )}
       </Flex>
-      <Button onClick={handleSignOut}>Sign out</Button>
+      {showSignOut && <Button onClick={handleSignOut}>Sign out</Button>}
     </Flex>
   );
 };
