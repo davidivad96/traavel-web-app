@@ -4,18 +4,11 @@ import { IoClose } from "react-icons/io5";
 interface Props {
   title: string;
   onClose: () => void;
-  Content: React.FC;
-  Footer?: React.FC;
   isOpen?: boolean;
+  children?: React.ReactNode;
 }
 
-export const Modal = ({
-  title,
-  onClose,
-  Content,
-  Footer,
-  isOpen = false,
-}: Props) => {
+export const Modal = ({ title, onClose, isOpen = false, children }: Props) => {
   if (!isOpen) {
     return null;
   }
@@ -46,8 +39,7 @@ export const Modal = ({
             <IoClose size={22} />
           </Button>
         </Flex>
-        <Content />
-        {Footer && <Footer />}
+        {children}
       </View>
     </View>
   );

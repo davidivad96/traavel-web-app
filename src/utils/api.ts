@@ -1,5 +1,5 @@
 import { AmplifyClass } from "@aws-amplify/core";
-import { getUser } from "./graphql/queries";
+import { getUser } from "../graphql/queries";
 
 export const getUserData = async ({ Auth, API }: AmplifyClass) => {
   const currentUser = await Auth.currentAuthenticatedUser();

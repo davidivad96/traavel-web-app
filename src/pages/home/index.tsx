@@ -6,7 +6,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { User } from "@/models";
 import { Navbar } from "@/components/Navbar";
 import { NewPlanModal } from "@/components/NewPlanModal";
-import { getUserData } from "@/utils";
+import { getUserData } from "@/utils/api";
 
 interface Props {
   user: User;
