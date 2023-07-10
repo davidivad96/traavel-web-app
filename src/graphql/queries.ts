@@ -14,7 +14,9 @@ export const getUser = /* GraphQL */ `
           id
           name
         }
+        __typename
       }
+      __typename
     }
   }
 `;
@@ -32,44 +34,9 @@ export const listUsers = /* GraphQL */ `
         avatarUrl
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
-export const syncUsers = /* GraphQL */ `
-  query SyncUsers(
-    $filter: ModelUserFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncUsers(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        email
-        name
-        avatarUrl
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        __typename
-      }
-      nextToken
-      startedAt
       __typename
     }
   }
@@ -89,17 +56,11 @@ export const getPlan = /* GraphQL */ `
         avatarUrl
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       ownerId
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -120,46 +81,9 @@ export const listPlans = /* GraphQL */ `
         ownerId
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
-      __typename
-    }
-  }
-`;
-export const syncPlans = /* GraphQL */ `
-  query SyncPlans(
-    $filter: ModelPlanFilterInput
-    $limit: Int
-    $nextToken: String
-    $lastSync: AWSTimestamp
-  ) {
-    syncPlans(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
-      items {
-        id
-        name
-        destination
-        startDate
-        endDate
-        ownerId
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        __typename
-      }
-      nextToken
-      startedAt
       __typename
     }
   }
@@ -188,13 +112,9 @@ export const plansByOwnerId = /* GraphQL */ `
         ownerId
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       nextToken
-      startedAt
       __typename
     }
   }

@@ -14,14 +14,10 @@ export const createUser = /* GraphQL */ `
       avatarUrl
       plans {
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -38,14 +34,10 @@ export const updateUser = /* GraphQL */ `
       avatarUrl
       plans {
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -62,14 +54,10 @@ export const deleteUser = /* GraphQL */ `
       avatarUrl
       plans {
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -81,6 +69,7 @@ export const createPlan = /* GraphQL */ `
   ) {
     createPlan(input: $input, condition: $condition) {
       id
+      __typename
     }
   }
 `;
@@ -102,17 +91,11 @@ export const updatePlan = /* GraphQL */ `
         avatarUrl
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       ownerId
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -124,28 +107,7 @@ export const deletePlan = /* GraphQL */ `
   ) {
     deletePlan(input: $input, condition: $condition) {
       id
-      name
-      destination
-      startDate
-      endDate
-      owner {
-        id
-        email
-        name
-        avatarUrl
-        createdAt
-        updatedAt
-        _version
-        _deleted
-        _lastChangedAt
-        __typename
-      }
-      ownerId
-      createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }

@@ -7,7 +7,6 @@ export type CreateUserInput = {
   email: string,
   name?: string | null,
   avatarUrl?: string | null,
-  _version?: number | null,
 };
 
 export type ModelUserConditionInput = {
@@ -17,7 +16,6 @@ export type ModelUserConditionInput = {
   and?: Array< ModelUserConditionInput | null > | null,
   or?: Array< ModelUserConditionInput | null > | null,
   not?: ModelUserConditionInput | null,
-  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelStringInput = {
@@ -60,13 +58,6 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
 export type User = {
   __typename: "User",
   id: string,
@@ -76,16 +67,12 @@ export type User = {
   plans?: ModelPlanConnection | null,
   createdAt: string,
   updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type ModelPlanConnection = {
   __typename: "ModelPlanConnection",
   items:  Array<Plan | null >,
   nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type Plan = {
@@ -99,9 +86,6 @@ export type Plan = {
   ownerId: string,
   createdAt: string,
   updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type UpdateUserInput = {
@@ -109,12 +93,10 @@ export type UpdateUserInput = {
   email?: string | null,
   name?: string | null,
   avatarUrl?: string | null,
-  _version?: number | null,
 };
 
 export type DeleteUserInput = {
   id: string,
-  _version?: number | null,
 };
 
 export type CreatePlanInput = {
@@ -124,7 +106,6 @@ export type CreatePlanInput = {
   startDate?: string | null,
   endDate?: string | null,
   ownerId: string,
-  _version?: number | null,
 };
 
 export type ModelPlanConditionInput = {
@@ -136,7 +117,6 @@ export type ModelPlanConditionInput = {
   and?: Array< ModelPlanConditionInput | null > | null,
   or?: Array< ModelPlanConditionInput | null > | null,
   not?: ModelPlanConditionInput | null,
-  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelIDInput = {
@@ -162,12 +142,10 @@ export type UpdatePlanInput = {
   startDate?: string | null,
   endDate?: string | null,
   ownerId?: string | null,
-  _version?: number | null,
 };
 
 export type DeletePlanInput = {
   id: string,
-  _version?: number | null,
 };
 
 export type ModelUserFilterInput = {
@@ -178,14 +156,12 @@ export type ModelUserFilterInput = {
   and?: Array< ModelUserFilterInput | null > | null,
   or?: Array< ModelUserFilterInput | null > | null,
   not?: ModelUserFilterInput | null,
-  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelUserConnection = {
   __typename: "ModelUserConnection",
   items:  Array<User | null >,
   nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type ModelPlanFilterInput = {
@@ -198,7 +174,6 @@ export type ModelPlanFilterInput = {
   and?: Array< ModelPlanFilterInput | null > | null,
   or?: Array< ModelPlanFilterInput | null > | null,
   not?: ModelPlanFilterInput | null,
-  _deleted?: ModelBooleanInput | null,
 };
 
 export enum ModelSortDirection {
@@ -214,7 +189,6 @@ export type ModelSubscriptionUserFilterInput = {
   avatarUrl?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionUserFilterInput | null > | null,
   or?: Array< ModelSubscriptionUserFilterInput | null > | null,
-  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelSubscriptionIDInput = {
@@ -256,7 +230,6 @@ export type ModelSubscriptionPlanFilterInput = {
   ownerId?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionPlanFilterInput | null > | null,
   or?: Array< ModelSubscriptionPlanFilterInput | null > | null,
-  _deleted?: ModelBooleanInput | null,
 };
 
 export type CreateUserMutationVariables = {
@@ -274,13 +247,9 @@ export type CreateUserMutation = {
     plans?:  {
       __typename: "ModelPlanConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -299,13 +268,9 @@ export type UpdateUserMutation = {
     plans?:  {
       __typename: "ModelPlanConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -324,13 +289,9 @@ export type DeleteUserMutation = {
     plans?:  {
       __typename: "ModelPlanConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -367,16 +328,10 @@ export type UpdatePlanMutation = {
       avatarUrl?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null,
     ownerId: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -389,28 +344,7 @@ export type DeletePlanMutation = {
   deletePlan?:  {
     __typename: "Plan",
     id: string,
-    name: string,
-    destination?: string | null,
-    startDate?: string | null,
-    endDate?: string | null,
-    owner?:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name?: string | null,
-      avatarUrl?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null,
-    ownerId: string,
-    createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -453,39 +387,8 @@ export type ListUsersQuery = {
       avatarUrl?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null >,
     nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncUsersQueryVariables = {
-  filter?: ModelUserFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncUsersQuery = {
-  syncUsers?:  {
-    __typename: "ModelUserConnection",
-    items:  Array< {
-      __typename: "User",
-      id: string,
-      email: string,
-      name?: string | null,
-      avatarUrl?: string | null,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
   } | null,
 };
 
@@ -509,16 +412,10 @@ export type GetPlanQuery = {
       avatarUrl?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null,
     ownerId: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -541,41 +438,8 @@ export type ListPlansQuery = {
       ownerId: string,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null >,
     nextToken?: string | null,
-    startedAt?: number | null,
-  } | null,
-};
-
-export type SyncPlansQueryVariables = {
-  filter?: ModelPlanFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
-};
-
-export type SyncPlansQuery = {
-  syncPlans?:  {
-    __typename: "ModelPlanConnection",
-    items:  Array< {
-      __typename: "Plan",
-      id: string,
-      name: string,
-      destination?: string | null,
-      startDate?: string | null,
-      endDate?: string | null,
-      ownerId: string,
-      createdAt: string,
-      updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
-    } | null >,
-    nextToken?: string | null,
-    startedAt?: number | null,
   } | null,
 };
 
@@ -600,12 +464,8 @@ export type PlansByOwnerIdQuery = {
       ownerId: string,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null >,
     nextToken?: string | null,
-    startedAt?: number | null,
   } | null,
 };
 
@@ -623,13 +483,9 @@ export type OnCreateUserSubscription = {
     plans?:  {
       __typename: "ModelPlanConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -647,13 +503,9 @@ export type OnUpdateUserSubscription = {
     plans?:  {
       __typename: "ModelPlanConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -671,13 +523,9 @@ export type OnDeleteUserSubscription = {
     plans?:  {
       __typename: "ModelPlanConnection",
       nextToken?: string | null,
-      startedAt?: number | null,
     } | null,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -701,16 +549,10 @@ export type OnCreatePlanSubscription = {
       avatarUrl?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null,
     ownerId: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -734,16 +576,10 @@ export type OnUpdatePlanSubscription = {
       avatarUrl?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null,
     ownerId: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };
 
@@ -767,15 +603,9 @@ export type OnDeletePlanSubscription = {
       avatarUrl?: string | null,
       createdAt: string,
       updatedAt: string,
-      _version: number,
-      _deleted?: boolean | null,
-      _lastChangedAt: number,
     } | null,
     ownerId: string,
     createdAt: string,
     updatedAt: string,
-    _version: number,
-    _deleted?: boolean | null,
-    _lastChangedAt: number,
   } | null,
 };

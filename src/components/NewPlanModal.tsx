@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-import { ToastContainer, toast } from "react-toastify";
 import { API } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import { Flex, Button, View } from "@aws-amplify/ui-react";
+import { ToastContainer, toast } from "react-toastify";
 import DatePicker from "react-datepicker";
 import { CreatePlanMutation } from "@/API";
 import { createPlan } from "@/graphql/mutations";

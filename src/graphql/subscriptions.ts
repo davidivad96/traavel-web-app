@@ -11,14 +11,10 @@ export const onCreateUser = /* GraphQL */ `
       avatarUrl
       plans {
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -32,14 +28,10 @@ export const onUpdateUser = /* GraphQL */ `
       avatarUrl
       plans {
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -53,14 +45,10 @@ export const onDeleteUser = /* GraphQL */ `
       avatarUrl
       plans {
         nextToken
-        startedAt
         __typename
       }
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -80,17 +68,11 @@ export const onCreatePlan = /* GraphQL */ `
         avatarUrl
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       ownerId
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -110,17 +92,11 @@ export const onUpdatePlan = /* GraphQL */ `
         avatarUrl
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       ownerId
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
@@ -140,17 +116,11 @@ export const onDeletePlan = /* GraphQL */ `
         avatarUrl
         createdAt
         updatedAt
-        _version
-        _deleted
-        _lastChangedAt
         __typename
       }
       ownerId
       createdAt
       updatedAt
-      _version
-      _deleted
-      _lastChangedAt
       __typename
     }
   }
