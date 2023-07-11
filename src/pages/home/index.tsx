@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { API, withSSRContext } from "aws-amplify";
+import { API, withSSRContext, Cache } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import { Button, Card, Collection, Heading } from "@aws-amplify/ui-react";
 import { ToastContainer, toast } from "react-toastify";
@@ -44,6 +44,7 @@ const Home = ({ user, userPlans }: Props) => {
         query: deletePlan,
         variables: { input: { id: planId } },
       });
+      Cache.removeItem(`places-${planId}`);
       toast.success("Plan deleted successfully", { theme: "colored" });
     } catch (error) {
       toast.error("There was an error!", { theme: "colored" });

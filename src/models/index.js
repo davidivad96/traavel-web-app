@@ -4,9 +4,10 @@ import { schema } from './schema';
 
 
 
-const { User, Plan } = initSchema(schema);
+const { User, Plan, Location } = initSchema(schema);
 
 export {
   User,
-  Plan
+  Plan,
+  Location
 };

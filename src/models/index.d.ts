@@ -4,7 +4,19 @@ import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@a
 
 
 
+type EagerLocation = {
+  readonly latitude?: number | null;
+  readonly longitude?: number | null;
+}
 
+type LazyLocation = {
+  readonly latitude?: number | null;
+  readonly longitude?: number | null;
+}
+
+export declare type Location = LazyLoading extends LazyLoadingDisabled ? EagerLocation : LazyLocation
+
+export declare const Location: (new (init: ModelInit<Location>) => Location)
 
 type EagerUser = {
   readonly [__modelMeta__]: {
@@ -46,12 +58,13 @@ type EagerPlan = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
-  readonly destination?: string | null;
+  readonly placeId: string;
+  readonly name?: string | null;
   readonly startDate?: string | null;
   readonly endDate?: string | null;
   readonly owner?: User | null;
   readonly ownerId: string;
+  readonly location?: Location | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -62,12 +75,13 @@ type LazyPlan = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name: string;
-  readonly destination?: string | null;
+  readonly placeId: string;
+  readonly name?: string | null;
   readonly startDate?: string | null;
   readonly endDate?: string | null;
   readonly owner: AsyncItem<User | undefined>;
   readonly ownerId: string;
+  readonly location?: Location | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

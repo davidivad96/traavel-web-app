@@ -10,6 +10,17 @@ export const onCreateUser = /* GraphQL */ `
       name
       avatarUrl
       plans {
+        items {
+          id
+          placeId
+          name
+          startDate
+          endDate
+          ownerId
+          createdAt
+          updatedAt
+          __typename
+        }
         nextToken
         __typename
       }
@@ -27,6 +38,17 @@ export const onUpdateUser = /* GraphQL */ `
       name
       avatarUrl
       plans {
+        items {
+          id
+          placeId
+          name
+          startDate
+          endDate
+          ownerId
+          createdAt
+          updatedAt
+          __typename
+        }
         nextToken
         __typename
       }
@@ -44,6 +66,17 @@ export const onDeleteUser = /* GraphQL */ `
       name
       avatarUrl
       plans {
+        items {
+          id
+          placeId
+          name
+          startDate
+          endDate
+          ownerId
+          createdAt
+          updatedAt
+          __typename
+        }
         nextToken
         __typename
       }
@@ -57,8 +90,8 @@ export const onCreatePlan = /* GraphQL */ `
   subscription OnCreatePlan($filter: ModelSubscriptionPlanFilterInput) {
     onCreatePlan(filter: $filter) {
       id
+      placeId
       name
-      destination
       startDate
       endDate
       owner {
@@ -66,11 +99,20 @@ export const onCreatePlan = /* GraphQL */ `
         email
         name
         avatarUrl
+        plans {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
       }
       ownerId
+      location {
+        latitude
+        longitude
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -81,8 +123,8 @@ export const onUpdatePlan = /* GraphQL */ `
   subscription OnUpdatePlan($filter: ModelSubscriptionPlanFilterInput) {
     onUpdatePlan(filter: $filter) {
       id
+      placeId
       name
-      destination
       startDate
       endDate
       owner {
@@ -90,11 +132,20 @@ export const onUpdatePlan = /* GraphQL */ `
         email
         name
         avatarUrl
+        plans {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
       }
       ownerId
+      location {
+        latitude
+        longitude
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -105,8 +156,8 @@ export const onDeletePlan = /* GraphQL */ `
   subscription OnDeletePlan($filter: ModelSubscriptionPlanFilterInput) {
     onDeletePlan(filter: $filter) {
       id
+      placeId
       name
-      destination
       startDate
       endDate
       owner {
@@ -114,11 +165,20 @@ export const onDeletePlan = /* GraphQL */ `
         email
         name
         avatarUrl
+        plans {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
       }
       ownerId
+      location {
+        latitude
+        longitude
+        __typename
+      }
       createdAt
       updatedAt
       __typename

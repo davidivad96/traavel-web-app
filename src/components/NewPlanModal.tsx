@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import GooglePlacesAutocomplete, {
+  geocodeByPlaceId,
+  getLatLng,
+} from "react-google-places-autocomplete";
 import { API } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import { Flex, Button, View } from "@aws-amplify/ui-react";
@@ -24,6 +27,7 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
   const router = useRouter();
   const [placeId, setPlaceId] = useState<string>("");
   const [destination, setDestination] = useState<string>("");
+  const [location, setLocation] = useState<[number, number]>([0, 0]);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
 
@@ -35,7 +39,7 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
           input: {
             name: `Trip to ${destination}`,
             placeId,
-            destination,
+            location: { latitude: location[0], longitude: location[1] },
             startDate: toISODateString(startDate!),
             endDate: toISODateString(endDate!),
             ownerId: user.id,
@@ -56,6 +60,15 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
     setIsOpen(false);
   };
 
+  const handleOnChangePlace = async (e: any) => {
+    const { place_id } = e?.value;
+    const [geocode] = await geocodeByPlaceId(place_id);
+    const { lat, lng } = await getLatLng(geocode);
+    setLocation([lat, lng]);
+    setPlaceId(place_id || "");
+    setDestination(e?.label || "");
+  };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -66,10 +79,7 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
         <View padding="30px 0">
           <GooglePlacesAutocomplete
             selectProps={{
-              onChange: (e) => {
-                setPlaceId(e?.value?.place_id || "");
-                setDestination(e?.label || "");
-              },
+              onChange: handleOnChangePlace,
               placeholder: "Search destination",
               styles: {
                 input: (provided) => ({

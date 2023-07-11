@@ -12,10 +12,20 @@ export const getUser = /* GraphQL */ `
       plans {
         items {
           id
+          placeId
           name
+          startDate
+          endDate
+          ownerId
+          createdAt
+          updatedAt
+          __typename
         }
+        nextToken
         __typename
       }
+      createdAt
+      updatedAt
       __typename
     }
   }
@@ -32,6 +42,10 @@ export const listUsers = /* GraphQL */ `
         email
         name
         avatarUrl
+        plans {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
@@ -45,9 +59,8 @@ export const getPlan = /* GraphQL */ `
   query GetPlan($id: ID!) {
     getPlan(id: $id) {
       id
-      name
-      destination
       placeId
+      name
       startDate
       endDate
       owner {
@@ -55,11 +68,20 @@ export const getPlan = /* GraphQL */ `
         email
         name
         avatarUrl
+        plans {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
       }
       ownerId
+      location {
+        latitude
+        longitude
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -75,12 +97,25 @@ export const listPlans = /* GraphQL */ `
     listPlans(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
-        destination
         placeId
+        name
         startDate
         endDate
+        owner {
+          id
+          email
+          name
+          avatarUrl
+          createdAt
+          updatedAt
+          __typename
+        }
         ownerId
+        location {
+          latitude
+          longitude
+          __typename
+        }
         createdAt
         updatedAt
         __typename
@@ -107,12 +142,25 @@ export const plansByOwnerId = /* GraphQL */ `
     ) {
       items {
         id
-        name
-        destination
         placeId
+        name
         startDate
         endDate
+        owner {
+          id
+          email
+          name
+          avatarUrl
+          createdAt
+          updatedAt
+          __typename
+        }
         ownerId
+        location {
+          latitude
+          longitude
+          __typename
+        }
         createdAt
         updatedAt
         __typename

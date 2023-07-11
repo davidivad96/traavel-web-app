@@ -13,6 +13,17 @@ export const createUser = /* GraphQL */ `
       name
       avatarUrl
       plans {
+        items {
+          id
+          placeId
+          name
+          startDate
+          endDate
+          ownerId
+          createdAt
+          updatedAt
+          __typename
+        }
         nextToken
         __typename
       }
@@ -33,6 +44,17 @@ export const updateUser = /* GraphQL */ `
       name
       avatarUrl
       plans {
+        items {
+          id
+          placeId
+          name
+          startDate
+          endDate
+          ownerId
+          createdAt
+          updatedAt
+          __typename
+        }
         nextToken
         __typename
       }
@@ -53,6 +75,17 @@ export const deleteUser = /* GraphQL */ `
       name
       avatarUrl
       plans {
+        items {
+          id
+          placeId
+          name
+          startDate
+          endDate
+          ownerId
+          createdAt
+          updatedAt
+          __typename
+        }
         nextToken
         __typename
       }
@@ -69,6 +102,31 @@ export const createPlan = /* GraphQL */ `
   ) {
     createPlan(input: $input, condition: $condition) {
       id
+      placeId
+      name
+      startDate
+      endDate
+      owner {
+        id
+        email
+        name
+        avatarUrl
+        plans {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      ownerId
+      location {
+        latitude
+        longitude
+        __typename
+      }
+      createdAt
+      updatedAt
       __typename
     }
   }
@@ -80,8 +138,8 @@ export const updatePlan = /* GraphQL */ `
   ) {
     updatePlan(input: $input, condition: $condition) {
       id
+      placeId
       name
-      destination
       startDate
       endDate
       owner {
@@ -89,11 +147,20 @@ export const updatePlan = /* GraphQL */ `
         email
         name
         avatarUrl
+        plans {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
         __typename
       }
       ownerId
+      location {
+        latitude
+        longitude
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -107,6 +174,30 @@ export const deletePlan = /* GraphQL */ `
   ) {
     deletePlan(input: $input, condition: $condition) {
       id
+      placeId
+      name
+      startDate
+      endDate
+      owner {
+        id
+        email
+        name
+        avatarUrl
+        plans {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
+      ownerId
+      location {
+        latitude
+        longitude
+        __typename
+      }
+      createdAt
       updatedAt
       __typename
     }
