@@ -1,27 +1,23 @@
 import { NextApiRequest, NextApiResponse } from "next";
-
-const PLACE_TYPES = [
-  "tourist_attraction",
-  "restaurant",
-  "cafe",
-  "bar",
-  "lodging",
-  "shopping_mall",
-];
+import axios from "axios";
+import { PLACE_TYPES, PlacesByType, PlacesSearchResponse } from "@/types";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { lat, lng } = req.query;
   try {
-    const data: google.maps.places.PlaceResult[] = [];
-    for (const type of PLACE_TYPES) {
-      const response = await fetch(
+    const data: PlacesByType = Object.values(PLACE_TYPES).reduce(
+      (acc, type) => ({ ...acc, [type]: [] }),
+      {} as PlacesByType
+    );
+    for (const type of Object.values(PLACE_TYPES)) {
+      const {
+        data: { results },
+      } = await axios.get<PlacesSearchResponse>(
         `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&radius=8000&type=${type}&key=${process.env.GOOGLE_API_KEY}`
       );
-      const { results }: { results: google.maps.places.PlaceResult[] } =
-        await response.json();
       results.forEach((result) => {
-        if (!data.find((place) => place.place_id === result.place_id)) {
-          data.push(result);
+        if (!data[type].find((place) => place.place_id === result.place_id)) {
+          data[type].push(result);
         }
       });
     }

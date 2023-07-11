@@ -38,8 +38,7 @@ const Home = ({ user, userPlans }: Props) => {
 
   const handleDeletePlan = async (planId: string) => {
     try {
-      const newPlans = plans.filter((plan) => plan.id !== planId);
-      setPlans(newPlans);
+      setPlans((plans) => plans.filter((plan) => plan.id !== planId));
       await API.graphql<GraphQLQuery<DeletePlanMutation>>({
         query: deletePlan,
         variables: { input: { id: planId } },
