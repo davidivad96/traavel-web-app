@@ -4,6 +4,8 @@ import GooglePlacesAutocomplete, {
   geocodeByPlaceId,
   getLatLng,
 } from "react-google-places-autocomplete";
+import { Place } from "@googlemaps/google-maps-services-js";
+import axios from "axios";
 import { API } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import { Flex, Button, View } from "@aws-amplify/ui-react";
@@ -36,6 +38,16 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
   const handleCreatePlan = async () => {
     setIsLoading(true);
     try {
+      const {
+        data: { photos },
+      } = await axios.get<Place>("/api/place-details", {
+        params: { placeId },
+      });
+      const { data: base64img } = await axios.get<string>("/api/photo", {
+        params: {
+          photoReference: photos?.at(0)?.photo_reference,
+        },
+      });
       const response = await API.graphql<GraphQLQuery<CreatePlanMutation>>({
         query: createPlan,
         variables: {
@@ -46,12 +58,14 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
             location: { latitude: location[0], longitude: location[1] },
             startDate: toISODateString(startDate!),
             endDate: toISODateString(endDate!),
+            base64img,
             ownerId: user.id,
           },
         },
       });
       router.push(`/plan/${response.data?.createPlan?.id}`);
     } catch (error) {
+      console.log(error);
       toast.error("There was an error!", { theme: "colored" });
     }
   };

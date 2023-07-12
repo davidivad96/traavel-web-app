@@ -3,7 +3,13 @@ import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import { API, withSSRContext, Cache } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
-import { Button, Card, Collection, Heading } from "@aws-amplify/ui-react";
+import {
+  Button,
+  Card,
+  Collection,
+  Heading,
+  Image,
+} from "@aws-amplify/ui-react";
 import { ToastContainer, toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
 import { DeletePlanMutation } from "@/API";
@@ -79,10 +85,26 @@ const Home = ({ user, userPlans }: Props) => {
             borderRadius="medium"
             variation="outlined"
             onClick={() => router.push(`/plan/${plan.id}`)}
-            style={{ cursor: "pointer" }}
+            display="flex"
+            style={{
+              cursor: "pointer",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
             <>
-              <Heading level={6}>{plan.name}</Heading>
+              <Heading level={5}>{plan.name}</Heading>
+              <Image
+                src={
+                  plan.base64img
+                    ? `data:image/jpeg;base64,${plan.base64img}`
+                    : "/images/placeholder.png"
+                }
+                width={200}
+                height={200}
+                alt="Plan image"
+              />
               <Button
                 variation="destructive"
                 isFullWidth

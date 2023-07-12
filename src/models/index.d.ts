@@ -61,11 +61,12 @@ type EagerPlan = {
   readonly placeId: string;
   readonly name?: string | null;
   readonly destination?: string | null;
+  readonly location?: Location | null;
   readonly startDate?: string | null;
   readonly endDate?: string | null;
+  readonly base64img?: string | null;
   readonly owner?: User | null;
   readonly ownerId: string;
-  readonly location?: Location | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -79,11 +80,12 @@ type LazyPlan = {
   readonly placeId: string;
   readonly name?: string | null;
   readonly destination?: string | null;
+  readonly location?: Location | null;
   readonly startDate?: string | null;
   readonly endDate?: string | null;
+  readonly base64img?: string | null;
   readonly owner: AsyncItem<User | undefined>;
   readonly ownerId: string;
-  readonly location?: Location | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

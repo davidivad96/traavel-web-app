@@ -120,6 +120,15 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "location": {
+                    "name": "location",
+                    "isArray": false,
+                    "type": {
+                        "nonModel": "Location"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "startDate": {
                     "name": "startDate",
                     "isArray": false,
@@ -131,6 +140,13 @@ export const schema = {
                     "name": "endDate",
                     "isArray": false,
                     "type": "AWSDate",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "base64img": {
+                    "name": "base64img",
+                    "isArray": false,
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -154,15 +170,6 @@ export const schema = {
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
-                    "attributes": []
-                },
-                "location": {
-                    "name": "location",
-                    "isArray": false,
-                    "type": {
-                        "nonModel": "Location"
-                    },
-                    "isRequired": false,
                     "attributes": []
                 },
                 "createdAt": {
@@ -240,5 +247,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "442e2e8f4b3a4da378652faa3612f221"
+    "version": "22cd1a620e0afb5f16ec7576fc3a1cd0"
 };

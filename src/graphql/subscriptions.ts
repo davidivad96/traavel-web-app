@@ -17,6 +17,7 @@ export const onCreateUser = /* GraphQL */ `
           destination
           startDate
           endDate
+          base64img
           ownerId
           createdAt
           updatedAt
@@ -46,6 +47,7 @@ export const onUpdateUser = /* GraphQL */ `
           destination
           startDate
           endDate
+          base64img
           ownerId
           createdAt
           updatedAt
@@ -75,6 +77,7 @@ export const onDeleteUser = /* GraphQL */ `
           destination
           startDate
           endDate
+          base64img
           ownerId
           createdAt
           updatedAt
@@ -96,8 +99,14 @@ export const onCreatePlan = /* GraphQL */ `
       placeId
       name
       destination
+      location {
+        latitude
+        longitude
+        __typename
+      }
       startDate
       endDate
+      base64img
       owner {
         id
         email
@@ -112,11 +121,6 @@ export const onCreatePlan = /* GraphQL */ `
         __typename
       }
       ownerId
-      location {
-        latitude
-        longitude
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -130,8 +134,14 @@ export const onUpdatePlan = /* GraphQL */ `
       placeId
       name
       destination
+      location {
+        latitude
+        longitude
+        __typename
+      }
       startDate
       endDate
+      base64img
       owner {
         id
         email
@@ -146,11 +156,6 @@ export const onUpdatePlan = /* GraphQL */ `
         __typename
       }
       ownerId
-      location {
-        latitude
-        longitude
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -164,8 +169,14 @@ export const onDeletePlan = /* GraphQL */ `
       placeId
       name
       destination
+      location {
+        latitude
+        longitude
+        __typename
+      }
       startDate
       endDate
+      base64img
       owner {
         id
         email
@@ -180,11 +191,6 @@ export const onDeletePlan = /* GraphQL */ `
         __typename
       }
       ownerId
-      location {
-        latitude
-        longitude
-        __typename
-      }
       createdAt
       updatedAt
       __typename

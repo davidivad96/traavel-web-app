@@ -16,9 +16,10 @@ type Plan @model @auth(rules: [{ allow: public }]) {
   placeId: String!
   name: String
   destination: String
+  location: Location
   startDate: AWSDate
   endDate: AWSDate
+  base64img: String
   owner: User @belongsTo(fields: ["ownerId"])
   ownerId: ID! @index(name: "byUser")
-  location: Location
 }

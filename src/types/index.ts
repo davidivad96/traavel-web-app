@@ -1,8 +1,4 @@
-export type PlacesSearchResponse = {
-  html_attributions: string[];
-  results: google.maps.places.PlaceResult[];
-  status: string;
-};
+import { Place } from "@googlemaps/google-maps-services-js";
 
 export enum PLACE_TYPES {
   RESTAURANT = "restaurant",
@@ -16,5 +12,5 @@ export enum PLACE_TYPES {
 }
 
 export type PlacesByType = {
-  [key in PLACE_TYPES]: google.maps.places.PlaceResult[];
+  [key in PLACE_TYPES]: Place[];
 };

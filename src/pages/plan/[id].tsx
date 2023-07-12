@@ -2,12 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import axios from "axios";
 import { GoogleMap, MarkerF } from "@react-google-maps/api";
+import { Place } from "@googlemaps/google-maps-services-js";
 import { withSSRContext, Cache } from "aws-amplify";
 import { Flex } from "@aws-amplify/ui-react";
 import { Plan as PlanModel } from "@/models";
 import { Navbar } from "@/components/Navbar";
 import { getPlanData } from "@/utils/api";
-import { PLACE_TYPES, PlacesByType, PlacesSearchResponse } from "@/types";
+import { PLACE_TYPES, PlacesByType } from "@/types";
 
 const getIcon = (type?: PLACE_TYPES) => {
   switch (type) {
@@ -84,16 +85,13 @@ const Plan = ({ plan: { id, name, destination, location } }: Props) => {
       );
       for (const type of Object.values(PLACE_TYPES)) {
         const query = `${type}s in ${destination}`;
-        const { data } = await axios.get<PlacesSearchResponse["results"]>(
-          `/api/places`,
-          {
-            params: {
-              query,
-              lat: location?.latitude,
-              lng: location?.longitude,
-            },
-          }
-        );
+        const { data } = await axios.get<Place[]>(`/api/places`, {
+          params: {
+            query,
+            lat: location?.latitude,
+            lng: location?.longitude,
+          },
+        });
         data.forEach((result) => {
           if (
             !newPlaces[type].find((place) => place.place_id === result.place_id)

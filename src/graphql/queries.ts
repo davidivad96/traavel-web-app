@@ -17,6 +17,7 @@ export const getUser = /* GraphQL */ `
           destination
           startDate
           endDate
+          base64img
           ownerId
           createdAt
           updatedAt
@@ -63,8 +64,14 @@ export const getPlan = /* GraphQL */ `
       placeId
       name
       destination
+      location {
+        latitude
+        longitude
+        __typename
+      }
       startDate
       endDate
+      base64img
       owner {
         id
         email
@@ -79,11 +86,6 @@ export const getPlan = /* GraphQL */ `
         __typename
       }
       ownerId
-      location {
-        latitude
-        longitude
-        __typename
-      }
       createdAt
       updatedAt
       __typename
@@ -102,8 +104,14 @@ export const listPlans = /* GraphQL */ `
         placeId
         name
         destination
+        location {
+          latitude
+          longitude
+          __typename
+        }
         startDate
         endDate
+        base64img
         owner {
           id
           email
@@ -114,11 +122,6 @@ export const listPlans = /* GraphQL */ `
           __typename
         }
         ownerId
-        location {
-          latitude
-          longitude
-          __typename
-        }
         createdAt
         updatedAt
         __typename
@@ -148,8 +151,14 @@ export const plansByOwnerId = /* GraphQL */ `
         placeId
         name
         destination
+        location {
+          latitude
+          longitude
+          __typename
+        }
         startDate
         endDate
+        base64img
         owner {
           id
           email
@@ -160,11 +169,6 @@ export const plansByOwnerId = /* GraphQL */ `
           __typename
         }
         ownerId
-        location {
-          latitude
-          longitude
-          __typename
-        }
         createdAt
         updatedAt
         __typename
