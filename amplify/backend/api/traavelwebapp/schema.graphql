@@ -15,6 +15,7 @@ type Plan @model @auth(rules: [{ allow: public }]) {
   id: ID!
   placeId: String!
   name: String
+  destination: String
   startDate: AWSDate
   endDate: AWSDate
   owner: User @belongsTo(fields: ["ownerId"])

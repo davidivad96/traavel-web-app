@@ -32,6 +32,26 @@ const getIcon = (type?: PLACE_TYPES) => {
   }
 };
 
+const mapStyles = [
+  {
+    featureType: "poi",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "transit",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "road",
+    elementType: "labels.icon",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "administrative",
+    stylers: [{ visibility: "off" }],
+  },
+];
+
 interface Props {
   plan: PlanModel;
 }
@@ -59,14 +79,19 @@ const Plan = ({ plan }: Props) => {
     if (!cachedPlaces) {
       console.log("fetching places");
       const { data } = await axios.get<PlacesByType>(
-        `/api/places?lat=${plan.location?.latitude}&lng=${plan.location?.longitude}`
+        `/api/places?lat=${plan.location?.latitude}&lng=${plan.location?.longitude}&city=${plan.destination}`
       );
       Cache.setItem(`places-${plan.id}`, data);
       setPlaces(data);
     } else {
       setPlaces(cachedPlaces);
     }
-  }, [plan.id, plan.location?.latitude, plan.location?.longitude]);
+  }, [
+    plan.destination,
+    plan.id,
+    plan.location?.latitude,
+    plan.location?.longitude,
+  ]);
 
   useEffect(() => {
     fetchAndCachePlaces();
@@ -88,18 +113,7 @@ const Plan = ({ plan }: Props) => {
             lng: plan.location?.longitude || 0,
           }}
           zoom={13}
-          options={{
-            styles: [
-              {
-                featureType: "poi",
-                stylers: [{ visibility: "off" }],
-              },
-              {
-                featureType: "transit",
-                stylers: [{ visibility: "off" }],
-              },
-            ],
-          }}
+          options={{ styles: mapStyles }}
         >
           {Object.entries(places).map(([type, places]) => {
             return places.map((place) => {

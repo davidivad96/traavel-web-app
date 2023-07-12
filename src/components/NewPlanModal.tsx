@@ -39,6 +39,7 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
           input: {
             name: `Trip to ${destination}`,
             placeId,
+            destination,
             location: { latitude: location[0], longitude: location[1] },
             startDate: toISODateString(startDate!),
             endDate: toISODateString(endDate!),

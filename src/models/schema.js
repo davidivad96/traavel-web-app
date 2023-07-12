@@ -113,6 +113,13 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "destination": {
+                    "name": "destination",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "startDate": {
                     "name": "startDate",
                     "isArray": false,
@@ -233,5 +240,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "724f3fc3e3b832668fabcd0586e282d5"
+    "version": "442e2e8f4b3a4da378652faa3612f221"
 };

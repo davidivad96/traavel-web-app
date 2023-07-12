@@ -17,6 +17,7 @@ export const createUser = /* GraphQL */ `
           id
           placeId
           name
+          destination
           startDate
           endDate
           ownerId
@@ -48,6 +49,7 @@ export const updateUser = /* GraphQL */ `
           id
           placeId
           name
+          destination
           startDate
           endDate
           ownerId
@@ -79,6 +81,7 @@ export const deleteUser = /* GraphQL */ `
           id
           placeId
           name
+          destination
           startDate
           endDate
           ownerId
@@ -104,6 +107,7 @@ export const createPlan = /* GraphQL */ `
       id
       placeId
       name
+      destination
       startDate
       endDate
       owner {
@@ -140,6 +144,7 @@ export const updatePlan = /* GraphQL */ `
       id
       placeId
       name
+      destination
       startDate
       endDate
       owner {
@@ -176,6 +181,7 @@ export const deletePlan = /* GraphQL */ `
       id
       placeId
       name
+      destination
       startDate
       endDate
       owner {
