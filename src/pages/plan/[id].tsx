@@ -7,7 +7,7 @@ import { Flex } from "@aws-amplify/ui-react";
 import { Plan as PlanModel } from "@/models";
 import { Navbar } from "@/components/Navbar";
 import { getPlanData } from "@/utils/api";
-import { PLACE_TYPES, PlacesByType } from "@/types";
+import { PLACE_TYPES, PlacesByType, PlacesSearchResponse } from "@/types";
 
 const getIcon = (type?: PLACE_TYPES) => {
   switch (type) {
@@ -71,27 +71,43 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   }
 };
 
-const Plan = ({ plan }: Props) => {
+const Plan = ({ plan: { id, name, destination, location } }: Props) => {
   const [places, setPlaces] = useState<PlacesByType>({} as PlacesByType);
 
   const fetchAndCachePlaces = useCallback(async () => {
-    const cachedPlaces: PlacesByType = Cache.getItem(`places-${plan.id}`);
+    const cachedPlaces: PlacesByType = Cache.getItem(`places-${id}`);
     if (!cachedPlaces) {
       console.log("fetching places");
-      const { data } = await axios.get<PlacesByType>(
-        `/api/places?lat=${plan.location?.latitude}&lng=${plan.location?.longitude}&city=${plan.destination}`
+      const newPlaces: PlacesByType = Object.values(PLACE_TYPES).reduce(
+        (acc, type) => ({ ...acc, [type]: [] }),
+        {} as PlacesByType
       );
-      Cache.setItem(`places-${plan.id}`, data);
-      setPlaces(data);
+      for (const type of Object.values(PLACE_TYPES)) {
+        const query = `${type}s in ${destination}`;
+        const { data } = await axios.get<PlacesSearchResponse["results"]>(
+          `/api/places`,
+          {
+            params: {
+              query,
+              lat: location?.latitude,
+              lng: location?.longitude,
+            },
+          }
+        );
+        data.forEach((result) => {
+          if (
+            !newPlaces[type].find((place) => place.place_id === result.place_id)
+          ) {
+            newPlaces[type].push(result);
+          }
+        });
+        setPlaces(newPlaces);
+      }
+      Cache.setItem(`places-${id}`, newPlaces);
     } else {
       setPlaces(cachedPlaces);
     }
-  }, [
-    plan.destination,
-    plan.id,
-    plan.location?.latitude,
-    plan.location?.longitude,
-  ]);
+  }, [id, destination, location?.latitude, location?.longitude]);
 
   useEffect(() => {
     fetchAndCachePlaces();
@@ -100,7 +116,7 @@ const Plan = ({ plan }: Props) => {
   return (
     <Flex direction="row" alignItems="flex-start">
       <Flex flex={5}>
-        <Navbar title={plan.name || ""} showGoBack />
+        <Navbar title={name || ""} showGoBack />
       </Flex>
       <Flex flex={4} height="100vh" width="100%">
         <GoogleMap
@@ -109,8 +125,8 @@ const Plan = ({ plan }: Props) => {
             height: "100%",
           }}
           center={{
-            lat: plan.location?.latitude || 0,
-            lng: plan.location?.longitude || 0,
+            lat: location?.latitude || 0,
+            lng: location?.longitude || 0,
           }}
           zoom={13}
           options={{ styles: mapStyles }}

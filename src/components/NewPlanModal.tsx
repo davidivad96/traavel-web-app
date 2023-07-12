@@ -49,7 +49,6 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
       });
       router.push(`/plan/${response.data?.createPlan?.id}`);
     } catch (error) {
-      console.log(error);
       toast.error("There was an error!", { theme: "colored" });
     }
   };
