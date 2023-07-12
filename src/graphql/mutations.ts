@@ -20,7 +20,7 @@ export const createUser = /* GraphQL */ `
           destination
           startDate
           endDate
-          base64img
+          imgUrl
           ownerId
           createdAt
           updatedAt
@@ -53,7 +53,7 @@ export const updateUser = /* GraphQL */ `
           destination
           startDate
           endDate
-          base64img
+          imgUrl
           ownerId
           createdAt
           updatedAt
@@ -86,7 +86,7 @@ export const deleteUser = /* GraphQL */ `
           destination
           startDate
           endDate
-          base64img
+          imgUrl
           ownerId
           createdAt
           updatedAt
@@ -118,7 +118,7 @@ export const createPlan = /* GraphQL */ `
       }
       startDate
       endDate
-      base64img
+      imgUrl
       owner {
         id
         email
@@ -156,7 +156,7 @@ export const updatePlan = /* GraphQL */ `
       }
       startDate
       endDate
-      base64img
+      imgUrl
       owner {
         id
         email
@@ -194,7 +194,7 @@ export const deletePlan = /* GraphQL */ `
       }
       startDate
       endDate
-      base64img
+      imgUrl
       owner {
         id
         email

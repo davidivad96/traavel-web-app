@@ -6,7 +6,7 @@ const client = new Client();
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { photoReference } = req.query;
   try {
-    const { statusText, data, headers } = await client.placePhoto({
+    const { statusText, data } = await client.placePhoto({
       params: {
         photoreference: photoReference as string,
         maxheight: 400,

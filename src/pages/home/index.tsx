@@ -97,8 +97,8 @@ const Home = ({ user, userPlans }: Props) => {
               <Heading level={5}>{plan.name}</Heading>
               <Image
                 src={
-                  plan.base64img
-                    ? `data:image/jpeg;base64,${plan.base64img}`
+                  plan.imgUrl
+                    ? `data:image/jpeg;base64,${plan.imgUrl}`
                     : "/images/placeholder.png"
                 }
                 width={200}

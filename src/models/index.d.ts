@@ -64,7 +64,7 @@ type EagerPlan = {
   readonly location?: Location | null;
   readonly startDate?: string | null;
   readonly endDate?: string | null;
-  readonly base64img?: string | null;
+  readonly imgUrl?: string | null;
   readonly owner?: User | null;
   readonly ownerId: string;
   readonly createdAt?: string | null;
@@ -83,7 +83,7 @@ type LazyPlan = {
   readonly location?: Location | null;
   readonly startDate?: string | null;
   readonly endDate?: string | null;
-  readonly base64img?: string | null;
+  readonly imgUrl?: string | null;
   readonly owner: AsyncItem<User | undefined>;
   readonly ownerId: string;
   readonly createdAt?: string | null;

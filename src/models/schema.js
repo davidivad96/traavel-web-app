@@ -143,8 +143,8 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "base64img": {
-                    "name": "base64img",
+                "imgUrl": {
+                    "name": "imgUrl",
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
@@ -247,5 +247,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "22cd1a620e0afb5f16ec7576fc3a1cd0"
+    "version": "e620e418f6994616c4a5072ebf30e7c1"
 };

@@ -17,7 +17,7 @@ export const getUser = /* GraphQL */ `
           destination
           startDate
           endDate
-          base64img
+          imgUrl
           ownerId
           createdAt
           updatedAt
@@ -71,7 +71,7 @@ export const getPlan = /* GraphQL */ `
       }
       startDate
       endDate
-      base64img
+      imgUrl
       owner {
         id
         email
@@ -111,7 +111,7 @@ export const listPlans = /* GraphQL */ `
         }
         startDate
         endDate
-        base64img
+        imgUrl
         owner {
           id
           email
@@ -158,7 +158,7 @@ export const plansByOwnerId = /* GraphQL */ `
         }
         startDate
         endDate
-        base64img
+        imgUrl
         owner {
           id
           email
