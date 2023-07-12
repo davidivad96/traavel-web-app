@@ -9,6 +9,7 @@ import { GraphQLQuery } from "@aws-amplify/api";
 import { Flex, Button, View } from "@aws-amplify/ui-react";
 import { ToastContainer, toast } from "react-toastify";
 import DatePicker from "react-datepicker";
+import { Oval } from "react-loader-spinner";
 import { CreatePlanMutation } from "@/API";
 import { createPlan } from "@/graphql/mutations";
 import { User } from "@/models";
@@ -30,8 +31,10 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
   const [location, setLocation] = useState<[number, number]>([0, 0]);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleCreatePlan = async () => {
+    setIsLoading(true);
     try {
       const response = await API.graphql<GraphQLQuery<CreatePlanMutation>>({
         query: createPlan,
@@ -75,56 +78,73 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
       title="Create your plan!"
       onClose={handleOnCloseModal}
     >
-      <>
-        <View padding="30px 0">
-          <GooglePlacesAutocomplete
-            selectProps={{
-              onChange: handleOnChangePlace,
-              placeholder: "Search destination",
-              styles: {
-                input: (provided) => ({
-                  ...provided,
-                  backgroundColor: "transparent",
-                  height: "36px",
-                }),
-                control: (provided) => ({
-                  ...provided,
-                  border: "1px solid #fff",
-                  borderRadius: "4px",
-                  boxShadow: "0 0 10px 2px rgba(0, 0, 0, 0.1)",
-                }),
-                placeholder: (provided) => ({
-                  ...provided,
-                  color: "#828282",
-                }),
-              },
-            }}
-          />
-          <DatePicker
-            selected={startDate}
-            onChange={(dates) => {
-              const [start, end] = dates;
-              setStartDate(start);
-              setEndDate(end);
-            }}
-            startDate={startDate}
-            endDate={endDate}
-            selectsRange
-            className="date-picker-input"
-            placeholderText="Select dates"
-          />
-        </View>
-        <Flex justifyContent="flex-end">
-          <Button
-            variation="primary"
-            onClick={handleCreatePlan}
-            disabled={!placeId || !startDate || !endDate}
-          >
-            Create my plan
-          </Button>
-        </Flex>
-        <ToastContainer />
-      </>
+      {isLoading ? (
+        <Oval
+          height={80}
+          width={80}
+          color="#367b92"
+          secondaryColor="#367b92"
+          wrapperStyle={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "30px",
+          }}
+          visible
+          strokeWidth={2}
+          strokeWidthSecondary={2}
+        />
+      ) : (
+        <>
+          <View padding="30px 0">
+            <GooglePlacesAutocomplete
+              selectProps={{
+                onChange: handleOnChangePlace,
+                placeholder: "Search destination",
+                styles: {
+                  input: (provided) => ({
+                    ...provided,
+                    backgroundColor: "transparent",
+                    height: "36px",
+                  }),
+                  control: (provided) => ({
+                    ...provided,
+                    border: "1px solid #fff",
+                    borderRadius: "4px",
+                    boxShadow: "0 0 10px 2px rgba(0, 0, 0, 0.1)",
+                  }),
+                  placeholder: (provided) => ({
+                    ...provided,
+                    color: "#828282",
+                  }),
+                },
+              }}
+            />
+            <DatePicker
+              selected={startDate}
+              onChange={(dates) => {
+                const [start, end] = dates;
+                setStartDate(start);
+                setEndDate(end);
+              }}
+              startDate={startDate}
+              endDate={endDate}
+              selectsRange
+              className="date-picker-input"
+              placeholderText="Select dates"
+            />
+          </View>
+          <Flex justifyContent="flex-end">
+            <Button
+              variation="primary"
+              onClick={handleCreatePlan}
+              disabled={!placeId || !startDate || !endDate}
+            >
+              Create my plan
+            </Button>
+          </Flex>
+          <ToastContainer />
+        </>
+      )}
     </Modal>
   );
 };
