@@ -58,7 +58,7 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
             location: { latitude: location[0], longitude: location[1] },
             startDate: toISODateString(startDate!),
             endDate: toISODateString(endDate!),
-            imgUrl: base64img,
+            // imgUrl: base64img,
             ownerId: user.id,
           },
         },

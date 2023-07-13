@@ -11,6 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     } = await client.placeDetails({
       params: {
         place_id: placeId as string,
+        fields: ["name", "geometry", "photos"],
         key: process.env.GOOGLE_API_KEY!,
       },
     });

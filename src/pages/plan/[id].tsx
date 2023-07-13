@@ -72,44 +72,37 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   }
 };
 
-const Plan = ({ plan: { id, name, destination, location } }: Props) => {
+const Plan = ({ plan: { name, destination, location } }: Props) => {
   const [places, setPlaces] = useState<PlacesByType>({} as PlacesByType);
 
-  const fetchAndCachePlaces = useCallback(async () => {
-    const cachedPlaces: PlacesByType = Cache.getItem(`places-${id}`);
-    if (!cachedPlaces) {
-      console.log("fetching places");
-      const newPlaces: PlacesByType = Object.values(PLACE_TYPES).reduce(
-        (acc, type) => ({ ...acc, [type]: [] }),
-        {} as PlacesByType
-      );
-      for (const type of Object.values(PLACE_TYPES)) {
-        const query = `${type}s in ${destination}`;
-        const { data } = await axios.get<Place[]>(`/api/places`, {
-          params: {
-            query,
-            lat: location?.latitude,
-            lng: location?.longitude,
-          },
-        });
-        data.forEach((result) => {
-          if (
-            !newPlaces[type].find((place) => place.place_id === result.place_id)
-          ) {
-            newPlaces[type].push(result);
-          }
-        });
-        setPlaces(newPlaces);
-      }
-      Cache.setItem(`places-${id}`, newPlaces);
-    } else {
-      setPlaces(cachedPlaces);
+  const fetchPlaces = useCallback(async () => {
+    const newPlaces: PlacesByType = Object.values(PLACE_TYPES).reduce(
+      (acc, type) => ({ ...acc, [type]: [] }),
+      {} as PlacesByType
+    );
+    for (const type of Object.values(PLACE_TYPES)) {
+      const query = `${type}s in ${destination}`;
+      const { data } = await axios.get<Place[]>(`/api/places`, {
+        params: {
+          query,
+          lat: location?.latitude,
+          lng: location?.longitude,
+        },
+      });
+      data.forEach((result) => {
+        if (
+          !newPlaces[type].find((place) => place.place_id === result.place_id)
+        ) {
+          newPlaces[type].push(result);
+        }
+      });
+      setPlaces(newPlaces);
     }
-  }, [id, destination, location?.latitude, location?.longitude]);
+  }, [destination, location?.latitude, location?.longitude]);
 
   useEffect(() => {
-    fetchAndCachePlaces();
-  }, [fetchAndCachePlaces]);
+    fetchPlaces();
+  }, [fetchPlaces]);
 
   return (
     <Flex direction="row" alignItems="flex-start">

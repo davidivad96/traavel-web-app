@@ -99,7 +99,7 @@ const Home = ({ user, userPlans }: Props) => {
                 src={
                   plan.imgUrl
                     ? `data:image/jpeg;base64,${plan.imgUrl}`
-                    : "/images/placeholder.png"
+                    : "/images/default_plan_image.png"
                 }
                 width={200}
                 height={200}
