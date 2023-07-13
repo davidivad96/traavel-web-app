@@ -123,7 +123,7 @@ const Plan = ({ plan: { name, destination, location } }: Props) => {
         >
           {Object.entries(places).map(([type, places]) => {
             return places.map((place) => {
-              if (!place?.geometry?.location) return null;
+              if (!place?.geometry?.location) return <div>testing</div>;
               return (
                 <MarkerF
                   key={place.place_id}
