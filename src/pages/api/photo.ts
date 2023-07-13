@@ -20,7 +20,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
     res.status(200).json(data.toString("base64"));
   } catch (error) {
-    console.log("error: ", error);
     res.status(500).json({ error });
   }
 };

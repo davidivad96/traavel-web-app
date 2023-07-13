@@ -10,11 +10,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const cacheKey = `${query}-${lat}-${lng}-${radius}`;
   const cache = await redis.get(cacheKey);
   if (cache) {
-    console.log("cache hit");
     return res.status(200).json(cache);
   }
   try {
-    console.log("cache miss: fetching places");
     const {
       data: { status, results, error_message },
     } = await client.textSearch({

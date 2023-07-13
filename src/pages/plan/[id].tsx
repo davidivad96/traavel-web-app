@@ -67,7 +67,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     const plan = await getPlanData(SSR, planId);
     return { props: { plan } };
   } catch (error) {
-    console.log(error);
     return { redirect: { permanent: false, destination: "/" } };
   }
 };
