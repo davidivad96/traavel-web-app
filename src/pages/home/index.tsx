@@ -50,7 +50,6 @@ const Home = ({ user, userPlans }: Props) => {
         query: deletePlan,
         variables: { input: { id: planId } },
       });
-      Cache.removeItem(`places-${planId}`);
     } catch (error) {
       toast.error("There was an error!", { theme: "colored" });
     }
