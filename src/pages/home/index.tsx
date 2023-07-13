@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-import { API, withSSRContext, Cache } from "aws-amplify";
+import { API, withSSRContext } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import {
   Button,

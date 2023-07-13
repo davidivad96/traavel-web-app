@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import axios from "axios";
 import { GoogleMap, MarkerF } from "@react-google-maps/api";
 import { Place } from "@googlemaps/google-maps-services-js";
-import { withSSRContext, Cache } from "aws-amplify";
+import { withSSRContext } from "aws-amplify";
 import { Flex } from "@aws-amplify/ui-react";
 import { Plan as PlanModel } from "@/models";
 import { Navbar } from "@/components/Navbar";
@@ -123,7 +123,7 @@ const Plan = ({ plan: { name, destination, location } }: Props) => {
         >
           {Object.entries(places).map(([type, places]) => {
             return places.map((place) => {
-              if (!place?.geometry?.location) return <div>testing</div>;
+              if (!place?.geometry?.location) return null;
               return (
                 <MarkerF
                   key={place.place_id}
