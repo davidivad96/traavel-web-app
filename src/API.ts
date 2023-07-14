@@ -64,19 +64,19 @@ export type User = {
   email: string,
   name?: string | null,
   avatarUrl?: string | null,
-  plans?: ModelPlanConnection | null,
+  trips?: ModelTripConnection | null,
   createdAt: string,
   updatedAt: string,
 };
 
-export type ModelPlanConnection = {
-  __typename: "ModelPlanConnection",
-  items:  Array<Plan | null >,
+export type ModelTripConnection = {
+  __typename: "ModelTripConnection",
+  items:  Array<Trip | null >,
   nextToken?: string | null,
 };
 
-export type Plan = {
-  __typename: "Plan",
+export type Trip = {
+  __typename: "Trip",
   id: string,
   name?: string | null,
   destination?: string | null,
@@ -100,7 +100,7 @@ export type DeleteUserInput = {
   id: string,
 };
 
-export type CreatePlanInput = {
+export type CreateTripInput = {
   id?: string | null,
   name?: string | null,
   destination?: string | null,
@@ -110,16 +110,16 @@ export type CreatePlanInput = {
   ownerId: string,
 };
 
-export type ModelPlanConditionInput = {
+export type ModelTripConditionInput = {
   name?: ModelStringInput | null,
   destination?: ModelStringInput | null,
   startDate?: ModelStringInput | null,
   endDate?: ModelStringInput | null,
   imgUrl?: ModelStringInput | null,
   ownerId?: ModelIDInput | null,
-  and?: Array< ModelPlanConditionInput | null > | null,
-  or?: Array< ModelPlanConditionInput | null > | null,
-  not?: ModelPlanConditionInput | null,
+  and?: Array< ModelTripConditionInput | null > | null,
+  or?: Array< ModelTripConditionInput | null > | null,
+  not?: ModelTripConditionInput | null,
 };
 
 export type ModelIDInput = {
@@ -138,7 +138,7 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
-export type UpdatePlanInput = {
+export type UpdateTripInput = {
   id: string,
   name?: string | null,
   destination?: string | null,
@@ -148,7 +148,7 @@ export type UpdatePlanInput = {
   ownerId?: string | null,
 };
 
-export type DeletePlanInput = {
+export type DeleteTripInput = {
   id: string,
 };
 
@@ -168,7 +168,7 @@ export type ModelUserConnection = {
   nextToken?: string | null,
 };
 
-export type ModelPlanFilterInput = {
+export type ModelTripFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
   destination?: ModelStringInput | null,
@@ -176,9 +176,9 @@ export type ModelPlanFilterInput = {
   endDate?: ModelStringInput | null,
   imgUrl?: ModelStringInput | null,
   ownerId?: ModelIDInput | null,
-  and?: Array< ModelPlanFilterInput | null > | null,
-  or?: Array< ModelPlanFilterInput | null > | null,
-  not?: ModelPlanFilterInput | null,
+  and?: Array< ModelTripFilterInput | null > | null,
+  or?: Array< ModelTripFilterInput | null > | null,
+  not?: ModelTripFilterInput | null,
 };
 
 export enum ModelSortDirection {
@@ -226,7 +226,7 @@ export type ModelSubscriptionStringInput = {
   notIn?: Array< string | null > | null,
 };
 
-export type ModelSubscriptionPlanFilterInput = {
+export type ModelSubscriptionTripFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
   destination?: ModelSubscriptionStringInput | null,
@@ -234,8 +234,8 @@ export type ModelSubscriptionPlanFilterInput = {
   endDate?: ModelSubscriptionStringInput | null,
   imgUrl?: ModelSubscriptionStringInput | null,
   ownerId?: ModelSubscriptionIDInput | null,
-  and?: Array< ModelSubscriptionPlanFilterInput | null > | null,
-  or?: Array< ModelSubscriptionPlanFilterInput | null > | null,
+  and?: Array< ModelSubscriptionTripFilterInput | null > | null,
+  or?: Array< ModelSubscriptionTripFilterInput | null > | null,
 };
 
 export type CreateUserMutationVariables = {
@@ -250,10 +250,10 @@ export type CreateUserMutation = {
     email: string,
     name?: string | null,
     avatarUrl?: string | null,
-    plans?:  {
-      __typename: "ModelPlanConnection",
+    trips?:  {
+      __typename: "ModelTripConnection",
       items:  Array< {
-        __typename: "Plan",
+        __typename: "Trip",
         id: string,
         name?: string | null,
         destination?: string | null,
@@ -283,10 +283,10 @@ export type UpdateUserMutation = {
     email: string,
     name?: string | null,
     avatarUrl?: string | null,
-    plans?:  {
-      __typename: "ModelPlanConnection",
+    trips?:  {
+      __typename: "ModelTripConnection",
       items:  Array< {
-        __typename: "Plan",
+        __typename: "Trip",
         id: string,
         name?: string | null,
         destination?: string | null,
@@ -316,10 +316,10 @@ export type DeleteUserMutation = {
     email: string,
     name?: string | null,
     avatarUrl?: string | null,
-    plans?:  {
-      __typename: "ModelPlanConnection",
+    trips?:  {
+      __typename: "ModelTripConnection",
       items:  Array< {
-        __typename: "Plan",
+        __typename: "Trip",
         id: string,
         name?: string | null,
         destination?: string | null,
@@ -337,14 +337,14 @@ export type DeleteUserMutation = {
   } | null,
 };
 
-export type CreatePlanMutationVariables = {
-  input: CreatePlanInput,
-  condition?: ModelPlanConditionInput | null,
+export type CreateTripMutationVariables = {
+  input: CreateTripInput,
+  condition?: ModelTripConditionInput | null,
 };
 
-export type CreatePlanMutation = {
-  createPlan?:  {
-    __typename: "Plan",
+export type CreateTripMutation = {
+  createTrip?:  {
+    __typename: "Trip",
     id: string,
     name?: string | null,
     destination?: string | null,
@@ -357,8 +357,8 @@ export type CreatePlanMutation = {
       email: string,
       name?: string | null,
       avatarUrl?: string | null,
-      plans?:  {
-        __typename: "ModelPlanConnection",
+      trips?:  {
+        __typename: "ModelTripConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -370,14 +370,14 @@ export type CreatePlanMutation = {
   } | null,
 };
 
-export type UpdatePlanMutationVariables = {
-  input: UpdatePlanInput,
-  condition?: ModelPlanConditionInput | null,
+export type UpdateTripMutationVariables = {
+  input: UpdateTripInput,
+  condition?: ModelTripConditionInput | null,
 };
 
-export type UpdatePlanMutation = {
-  updatePlan?:  {
-    __typename: "Plan",
+export type UpdateTripMutation = {
+  updateTrip?:  {
+    __typename: "Trip",
     id: string,
     name?: string | null,
     destination?: string | null,
@@ -390,8 +390,8 @@ export type UpdatePlanMutation = {
       email: string,
       name?: string | null,
       avatarUrl?: string | null,
-      plans?:  {
-        __typename: "ModelPlanConnection",
+      trips?:  {
+        __typename: "ModelTripConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -403,14 +403,14 @@ export type UpdatePlanMutation = {
   } | null,
 };
 
-export type DeletePlanMutationVariables = {
-  input: DeletePlanInput,
-  condition?: ModelPlanConditionInput | null,
+export type DeleteTripMutationVariables = {
+  input: DeleteTripInput,
+  condition?: ModelTripConditionInput | null,
 };
 
-export type DeletePlanMutation = {
-  deletePlan?:  {
-    __typename: "Plan",
+export type DeleteTripMutation = {
+  deleteTrip?:  {
+    __typename: "Trip",
     id: string,
     name?: string | null,
     destination?: string | null,
@@ -423,8 +423,8 @@ export type DeletePlanMutation = {
       email: string,
       name?: string | null,
       avatarUrl?: string | null,
-      plans?:  {
-        __typename: "ModelPlanConnection",
+      trips?:  {
+        __typename: "ModelTripConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -447,10 +447,10 @@ export type GetUserQuery = {
     email: string,
     name?: string | null,
     avatarUrl?: string | null,
-    plans?:  {
-      __typename: "ModelPlanConnection",
+    trips?:  {
+      __typename: "ModelTripConnection",
       items:  Array< {
-        __typename: "Plan",
+        __typename: "Trip",
         id: string,
         name?: string | null,
         destination?: string | null,
@@ -483,8 +483,8 @@ export type ListUsersQuery = {
       email: string,
       name?: string | null,
       avatarUrl?: string | null,
-      plans?:  {
-        __typename: "ModelPlanConnection",
+      trips?:  {
+        __typename: "ModelTripConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -494,13 +494,13 @@ export type ListUsersQuery = {
   } | null,
 };
 
-export type GetPlanQueryVariables = {
+export type GetTripQueryVariables = {
   id: string,
 };
 
-export type GetPlanQuery = {
-  getPlan?:  {
-    __typename: "Plan",
+export type GetTripQuery = {
+  getTrip?:  {
+    __typename: "Trip",
     id: string,
     name?: string | null,
     destination?: string | null,
@@ -513,8 +513,8 @@ export type GetPlanQuery = {
       email: string,
       name?: string | null,
       avatarUrl?: string | null,
-      plans?:  {
-        __typename: "ModelPlanConnection",
+      trips?:  {
+        __typename: "ModelTripConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -526,17 +526,17 @@ export type GetPlanQuery = {
   } | null,
 };
 
-export type ListPlansQueryVariables = {
-  filter?: ModelPlanFilterInput | null,
+export type ListTripsQueryVariables = {
+  filter?: ModelTripFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListPlansQuery = {
-  listPlans?:  {
-    __typename: "ModelPlanConnection",
+export type ListTripsQuery = {
+  listTrips?:  {
+    __typename: "ModelTripConnection",
     items:  Array< {
-      __typename: "Plan",
+      __typename: "Trip",
       id: string,
       name?: string | null,
       destination?: string | null,
@@ -560,19 +560,19 @@ export type ListPlansQuery = {
   } | null,
 };
 
-export type PlansByOwnerIdQueryVariables = {
+export type TripsByOwnerIdQueryVariables = {
   ownerId: string,
   sortDirection?: ModelSortDirection | null,
-  filter?: ModelPlanFilterInput | null,
+  filter?: ModelTripFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type PlansByOwnerIdQuery = {
-  plansByOwnerId?:  {
-    __typename: "ModelPlanConnection",
+export type TripsByOwnerIdQuery = {
+  tripsByOwnerId?:  {
+    __typename: "ModelTripConnection",
     items:  Array< {
-      __typename: "Plan",
+      __typename: "Trip",
       id: string,
       name?: string | null,
       destination?: string | null,
@@ -607,10 +607,10 @@ export type OnCreateUserSubscription = {
     email: string,
     name?: string | null,
     avatarUrl?: string | null,
-    plans?:  {
-      __typename: "ModelPlanConnection",
+    trips?:  {
+      __typename: "ModelTripConnection",
       items:  Array< {
-        __typename: "Plan",
+        __typename: "Trip",
         id: string,
         name?: string | null,
         destination?: string | null,
@@ -639,10 +639,10 @@ export type OnUpdateUserSubscription = {
     email: string,
     name?: string | null,
     avatarUrl?: string | null,
-    plans?:  {
-      __typename: "ModelPlanConnection",
+    trips?:  {
+      __typename: "ModelTripConnection",
       items:  Array< {
-        __typename: "Plan",
+        __typename: "Trip",
         id: string,
         name?: string | null,
         destination?: string | null,
@@ -671,10 +671,10 @@ export type OnDeleteUserSubscription = {
     email: string,
     name?: string | null,
     avatarUrl?: string | null,
-    plans?:  {
-      __typename: "ModelPlanConnection",
+    trips?:  {
+      __typename: "ModelTripConnection",
       items:  Array< {
-        __typename: "Plan",
+        __typename: "Trip",
         id: string,
         name?: string | null,
         destination?: string | null,
@@ -692,13 +692,13 @@ export type OnDeleteUserSubscription = {
   } | null,
 };
 
-export type OnCreatePlanSubscriptionVariables = {
-  filter?: ModelSubscriptionPlanFilterInput | null,
+export type OnCreateTripSubscriptionVariables = {
+  filter?: ModelSubscriptionTripFilterInput | null,
 };
 
-export type OnCreatePlanSubscription = {
-  onCreatePlan?:  {
-    __typename: "Plan",
+export type OnCreateTripSubscription = {
+  onCreateTrip?:  {
+    __typename: "Trip",
     id: string,
     name?: string | null,
     destination?: string | null,
@@ -711,8 +711,8 @@ export type OnCreatePlanSubscription = {
       email: string,
       name?: string | null,
       avatarUrl?: string | null,
-      plans?:  {
-        __typename: "ModelPlanConnection",
+      trips?:  {
+        __typename: "ModelTripConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -724,13 +724,13 @@ export type OnCreatePlanSubscription = {
   } | null,
 };
 
-export type OnUpdatePlanSubscriptionVariables = {
-  filter?: ModelSubscriptionPlanFilterInput | null,
+export type OnUpdateTripSubscriptionVariables = {
+  filter?: ModelSubscriptionTripFilterInput | null,
 };
 
-export type OnUpdatePlanSubscription = {
-  onUpdatePlan?:  {
-    __typename: "Plan",
+export type OnUpdateTripSubscription = {
+  onUpdateTrip?:  {
+    __typename: "Trip",
     id: string,
     name?: string | null,
     destination?: string | null,
@@ -743,8 +743,8 @@ export type OnUpdatePlanSubscription = {
       email: string,
       name?: string | null,
       avatarUrl?: string | null,
-      plans?:  {
-        __typename: "ModelPlanConnection",
+      trips?:  {
+        __typename: "ModelTripConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,
@@ -756,13 +756,13 @@ export type OnUpdatePlanSubscription = {
   } | null,
 };
 
-export type OnDeletePlanSubscriptionVariables = {
-  filter?: ModelSubscriptionPlanFilterInput | null,
+export type OnDeleteTripSubscriptionVariables = {
+  filter?: ModelSubscriptionTripFilterInput | null,
 };
 
-export type OnDeletePlanSubscription = {
-  onDeletePlan?:  {
-    __typename: "Plan",
+export type OnDeleteTripSubscription = {
+  onDeleteTrip?:  {
+    __typename: "Trip",
     id: string,
     name?: string | null,
     destination?: string | null,
@@ -775,8 +775,8 @@ export type OnDeletePlanSubscription = {
       email: string,
       name?: string | null,
       avatarUrl?: string | null,
-      plans?:  {
-        __typename: "ModelPlanConnection",
+      trips?:  {
+        __typename: "ModelTripConnection",
         nextToken?: string | null,
       } | null,
       createdAt: string,

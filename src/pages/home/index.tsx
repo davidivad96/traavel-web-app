@@ -7,16 +7,16 @@ import { GraphQLQuery } from "@aws-amplify/api";
 import { Button, Card, Collection, Heading } from "@aws-amplify/ui-react";
 import { ToastContainer, toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
-import { DeletePlanMutation } from "@/API";
-import { deletePlan } from "@/graphql/mutations";
-import { Plan, User } from "@/models";
+import { DeleteTripMutation } from "@/API";
+import { deleteTrip } from "@/graphql/mutations";
+import { Trip, User } from "@/models";
 import { Navbar } from "@/components/Navbar";
-import { NewPlanModal } from "@/components/NewPlanModal";
+import { NewTripModal } from "@/components/NewTripModal";
 import { getUserData } from "@/utils/api";
 
 interface Props {
   user: User;
-  userPlans: Plan[];
+  userTrips: Trip[];
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({
@@ -25,25 +25,25 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   const SSR = withSSRContext({ req });
   try {
     const user = await getUserData(SSR);
-    const userPlans = user.plans.items;
-    return { props: { user, userPlans } };
+    const userTrips = user.trips.items;
+    return { props: { user, userTrips } };
   } catch (error) {
     return { redirect: { permanent: false, destination: "/" } };
   }
 };
 
-const Home = ({ user, userPlans }: Props) => {
+const Home = ({ user, userTrips }: Props) => {
   const router = useRouter();
-  const [plans, setPlans] = useState<Plan[]>(userPlans);
+  const [trips, setTrips] = useState<Trip[]>(userTrips);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const handleDeletePlan = async (planId: string) => {
+  const handleDeleteTrip = async (tripId: string) => {
     try {
-      setPlans((plans) => plans.filter((plan) => plan.id !== planId));
-      toast.success("Plan deleted successfully", { theme: "colored" });
-      await API.graphql<GraphQLQuery<DeletePlanMutation>>({
-        query: deletePlan,
-        variables: { input: { id: planId } },
+      setTrips((trips) => trips.filter((trip) => trip.id !== tripId));
+      toast.success("Trip deleted successfully", { theme: "colored" });
+      await API.graphql<GraphQLQuery<DeleteTripMutation>>({
+        query: deleteTrip,
+        variables: { input: { id: tripId } },
       });
     } catch (error) {
       toast.error("There was an error!", { theme: "colored" });
@@ -63,11 +63,11 @@ const Home = ({ user, userPlans }: Props) => {
         onClick={() => setIsOpen(true)}
         margin="20px 0"
       >
-        <AiOutlinePlus size={22} style={{ marginRight: "5px" }} /> New plan
+        <AiOutlinePlus size={22} style={{ marginRight: "5px" }} /> New trip
       </Button>
-      <NewPlanModal isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
+      <NewTripModal isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
       <Collection
-        items={plans}
+        items={trips}
         type="grid"
         templateColumns={{
           base: "1fr 1fr",
@@ -76,12 +76,12 @@ const Home = ({ user, userPlans }: Props) => {
         }}
         gap="20px"
       >
-        {(plan) => (
+        {(trip) => (
           <Card
-            key={plan.id}
+            key={trip.id}
             borderRadius="medium"
             variation="outlined"
-            onClick={() => router.push(`/plan/${plan.id}`)}
+            onClick={() => router.push(`/trip/${trip.id}`)}
             display="flex"
             style={{
               cursor: "pointer",
@@ -91,15 +91,15 @@ const Home = ({ user, userPlans }: Props) => {
             }}
           >
             <>
-              <Heading level={5}>{plan.name}</Heading>
+              <Heading level={5}>{trip.name}</Heading>
               <Image
-                src={plan.imgUrl || "/images/default_plan_image.png"}
+                src={trip.imgUrl || "/images/default_trip_image.png"}
                 width={200}
                 height={200}
-                alt="Plan image"
+                alt="Trip image"
                 style={{ objectFit: "cover" }}
                 placeholder="blur"
-                blurDataURL="/images/default_plan_image.png"
+                blurDataURL="/images/default_trip_image.png"
               />
               <Button
                 variation="destructive"
@@ -107,10 +107,10 @@ const Home = ({ user, userPlans }: Props) => {
                 marginTop={10}
                 onClick={(e: React.MouseEvent<HTMLElement>) => {
                   e.stopPropagation();
-                  handleDeletePlan(plan.id);
+                  handleDeleteTrip(trip.id);
                 }}
               >
-                Delete plan
+                Delete trip
               </Button>
             </>
           </Card>

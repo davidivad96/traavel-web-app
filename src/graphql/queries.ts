@@ -9,7 +9,7 @@ export const getUser = /* GraphQL */ `
       email
       name
       avatarUrl
-      plans {
+      trips {
         items {
           id
           name
@@ -43,7 +43,7 @@ export const listUsers = /* GraphQL */ `
         email
         name
         avatarUrl
-        plans {
+        trips {
           nextToken
           __typename
         }
@@ -56,9 +56,9 @@ export const listUsers = /* GraphQL */ `
     }
   }
 `;
-export const getPlan = /* GraphQL */ `
-  query GetPlan($id: ID!) {
-    getPlan(id: $id) {
+export const getTrip = /* GraphQL */ `
+  query GetTrip($id: ID!) {
+    getTrip(id: $id) {
       id
       name
       destination
@@ -70,7 +70,7 @@ export const getPlan = /* GraphQL */ `
         email
         name
         avatarUrl
-        plans {
+        trips {
           nextToken
           __typename
         }
@@ -85,13 +85,13 @@ export const getPlan = /* GraphQL */ `
     }
   }
 `;
-export const listPlans = /* GraphQL */ `
-  query ListPlans(
-    $filter: ModelPlanFilterInput
+export const listTrips = /* GraphQL */ `
+  query ListTrips(
+    $filter: ModelTripFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPlans(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listTrips(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
@@ -118,15 +118,15 @@ export const listPlans = /* GraphQL */ `
     }
   }
 `;
-export const plansByOwnerId = /* GraphQL */ `
-  query PlansByOwnerId(
+export const tripsByOwnerId = /* GraphQL */ `
+  query TripsByOwnerId(
     $ownerId: ID!
     $sortDirection: ModelSortDirection
-    $filter: ModelPlanFilterInput
+    $filter: ModelTripFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    plansByOwnerId(
+    tripsByOwnerId(
       ownerId: $ownerId
       sortDirection: $sortDirection
       filter: $filter

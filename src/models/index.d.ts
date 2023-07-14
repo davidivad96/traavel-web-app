@@ -4,19 +4,7 @@ import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@a
 
 
 
-type EagerLocation = {
-  readonly latitude?: number | null;
-  readonly longitude?: number | null;
-}
 
-type LazyLocation = {
-  readonly latitude?: number | null;
-  readonly longitude?: number | null;
-}
-
-export declare type Location = LazyLoading extends LazyLoadingDisabled ? EagerLocation : LazyLocation
-
-export declare const Location: (new (init: ModelInit<Location>) => Location)
 
 type EagerUser = {
   readonly [__modelMeta__]: {
@@ -27,7 +15,7 @@ type EagerUser = {
   readonly email: string;
   readonly name?: string | null;
   readonly avatarUrl?: string | null;
-  readonly plans?: (Plan | null)[] | null;
+  readonly trips?: (Trip | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -41,7 +29,7 @@ type LazyUser = {
   readonly email: string;
   readonly name?: string | null;
   readonly avatarUrl?: string | null;
-  readonly plans: AsyncCollection<Plan>;
+  readonly trips: AsyncCollection<Trip>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -52,9 +40,9 @@ export declare const User: (new (init: ModelInit<User>) => User) & {
   copyOf(source: User, mutator: (draft: MutableModel<User>) => MutableModel<User> | void): User;
 }
 
-type EagerPlan = {
+type EagerTrip = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Plan, 'id'>;
+    identifier: ManagedIdentifier<Trip, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -69,9 +57,9 @@ type EagerPlan = {
   readonly updatedAt?: string | null;
 }
 
-type LazyPlan = {
+type LazyTrip = {
   readonly [__modelMeta__]: {
-    identifier: ManagedIdentifier<Plan, 'id'>;
+    identifier: ManagedIdentifier<Trip, 'id'>;
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
@@ -86,8 +74,8 @@ type LazyPlan = {
   readonly updatedAt?: string | null;
 }
 
-export declare type Plan = LazyLoading extends LazyLoadingDisabled ? EagerPlan : LazyPlan
+export declare type Trip = LazyLoading extends LazyLoadingDisabled ? EagerTrip : LazyTrip
 
-export declare const Plan: (new (init: ModelInit<Plan>) => Plan) & {
-  copyOf(source: Plan, mutator: (draft: MutableModel<Plan>) => MutableModel<Plan> | void): Plan;
+export declare const Trip: (new (init: ModelInit<Trip>) => Trip) & {
+  copyOf(source: Trip, mutator: (draft: MutableModel<Trip>) => MutableModel<Trip> | void): Trip;
 }

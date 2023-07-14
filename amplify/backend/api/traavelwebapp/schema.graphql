@@ -1,17 +1,12 @@
-type Location {
-  latitude: Float
-  longitude: Float
-}
-
 type User @model @auth(rules: [{ allow: public }]) {
   id: ID!
   email: AWSEmail!
   name: String
   avatarUrl: AWSURL
-  plans: [Plan] @hasMany(indexName: "byUser", fields: ["id"])
+  trips: [Trip] @hasMany(indexName: "byUser", fields: ["id"])
 }
 
-type Plan @model @auth(rules: [{ allow: public }]) {
+type Trip @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String
   destination: String

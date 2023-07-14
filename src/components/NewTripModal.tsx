@@ -8,8 +8,8 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import DatePicker from "react-datepicker";
 import { Oval } from "react-loader-spinner";
-import { CreatePlanMutation } from "@/API";
-import { createPlan } from "@/graphql/mutations";
+import { CreateTripMutation } from "@/API";
+import { createTrip } from "@/graphql/mutations";
 import { User } from "@/models";
 import { toISODateString } from "@/utils/functions";
 import { Modal } from "./Modal";
@@ -22,21 +22,21 @@ interface Props {
   user: User;
 }
 
-export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
+export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
   const router = useRouter();
   const [destination, setDestination] = useState<string>("");
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleCreatePlan = async () => {
+  const handleCreateTrip = async () => {
     setIsLoading(true);
     try {
       const { data: imgUrl } = await axios.get("/api/photo", {
         params: { query: destination },
       });
-      const response = await API.graphql<GraphQLQuery<CreatePlanMutation>>({
-        query: createPlan,
+      const response = await API.graphql<GraphQLQuery<CreateTripMutation>>({
+        query: createTrip,
         variables: {
           input: {
             name: `Trip to ${destination}`,
@@ -48,7 +48,7 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
           },
         },
       });
-      router.push(`/plan/${response.data?.createPlan?.id}`);
+      router.push(`/trip/${response.data?.createTrip?.id}`);
     } catch (error) {
       toast.error("There was an error!", { theme: "colored" });
     }
@@ -67,7 +67,7 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
   return (
     <Modal
       isOpen={isOpen}
-      title="Create your plan!"
+      title="Where are you going?"
       onClose={handleOnCloseModal}
     >
       {isLoading ? (
@@ -129,10 +129,10 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
           <Flex justifyContent="flex-end">
             <Button
               variation="primary"
-              onClick={handleCreatePlan}
+              onClick={handleCreateTrip}
               disabled={!destination || !startDate || !endDate}
             >
-              Create my plan
+              Start planning my trip
             </Button>
           </Flex>
           <ToastContainer />

@@ -31,11 +31,11 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "plans": {
-                    "name": "plans",
+                "trips": {
+                    "name": "trips",
                     "isArray": true,
                     "type": {
-                        "model": "Plan"
+                        "model": "Trip"
                     },
                     "isRequired": false,
                     "attributes": [],
@@ -89,8 +89,8 @@ export const schema = {
                 }
             ]
         },
-        "Plan": {
-            "name": "Plan",
+        "Trip": {
+            "name": "Trip",
             "fields": {
                 "id": {
                     "name": "id",
@@ -174,7 +174,7 @@ export const schema = {
                 }
             },
             "syncable": true,
-            "pluralName": "Plans",
+            "pluralName": "Trips",
             "attributes": [
                 {
                     "type": "model",
@@ -209,27 +209,7 @@ export const schema = {
         }
     },
     "enums": {},
-    "nonModels": {
-        "Location": {
-            "name": "Location",
-            "fields": {
-                "latitude": {
-                    "name": "latitude",
-                    "isArray": false,
-                    "type": "Float",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "longitude": {
-                    "name": "longitude",
-                    "isArray": false,
-                    "type": "Float",
-                    "isRequired": false,
-                    "attributes": []
-                }
-            }
-        }
-    },
+    "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "f41266a25dcaa69bc4567857e828444e"
+    "version": "2a9827112bea24a73c475009032fccb3"
 };

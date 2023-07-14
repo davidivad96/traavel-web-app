@@ -12,7 +12,7 @@ export const createUser = /* GraphQL */ `
       email
       name
       avatarUrl
-      plans {
+      trips {
         items {
           id
           name
@@ -44,7 +44,7 @@ export const updateUser = /* GraphQL */ `
       email
       name
       avatarUrl
-      plans {
+      trips {
         items {
           id
           name
@@ -76,7 +76,7 @@ export const deleteUser = /* GraphQL */ `
       email
       name
       avatarUrl
-      plans {
+      trips {
         items {
           id
           name
@@ -98,12 +98,12 @@ export const deleteUser = /* GraphQL */ `
     }
   }
 `;
-export const createPlan = /* GraphQL */ `
-  mutation CreatePlan(
-    $input: CreatePlanInput!
-    $condition: ModelPlanConditionInput
+export const createTrip = /* GraphQL */ `
+  mutation CreateTrip(
+    $input: CreateTripInput!
+    $condition: ModelTripConditionInput
   ) {
-    createPlan(input: $input, condition: $condition) {
+    createTrip(input: $input, condition: $condition) {
       id
       name
       destination
@@ -115,7 +115,7 @@ export const createPlan = /* GraphQL */ `
         email
         name
         avatarUrl
-        plans {
+        trips {
           nextToken
           __typename
         }
@@ -130,12 +130,12 @@ export const createPlan = /* GraphQL */ `
     }
   }
 `;
-export const updatePlan = /* GraphQL */ `
-  mutation UpdatePlan(
-    $input: UpdatePlanInput!
-    $condition: ModelPlanConditionInput
+export const updateTrip = /* GraphQL */ `
+  mutation UpdateTrip(
+    $input: UpdateTripInput!
+    $condition: ModelTripConditionInput
   ) {
-    updatePlan(input: $input, condition: $condition) {
+    updateTrip(input: $input, condition: $condition) {
       id
       name
       destination
@@ -147,7 +147,7 @@ export const updatePlan = /* GraphQL */ `
         email
         name
         avatarUrl
-        plans {
+        trips {
           nextToken
           __typename
         }
@@ -162,12 +162,12 @@ export const updatePlan = /* GraphQL */ `
     }
   }
 `;
-export const deletePlan = /* GraphQL */ `
-  mutation DeletePlan(
-    $input: DeletePlanInput!
-    $condition: ModelPlanConditionInput
+export const deleteTrip = /* GraphQL */ `
+  mutation DeleteTrip(
+    $input: DeleteTripInput!
+    $condition: ModelTripConditionInput
   ) {
-    deletePlan(input: $input, condition: $condition) {
+    deleteTrip(input: $input, condition: $condition) {
       id
       name
       destination
@@ -179,7 +179,7 @@ export const deletePlan = /* GraphQL */ `
         email
         name
         avatarUrl
-        plans {
+        trips {
           nextToken
           __typename
         }

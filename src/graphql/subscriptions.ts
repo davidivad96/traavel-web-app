@@ -9,7 +9,7 @@ export const onCreateUser = /* GraphQL */ `
       email
       name
       avatarUrl
-      plans {
+      trips {
         items {
           id
           name
@@ -38,7 +38,7 @@ export const onUpdateUser = /* GraphQL */ `
       email
       name
       avatarUrl
-      plans {
+      trips {
         items {
           id
           name
@@ -67,7 +67,7 @@ export const onDeleteUser = /* GraphQL */ `
       email
       name
       avatarUrl
-      plans {
+      trips {
         items {
           id
           name
@@ -89,9 +89,9 @@ export const onDeleteUser = /* GraphQL */ `
     }
   }
 `;
-export const onCreatePlan = /* GraphQL */ `
-  subscription OnCreatePlan($filter: ModelSubscriptionPlanFilterInput) {
-    onCreatePlan(filter: $filter) {
+export const onCreateTrip = /* GraphQL */ `
+  subscription OnCreateTrip($filter: ModelSubscriptionTripFilterInput) {
+    onCreateTrip(filter: $filter) {
       id
       name
       destination
@@ -103,7 +103,7 @@ export const onCreatePlan = /* GraphQL */ `
         email
         name
         avatarUrl
-        plans {
+        trips {
           nextToken
           __typename
         }
@@ -118,9 +118,9 @@ export const onCreatePlan = /* GraphQL */ `
     }
   }
 `;
-export const onUpdatePlan = /* GraphQL */ `
-  subscription OnUpdatePlan($filter: ModelSubscriptionPlanFilterInput) {
-    onUpdatePlan(filter: $filter) {
+export const onUpdateTrip = /* GraphQL */ `
+  subscription OnUpdateTrip($filter: ModelSubscriptionTripFilterInput) {
+    onUpdateTrip(filter: $filter) {
       id
       name
       destination
@@ -132,7 +132,7 @@ export const onUpdatePlan = /* GraphQL */ `
         email
         name
         avatarUrl
-        plans {
+        trips {
           nextToken
           __typename
         }
@@ -147,9 +147,9 @@ export const onUpdatePlan = /* GraphQL */ `
     }
   }
 `;
-export const onDeletePlan = /* GraphQL */ `
-  subscription OnDeletePlan($filter: ModelSubscriptionPlanFilterInput) {
-    onDeletePlan(filter: $filter) {
+export const onDeleteTrip = /* GraphQL */ `
+  subscription OnDeleteTrip($filter: ModelSubscriptionTripFilterInput) {
+    onDeleteTrip(filter: $filter) {
       id
       name
       destination
@@ -161,7 +161,7 @@ export const onDeletePlan = /* GraphQL */ `
         email
         name
         avatarUrl
-        plans {
+        trips {
           nextToken
           __typename
         }
