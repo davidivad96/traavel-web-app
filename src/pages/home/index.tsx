@@ -1,15 +1,10 @@
 import { useState } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
+import Image from "next/image";
 import { API, withSSRContext } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
-import {
-  Button,
-  Card,
-  Collection,
-  Heading,
-  Image,
-} from "@aws-amplify/ui-react";
+import { Button, Card, Collection, Heading } from "@aws-amplify/ui-react";
 import { ToastContainer, toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
 import { DeletePlanMutation } from "@/API";
@@ -73,10 +68,13 @@ const Home = ({ user, userPlans }: Props) => {
       <NewPlanModal isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
       <Collection
         items={plans}
-        type="list"
-        direction="row"
+        type="grid"
+        templateColumns={{
+          base: "1fr 1fr",
+          small: "1fr 1fr 1fr",
+          medium: "1fr 1fr 1fr 1fr",
+        }}
         gap="20px"
-        wrap="nowrap"
       >
         {(plan) => (
           <Card
@@ -95,14 +93,13 @@ const Home = ({ user, userPlans }: Props) => {
             <>
               <Heading level={5}>{plan.name}</Heading>
               <Image
-                src={
-                  plan.imgUrl
-                    ? `data:image/jpeg;base64,${plan.imgUrl}`
-                    : "/images/default_plan_image.png"
-                }
+                src={plan.imgUrl || "/images/default_plan_image.png"}
                 width={200}
                 height={200}
                 alt="Plan image"
+                style={{ objectFit: "cover" }}
+                placeholder="blur"
+                blurDataURL="/images/default_plan_image.png"
               />
               <Button
                 variation="destructive"

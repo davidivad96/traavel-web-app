@@ -78,10 +78,8 @@ export type ModelPlanConnection = {
 export type Plan = {
   __typename: "Plan",
   id: string,
-  placeId: string,
   name?: string | null,
   destination?: string | null,
-  location?: Location | null,
   startDate?: string | null,
   endDate?: string | null,
   imgUrl?: string | null,
@@ -89,12 +87,6 @@ export type Plan = {
   ownerId: string,
   createdAt: string,
   updatedAt: string,
-};
-
-export type Location = {
-  __typename: "Location",
-  latitude?: number | null,
-  longitude?: number | null,
 };
 
 export type UpdateUserInput = {
@@ -110,23 +102,15 @@ export type DeleteUserInput = {
 
 export type CreatePlanInput = {
   id?: string | null,
-  placeId: string,
   name?: string | null,
   destination?: string | null,
-  location?: LocationInput | null,
   startDate?: string | null,
   endDate?: string | null,
   imgUrl?: string | null,
   ownerId: string,
 };
 
-export type LocationInput = {
-  latitude?: number | null,
-  longitude?: number | null,
-};
-
 export type ModelPlanConditionInput = {
-  placeId?: ModelStringInput | null,
   name?: ModelStringInput | null,
   destination?: ModelStringInput | null,
   startDate?: ModelStringInput | null,
@@ -156,10 +140,8 @@ export type ModelIDInput = {
 
 export type UpdatePlanInput = {
   id: string,
-  placeId?: string | null,
   name?: string | null,
   destination?: string | null,
-  location?: LocationInput | null,
   startDate?: string | null,
   endDate?: string | null,
   imgUrl?: string | null,
@@ -188,7 +170,6 @@ export type ModelUserConnection = {
 
 export type ModelPlanFilterInput = {
   id?: ModelIDInput | null,
-  placeId?: ModelStringInput | null,
   name?: ModelStringInput | null,
   destination?: ModelStringInput | null,
   startDate?: ModelStringInput | null,
@@ -247,7 +228,6 @@ export type ModelSubscriptionStringInput = {
 
 export type ModelSubscriptionPlanFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  placeId?: ModelSubscriptionStringInput | null,
   name?: ModelSubscriptionStringInput | null,
   destination?: ModelSubscriptionStringInput | null,
   startDate?: ModelSubscriptionStringInput | null,
@@ -275,7 +255,6 @@ export type CreateUserMutation = {
       items:  Array< {
         __typename: "Plan",
         id: string,
-        placeId: string,
         name?: string | null,
         destination?: string | null,
         startDate?: string | null,
@@ -309,7 +288,6 @@ export type UpdateUserMutation = {
       items:  Array< {
         __typename: "Plan",
         id: string,
-        placeId: string,
         name?: string | null,
         destination?: string | null,
         startDate?: string | null,
@@ -343,7 +321,6 @@ export type DeleteUserMutation = {
       items:  Array< {
         __typename: "Plan",
         id: string,
-        placeId: string,
         name?: string | null,
         destination?: string | null,
         startDate?: string | null,
@@ -369,14 +346,8 @@ export type CreatePlanMutation = {
   createPlan?:  {
     __typename: "Plan",
     id: string,
-    placeId: string,
     name?: string | null,
     destination?: string | null,
-    location?:  {
-      __typename: "Location",
-      latitude?: number | null,
-      longitude?: number | null,
-    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,
@@ -408,14 +379,8 @@ export type UpdatePlanMutation = {
   updatePlan?:  {
     __typename: "Plan",
     id: string,
-    placeId: string,
     name?: string | null,
     destination?: string | null,
-    location?:  {
-      __typename: "Location",
-      latitude?: number | null,
-      longitude?: number | null,
-    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,
@@ -447,14 +412,8 @@ export type DeletePlanMutation = {
   deletePlan?:  {
     __typename: "Plan",
     id: string,
-    placeId: string,
     name?: string | null,
     destination?: string | null,
-    location?:  {
-      __typename: "Location",
-      latitude?: number | null,
-      longitude?: number | null,
-    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,
@@ -493,7 +452,6 @@ export type GetUserQuery = {
       items:  Array< {
         __typename: "Plan",
         id: string,
-        placeId: string,
         name?: string | null,
         destination?: string | null,
         startDate?: string | null,
@@ -544,14 +502,8 @@ export type GetPlanQuery = {
   getPlan?:  {
     __typename: "Plan",
     id: string,
-    placeId: string,
     name?: string | null,
     destination?: string | null,
-    location?:  {
-      __typename: "Location",
-      latitude?: number | null,
-      longitude?: number | null,
-    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,
@@ -586,14 +538,8 @@ export type ListPlansQuery = {
     items:  Array< {
       __typename: "Plan",
       id: string,
-      placeId: string,
       name?: string | null,
       destination?: string | null,
-      location?:  {
-        __typename: "Location",
-        latitude?: number | null,
-        longitude?: number | null,
-      } | null,
       startDate?: string | null,
       endDate?: string | null,
       imgUrl?: string | null,
@@ -628,14 +574,8 @@ export type PlansByOwnerIdQuery = {
     items:  Array< {
       __typename: "Plan",
       id: string,
-      placeId: string,
       name?: string | null,
       destination?: string | null,
-      location?:  {
-        __typename: "Location",
-        latitude?: number | null,
-        longitude?: number | null,
-      } | null,
       startDate?: string | null,
       endDate?: string | null,
       imgUrl?: string | null,
@@ -672,7 +612,6 @@ export type OnCreateUserSubscription = {
       items:  Array< {
         __typename: "Plan",
         id: string,
-        placeId: string,
         name?: string | null,
         destination?: string | null,
         startDate?: string | null,
@@ -705,7 +644,6 @@ export type OnUpdateUserSubscription = {
       items:  Array< {
         __typename: "Plan",
         id: string,
-        placeId: string,
         name?: string | null,
         destination?: string | null,
         startDate?: string | null,
@@ -738,7 +676,6 @@ export type OnDeleteUserSubscription = {
       items:  Array< {
         __typename: "Plan",
         id: string,
-        placeId: string,
         name?: string | null,
         destination?: string | null,
         startDate?: string | null,
@@ -763,14 +700,8 @@ export type OnCreatePlanSubscription = {
   onCreatePlan?:  {
     __typename: "Plan",
     id: string,
-    placeId: string,
     name?: string | null,
     destination?: string | null,
-    location?:  {
-      __typename: "Location",
-      latitude?: number | null,
-      longitude?: number | null,
-    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,
@@ -801,14 +732,8 @@ export type OnUpdatePlanSubscription = {
   onUpdatePlan?:  {
     __typename: "Plan",
     id: string,
-    placeId: string,
     name?: string | null,
     destination?: string | null,
-    location?:  {
-      __typename: "Location",
-      latitude?: number | null,
-      longitude?: number | null,
-    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,
@@ -839,14 +764,8 @@ export type OnDeletePlanSubscription = {
   onDeletePlan?:  {
     __typename: "Plan",
     id: string,
-    placeId: string,
     name?: string | null,
     destination?: string | null,
-    location?:  {
-      __typename: "Location",
-      latitude?: number | null,
-      longitude?: number | null,
-    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,

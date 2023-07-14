@@ -15,7 +15,6 @@ export const createUser = /* GraphQL */ `
       plans {
         items {
           id
-          placeId
           name
           destination
           startDate
@@ -48,7 +47,6 @@ export const updateUser = /* GraphQL */ `
       plans {
         items {
           id
-          placeId
           name
           destination
           startDate
@@ -81,7 +79,6 @@ export const deleteUser = /* GraphQL */ `
       plans {
         items {
           id
-          placeId
           name
           destination
           startDate
@@ -108,14 +105,8 @@ export const createPlan = /* GraphQL */ `
   ) {
     createPlan(input: $input, condition: $condition) {
       id
-      placeId
       name
       destination
-      location {
-        latitude
-        longitude
-        __typename
-      }
       startDate
       endDate
       imgUrl
@@ -146,14 +137,8 @@ export const updatePlan = /* GraphQL */ `
   ) {
     updatePlan(input: $input, condition: $condition) {
       id
-      placeId
       name
       destination
-      location {
-        latitude
-        longitude
-        __typename
-      }
       startDate
       endDate
       imgUrl
@@ -184,14 +169,8 @@ export const deletePlan = /* GraphQL */ `
   ) {
     deletePlan(input: $input, condition: $condition) {
       id
-      placeId
       name
       destination
-      location {
-        latitude
-        longitude
-        __typename
-      }
       startDate
       endDate
       imgUrl

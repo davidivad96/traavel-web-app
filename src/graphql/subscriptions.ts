@@ -12,7 +12,6 @@ export const onCreateUser = /* GraphQL */ `
       plans {
         items {
           id
-          placeId
           name
           destination
           startDate
@@ -42,7 +41,6 @@ export const onUpdateUser = /* GraphQL */ `
       plans {
         items {
           id
-          placeId
           name
           destination
           startDate
@@ -72,7 +70,6 @@ export const onDeleteUser = /* GraphQL */ `
       plans {
         items {
           id
-          placeId
           name
           destination
           startDate
@@ -96,14 +93,8 @@ export const onCreatePlan = /* GraphQL */ `
   subscription OnCreatePlan($filter: ModelSubscriptionPlanFilterInput) {
     onCreatePlan(filter: $filter) {
       id
-      placeId
       name
       destination
-      location {
-        latitude
-        longitude
-        __typename
-      }
       startDate
       endDate
       imgUrl
@@ -131,14 +122,8 @@ export const onUpdatePlan = /* GraphQL */ `
   subscription OnUpdatePlan($filter: ModelSubscriptionPlanFilterInput) {
     onUpdatePlan(filter: $filter) {
       id
-      placeId
       name
       destination
-      location {
-        latitude
-        longitude
-        __typename
-      }
       startDate
       endDate
       imgUrl
@@ -166,14 +151,8 @@ export const onDeletePlan = /* GraphQL */ `
   subscription OnDeletePlan($filter: ModelSubscriptionPlanFilterInput) {
     onDeletePlan(filter: $filter) {
       id
-      placeId
       name
       destination
-      location {
-        latitude
-        longitude
-        __typename
-      }
       startDate
       endDate
       imgUrl

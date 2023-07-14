@@ -1,14 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import GooglePlacesAutocomplete, {
-  geocodeByPlaceId,
-  getLatLng,
-} from "react-google-places-autocomplete";
-import { Place } from "@googlemaps/google-maps-services-js";
-import axios from "axios";
+import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { API } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import { Flex, Button, View } from "@aws-amplify/ui-react";
+import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import DatePicker from "react-datepicker";
 import { Oval } from "react-loader-spinner";
@@ -28,9 +24,7 @@ interface Props {
 
 export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
   const router = useRouter();
-  const [placeId, setPlaceId] = useState<string>("");
   const [destination, setDestination] = useState<string>("");
-  const [location, setLocation] = useState<[number, number]>([0, 0]);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -38,27 +32,18 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
   const handleCreatePlan = async () => {
     setIsLoading(true);
     try {
-      const {
-        data: { photos },
-      } = await axios.get<Place>("/api/place-details", {
-        params: { placeId },
-      });
-      const { data: base64img } = await axios.get<string>("/api/photo", {
-        params: {
-          photoReference: photos?.at(0)?.photo_reference,
-        },
+      const { data: imgUrl } = await axios.get("/api/photo", {
+        params: { query: destination },
       });
       const response = await API.graphql<GraphQLQuery<CreatePlanMutation>>({
         query: createPlan,
         variables: {
           input: {
             name: `Trip to ${destination}`,
-            placeId,
             destination,
-            location: { latitude: location[0], longitude: location[1] },
             startDate: toISODateString(startDate!),
             endDate: toISODateString(endDate!),
-            // imgUrl: base64img,
+            imgUrl,
             ownerId: user.id,
           },
         },
@@ -70,18 +55,12 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
   };
 
   const handleOnCloseModal = () => {
-    setPlaceId("");
     setStartDate(null);
     setEndDate(null);
     setIsOpen(false);
   };
 
   const handleOnChangePlace = async (e: any) => {
-    const { place_id } = e?.value;
-    const [geocode] = await geocodeByPlaceId(place_id);
-    const { lat, lng } = await getLatLng(geocode);
-    setLocation([lat, lng]);
-    setPlaceId(place_id || "");
     setDestination(e?.label || "");
   };
 
@@ -93,8 +72,8 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
     >
       {isLoading ? (
         <Oval
-          height={80}
-          width={80}
+          height={60}
+          width={60}
           color="#367b92"
           secondaryColor="#367b92"
           wrapperStyle={{
@@ -110,6 +89,7 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
         <>
           <View padding="30px 0">
             <GooglePlacesAutocomplete
+              apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}
               selectProps={{
                 onChange: handleOnChangePlace,
                 placeholder: "Search destination",
@@ -150,7 +130,7 @@ export const NewPlanModal = ({ isOpen, setIsOpen, user }: Props) => {
             <Button
               variation="primary"
               onClick={handleCreatePlan}
-              disabled={!placeId || !startDate || !endDate}
+              disabled={!destination || !startDate || !endDate}
             >
               Create my plan
             </Button>

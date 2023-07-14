@@ -99,13 +99,6 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "placeId": {
-                    "name": "placeId",
-                    "isArray": false,
-                    "type": "String",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "name": {
                     "name": "name",
                     "isArray": false,
@@ -117,15 +110,6 @@ export const schema = {
                     "name": "destination",
                     "isArray": false,
                     "type": "String",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "location": {
-                    "name": "location",
-                    "isArray": false,
-                    "type": {
-                        "nonModel": "Location"
-                    },
                     "isRequired": false,
                     "attributes": []
                 },
@@ -247,5 +231,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "e620e418f6994616c4a5072ebf30e7c1"
+    "version": "f41266a25dcaa69bc4567857e828444e"
 };

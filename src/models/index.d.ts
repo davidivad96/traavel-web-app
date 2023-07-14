@@ -58,10 +58,8 @@ type EagerPlan = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly placeId: string;
   readonly name?: string | null;
   readonly destination?: string | null;
-  readonly location?: Location | null;
   readonly startDate?: string | null;
   readonly endDate?: string | null;
   readonly imgUrl?: string | null;
@@ -77,10 +75,8 @@ type LazyPlan = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly placeId: string;
   readonly name?: string | null;
   readonly destination?: string | null;
-  readonly location?: Location | null;
   readonly startDate?: string | null;
   readonly endDate?: string | null;
   readonly imgUrl?: string | null;

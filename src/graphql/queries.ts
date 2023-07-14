@@ -12,7 +12,6 @@ export const getUser = /* GraphQL */ `
       plans {
         items {
           id
-          placeId
           name
           destination
           startDate
@@ -61,14 +60,8 @@ export const getPlan = /* GraphQL */ `
   query GetPlan($id: ID!) {
     getPlan(id: $id) {
       id
-      placeId
       name
       destination
-      location {
-        latitude
-        longitude
-        __typename
-      }
       startDate
       endDate
       imgUrl
@@ -101,14 +94,8 @@ export const listPlans = /* GraphQL */ `
     listPlans(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        placeId
         name
         destination
-        location {
-          latitude
-          longitude
-          __typename
-        }
         startDate
         endDate
         imgUrl
@@ -148,14 +135,8 @@ export const plansByOwnerId = /* GraphQL */ `
     ) {
       items {
         id
-        placeId
         name
         destination
-        location {
-          latitude
-          longitude
-          __typename
-        }
         startDate
         endDate
         imgUrl
