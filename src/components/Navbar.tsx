@@ -34,13 +34,15 @@ export const Navbar = ({
   };
 
   return (
-    <View height={90}>
+    <View height={70}>
       <Flex
         direction="row"
-        justifyContent="space-around"
+        justifyContent={
+          showAvatar ? "space-evenly" : showGoBack ? "flex-start" : "center"
+        }
         alignItems="center"
         backgroundColor="#FFF"
-        padding={15}
+        padding="9px 15px"
         gap={30}
       >
         <Flex direction="row">
@@ -54,8 +56,8 @@ export const Navbar = ({
             <Image
               src={avatarUrl || "/images/default_avatar_image.png"}
               alt="Profile image"
-              width={60}
-              height={60}
+              width={50}
+              height={50}
             />
           )}
         </Flex>

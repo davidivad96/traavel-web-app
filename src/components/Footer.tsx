@@ -4,7 +4,7 @@ export const Footer = () => (
   <Flex
     position="absolute"
     width="100%"
-    height={90}
+    height={70}
     justifyContent="center"
     alignItems="center"
     backgroundColor="#F4F4FB"

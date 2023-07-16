@@ -62,7 +62,7 @@ const Home = ({ user, userTrips }: Props) => {
   return (
     <>
       <NewTripModal isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
-      <ScrollView height="calc(100vh - 180px)" padding="40px 60px">
+      <ScrollView height="calc(100vh - 140px)" padding="40px 60px">
         <Flex
           justifyContent="space-between"
           alignItems="center"
