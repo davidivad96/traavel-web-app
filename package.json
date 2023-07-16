@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^4.6.4",
+    "@react-google-maps/api": "^2.18.1",
     "aws-amplify": "^5.3.3",
     "axios": "^1.4.0",
     "next": "13.4.8",

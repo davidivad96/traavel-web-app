@@ -1,3 +1,16 @@
+html,
+body,
+#__next,
+#__next > main {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 .react-datepicker-wrapper {
   width: 100%;
   margin-top: 20px;

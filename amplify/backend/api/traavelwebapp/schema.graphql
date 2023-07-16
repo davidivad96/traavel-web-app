@@ -1,3 +1,8 @@
+type Location {
+  latitude: Float
+  longitude: Float
+}
+
 type User @model @auth(rules: [{ allow: public }]) {
   id: ID!
   email: AWSEmail!
@@ -10,6 +15,7 @@ type Trip @model @auth(rules: [{ allow: public }]) {
   id: ID!
   name: String
   destination: String
+  location: Location
   startDate: AWSDate
   endDate: AWSDate
   imgUrl: String

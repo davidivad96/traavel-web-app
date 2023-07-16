@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import GooglePlacesAutocomplete, {
+  geocodeByPlaceId,
+  getLatLng,
+} from "react-google-places-autocomplete";
 import { API } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import { Flex, Button, View } from "@aws-amplify/ui-react";
@@ -25,6 +28,7 @@ interface Props {
 export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
   const router = useRouter();
   const [destination, setDestination] = useState<string>("");
+  const [location, setLocation] = useState<[number, number]>([0, 0]);
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -41,6 +45,7 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
           input: {
             name: `Trip to ${destination}`,
             destination,
+            location: { latitude: location[0], longitude: location[1] },
             startDate: toISODateString(startDate!),
             endDate: toISODateString(endDate!),
             imgUrl,
@@ -61,6 +66,10 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
   };
 
   const handleOnChangePlace = async (e: any) => {
+    const { place_id } = e?.value;
+    const [geocode] = await geocodeByPlaceId(place_id);
+    const { lat, lng } = await getLatLng(geocode);
+    setLocation([lat, lng]);
     setDestination(e?.label || "");
   };
 
@@ -89,7 +98,6 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
         <>
           <View padding="30px 0">
             <GooglePlacesAutocomplete
-              apiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}
               selectProps={{
                 onChange: handleOnChangePlace,
                 placeholder: "Search destination",

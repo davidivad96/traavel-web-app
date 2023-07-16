@@ -80,6 +80,7 @@ export type Trip = {
   id: string,
   name?: string | null,
   destination?: string | null,
+  location?: Location | null,
   startDate?: string | null,
   endDate?: string | null,
   imgUrl?: string | null,
@@ -87,6 +88,12 @@ export type Trip = {
   ownerId: string,
   createdAt: string,
   updatedAt: string,
+};
+
+export type Location = {
+  __typename: "Location",
+  latitude?: number | null,
+  longitude?: number | null,
 };
 
 export type UpdateUserInput = {
@@ -104,10 +111,16 @@ export type CreateTripInput = {
   id?: string | null,
   name?: string | null,
   destination?: string | null,
+  location?: LocationInput | null,
   startDate?: string | null,
   endDate?: string | null,
   imgUrl?: string | null,
   ownerId: string,
+};
+
+export type LocationInput = {
+  latitude?: number | null,
+  longitude?: number | null,
 };
 
 export type ModelTripConditionInput = {
@@ -142,6 +155,7 @@ export type UpdateTripInput = {
   id: string,
   name?: string | null,
   destination?: string | null,
+  location?: LocationInput | null,
   startDate?: string | null,
   endDate?: string | null,
   imgUrl?: string | null,
@@ -348,6 +362,11 @@ export type CreateTripMutation = {
     id: string,
     name?: string | null,
     destination?: string | null,
+    location?:  {
+      __typename: "Location",
+      latitude?: number | null,
+      longitude?: number | null,
+    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,
@@ -381,6 +400,11 @@ export type UpdateTripMutation = {
     id: string,
     name?: string | null,
     destination?: string | null,
+    location?:  {
+      __typename: "Location",
+      latitude?: number | null,
+      longitude?: number | null,
+    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,
@@ -414,6 +438,11 @@ export type DeleteTripMutation = {
     id: string,
     name?: string | null,
     destination?: string | null,
+    location?:  {
+      __typename: "Location",
+      latitude?: number | null,
+      longitude?: number | null,
+    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,
@@ -504,6 +533,11 @@ export type GetTripQuery = {
     id: string,
     name?: string | null,
     destination?: string | null,
+    location?:  {
+      __typename: "Location",
+      latitude?: number | null,
+      longitude?: number | null,
+    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,
@@ -540,6 +574,11 @@ export type ListTripsQuery = {
       id: string,
       name?: string | null,
       destination?: string | null,
+      location?:  {
+        __typename: "Location",
+        latitude?: number | null,
+        longitude?: number | null,
+      } | null,
       startDate?: string | null,
       endDate?: string | null,
       imgUrl?: string | null,
@@ -576,6 +615,11 @@ export type TripsByOwnerIdQuery = {
       id: string,
       name?: string | null,
       destination?: string | null,
+      location?:  {
+        __typename: "Location",
+        latitude?: number | null,
+        longitude?: number | null,
+      } | null,
       startDate?: string | null,
       endDate?: string | null,
       imgUrl?: string | null,
@@ -702,6 +746,11 @@ export type OnCreateTripSubscription = {
     id: string,
     name?: string | null,
     destination?: string | null,
+    location?:  {
+      __typename: "Location",
+      latitude?: number | null,
+      longitude?: number | null,
+    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,
@@ -734,6 +783,11 @@ export type OnUpdateTripSubscription = {
     id: string,
     name?: string | null,
     destination?: string | null,
+    location?:  {
+      __typename: "Location",
+      latitude?: number | null,
+      longitude?: number | null,
+    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,
@@ -766,6 +820,11 @@ export type OnDeleteTripSubscription = {
     id: string,
     name?: string | null,
     destination?: string | null,
+    location?:  {
+      __typename: "Location",
+      latitude?: number | null,
+      longitude?: number | null,
+    } | null,
     startDate?: string | null,
     endDate?: string | null,
     imgUrl?: string | null,

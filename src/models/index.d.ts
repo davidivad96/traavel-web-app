@@ -4,7 +4,19 @@ import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@a
 
 
 
+type EagerLocation = {
+  readonly latitude?: number | null;
+  readonly longitude?: number | null;
+}
 
+type LazyLocation = {
+  readonly latitude?: number | null;
+  readonly longitude?: number | null;
+}
+
+export declare type Location = LazyLoading extends LazyLoadingDisabled ? EagerLocation : LazyLocation
+
+export declare const Location: (new (init: ModelInit<Location>) => Location)
 
 type EagerUser = {
   readonly [__modelMeta__]: {
@@ -48,6 +60,7 @@ type EagerTrip = {
   readonly id: string;
   readonly name?: string | null;
   readonly destination?: string | null;
+  readonly location?: Location | null;
   readonly startDate?: string | null;
   readonly endDate?: string | null;
   readonly imgUrl?: string | null;
@@ -65,6 +78,7 @@ type LazyTrip = {
   readonly id: string;
   readonly name?: string | null;
   readonly destination?: string | null;
+  readonly location?: Location | null;
   readonly startDate?: string | null;
   readonly endDate?: string | null;
   readonly imgUrl?: string | null;

@@ -62,6 +62,11 @@ export const getTrip = /* GraphQL */ `
       id
       name
       destination
+      location {
+        latitude
+        longitude
+        __typename
+      }
       startDate
       endDate
       imgUrl
@@ -96,6 +101,11 @@ export const listTrips = /* GraphQL */ `
         id
         name
         destination
+        location {
+          latitude
+          longitude
+          __typename
+        }
         startDate
         endDate
         imgUrl
@@ -137,6 +147,11 @@ export const tripsByOwnerId = /* GraphQL */ `
         id
         name
         destination
+        location {
+          latitude
+          longitude
+          __typename
+        }
         startDate
         endDate
         imgUrl
