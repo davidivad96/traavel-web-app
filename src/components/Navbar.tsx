@@ -38,7 +38,7 @@ export const Navbar = ({
       <Flex
         direction="row"
         justifyContent={
-          showAvatar ? "space-evenly" : showGoBack ? "flex-start" : "center"
+          showAvatar ? "space-between" : showGoBack ? "flex-start" : "center"
         }
         alignItems="center"
         backgroundColor="#FFF"

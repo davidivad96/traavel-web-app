@@ -1,29 +1,39 @@
-import { View, Button, Flex, Heading } from "@aws-amplify/ui-react";
+import { View, Button, Flex, Heading, ScrollView } from "@aws-amplify/ui-react";
 import { IoClose } from "react-icons/io5";
 
 interface Props {
   title: string;
   onClose: () => void;
   isOpen?: boolean;
+  style?: React.CSSProperties;
   children?: React.ReactNode;
 }
 
-export const Modal = ({ title, onClose, isOpen = false, children }: Props) => {
+export const Modal = ({
+  title,
+  onClose,
+  isOpen = false,
+  style,
+  children,
+}: Props) => {
   if (!isOpen) {
     return null;
   }
 
   return (
-    <View
+    <ScrollView
       position="fixed"
       backgroundColor="rgba(0, 0, 0, 0.5)"
       width="100%"
       height="100%"
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
       onClick={onClose}
-      style={{ top: 0, left: 0, backdropFilter: "blur(3px)" }}
+      style={{
+        top: 0,
+        left: 0,
+        backdropFilter: "blur(3px)",
+        zIndex: 1000,
+        ...style,
+      }}
     >
       <View
         backgroundColor="white"
@@ -31,6 +41,7 @@ export const Modal = ({ title, onClose, isOpen = false, children }: Props) => {
         borderRadius="0.5rem"
         minWidth="300px"
         maxWidth="500px"
+        margin="2rem auto"
         onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}
       >
         <Flex justifyContent="space-between" alignItems="center">
@@ -41,6 +52,6 @@ export const Modal = ({ title, onClose, isOpen = false, children }: Props) => {
         </Flex>
         {children}
       </View>
-    </View>
+    </ScrollView>
   );
 };

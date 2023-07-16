@@ -27,3 +27,23 @@ body {
     color: #828282;
   }
 }
+
+#edit-image-button {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 40px;
+  height: 40px;
+  border-radius: 20px;
+  cursor: pointer;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+}
+
+#photo {
+  &:hover {
+    opacity: 0.6;
+  }
+}

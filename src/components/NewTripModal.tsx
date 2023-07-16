@@ -11,6 +11,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import DatePicker from "react-datepicker";
 import { Oval } from "react-loader-spinner";
+import { Basic } from "unsplash-js/dist/methods/photos/types";
 import { CreateTripMutation } from "@/API";
 import { createTrip } from "@/graphql/mutations";
 import { User } from "@/models";
@@ -36,7 +37,7 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
   const handleCreateTrip = async () => {
     setIsLoading(true);
     try {
-      const { data: imgUrl } = await axios.get("/api/photo", {
+      const { data } = await axios.get<Basic[]>("/api/photos", {
         params: { query: destination },
       });
       const response = await API.graphql<GraphQLQuery<CreateTripMutation>>({
@@ -48,7 +49,7 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
             location: { latitude: location[0], longitude: location[1] },
             startDate: toISODateString(startDate!),
             endDate: toISODateString(endDate!),
-            imgUrl,
+            imgUrl: data[0].urls.raw,
             ownerId: user.id,
           },
         },
@@ -78,6 +79,11 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
       isOpen={isOpen}
       title="Where are you going?"
       onClose={handleOnCloseModal}
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
     >
       {isLoading ? (
         <Oval
