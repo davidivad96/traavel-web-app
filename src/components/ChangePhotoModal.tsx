@@ -1,6 +1,6 @@
 import { useEffect, useCallback, useState } from "react";
 import Image from "next/image";
-import { API, Cache } from "aws-amplify";
+import { API } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import { Collection, View } from "@aws-amplify/ui-react";
 import axios from "axios";
@@ -28,9 +28,9 @@ export const ChangePhotoModal = ({
   const [photos, setPhotos] = useState<string[]>([]);
 
   const fetchPhotos = useCallback(async () => {
-    const cachedPhotos = await Cache.getItem(`photos-${tripId}`);
+    const cachedPhotos = localStorage.getItem(`photos-${tripId}`);
     if (cachedPhotos) {
-      setPhotos(cachedPhotos);
+      setPhotos(JSON.parse(cachedPhotos));
     } else {
       console.log("fetching");
       const { data } = await axios.get<Basic[]>("/api/photos", {
@@ -38,7 +38,7 @@ export const ChangePhotoModal = ({
       });
       const photos = data.map((photo) => photo.urls.raw);
       setPhotos(photos);
-      Cache.setItem(`photos-${tripId}`, photos);
+      localStorage.setItem(`photos-${tripId}`, JSON.stringify(photos));
     }
   }, [query, tripId]);
 
@@ -83,11 +83,10 @@ export const ChangePhotoModal = ({
                 id="photo"
                 key={`photo-${index}`}
                 src={url}
-                objectFit="cover"
                 alt={`photo-${index}`}
                 width={140}
                 height={140}
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", objectFit: "cover" }}
                 onClick={handleOnClickPhoto}
               />
             )}

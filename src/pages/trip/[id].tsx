@@ -4,12 +4,11 @@ import Image from "next/image";
 import { withSSRContext } from "aws-amplify";
 import { Flex, View } from "@aws-amplify/ui-react";
 import { GoogleMap } from "@react-google-maps/api";
-import { Sidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
-import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
-import { FaRoute, FaEdit } from "react-icons/fa";
+import { FaEdit } from "react-icons/fa";
 import dayjs from "dayjs";
 import { Trip as TripModel } from "@/models";
 import { Navbar } from "@/components/Navbar";
+import { Sidebar } from "@/components/Sidebar";
 import { ChangePhotoModal } from "@/components/ChangePhotoModal";
 import { getTripData } from "@/utils/api";
 import { generateDates } from "@/utils/functions";
@@ -35,7 +34,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 const Trip = ({ trip: initialTrip }: Props) => {
   const [{ id, destination, startDate, endDate, imgUrl, location }, setTrip] =
     useState<TripModel>(initialTrip);
-  const [collapsedSidebar, setCollapsedSidebar] = useState(false);
   const [editImageModal, setEditImageModal] = useState(false);
 
   const dates = [];
@@ -64,39 +62,7 @@ const Trip = ({ trip: initialTrip }: Props) => {
         style={{ gap: 0 }}
       >
         <Flex flex={6} style={{ overflowY: "scroll", gap: 0 }}>
-          <Sidebar collapsed={collapsedSidebar as boolean} width="200px">
-            <Flex
-              direction="column"
-              justifyContent="space-between"
-              height="100%"
-            >
-              <Menu>
-                <SubMenu label="Itinerary" icon={<FaRoute />}>
-                  {dates.map(({ date, activities }) => (
-                    <SubMenu label={date} key={date}>
-                      {activities.map(
-                        ({ name, description, startTime, endTime }) => (
-                          <MenuItem key={name}>
-                            {startTime} - {endTime} {name} - {description}
-                          </MenuItem>
-                        )
-                      )}
-                    </SubMenu>
-                  ))}
-                </SubMenu>
-              </Menu>
-              <Menu
-                onClick={() => setCollapsedSidebar(!collapsedSidebar)}
-                style={{ bottom: 0, width: "100%" }}
-              >
-                <MenuItem
-                  icon={collapsedSidebar ? <FaAnglesRight /> : <FaAnglesLeft />}
-                >
-                  Collapse
-                </MenuItem>
-              </Menu>
-            </Flex>
-          </Sidebar>
+          <Sidebar dates={dates.map(({ date }) => date)} />
           <View
             width="100%"
             height={240}
