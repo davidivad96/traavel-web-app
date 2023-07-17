@@ -12,10 +12,10 @@ import { ToastContainer, toast } from "react-toastify";
 import DatePicker from "react-datepicker";
 import { Oval } from "react-loader-spinner";
 import { Basic } from "unsplash-js/dist/methods/photos/types";
-import { CreateTripMutation } from "@/API";
-import { createTrip } from "@/graphql/mutations";
+import { CreateDayMutation, CreateTripMutation } from "@/API";
+import { createDay, createTrip } from "@/graphql/mutations";
 import { User } from "@/models";
-import { toISODateString } from "@/utils/functions";
+import { generateDates, toISODateString } from "@/utils/functions";
 import { Modal } from "./Modal";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -54,7 +54,22 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
           },
         },
       });
-      router.push(`/trip/${response.data?.createTrip?.id}`);
+      const tripId = response.data?.createTrip?.id;
+      const days = generateDates(startDate!, endDate!);
+      await Promise.all(
+        days.map(async (day) => {
+          await API.graphql<GraphQLQuery<CreateDayMutation>>({
+            query: createDay,
+            variables: {
+              input: {
+                tripId,
+                date: toISODateString(day),
+              },
+            },
+          });
+        })
+      );
+      router.push(`/trip/${tripId}`);
     } catch (error) {
       toast.error("There was an error!", { theme: "colored" });
     }

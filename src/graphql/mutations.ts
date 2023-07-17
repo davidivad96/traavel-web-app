@@ -2,6 +2,186 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createActivity = /* GraphQL */ `
+  mutation CreateActivity(
+    $input: CreateActivityInput!
+    $condition: ModelActivityConditionInput
+  ) {
+    createActivity(input: $input, condition: $condition) {
+      id
+      dayId
+      startTime
+      endTime
+      name
+      description
+      location {
+        latitude
+        longitude
+        __typename
+      }
+      type
+      createdAt
+      updatedAt
+      dayActivitiesTripId
+      dayActivitiesDate
+      __typename
+    }
+  }
+`;
+export const updateActivity = /* GraphQL */ `
+  mutation UpdateActivity(
+    $input: UpdateActivityInput!
+    $condition: ModelActivityConditionInput
+  ) {
+    updateActivity(input: $input, condition: $condition) {
+      id
+      dayId
+      startTime
+      endTime
+      name
+      description
+      location {
+        latitude
+        longitude
+        __typename
+      }
+      type
+      createdAt
+      updatedAt
+      dayActivitiesTripId
+      dayActivitiesDate
+      __typename
+    }
+  }
+`;
+export const deleteActivity = /* GraphQL */ `
+  mutation DeleteActivity(
+    $input: DeleteActivityInput!
+    $condition: ModelActivityConditionInput
+  ) {
+    deleteActivity(input: $input, condition: $condition) {
+      id
+      dayId
+      startTime
+      endTime
+      name
+      description
+      location {
+        latitude
+        longitude
+        __typename
+      }
+      type
+      createdAt
+      updatedAt
+      dayActivitiesTripId
+      dayActivitiesDate
+      __typename
+    }
+  }
+`;
+export const createDay = /* GraphQL */ `
+  mutation CreateDay(
+    $input: CreateDayInput!
+    $condition: ModelDayConditionInput
+  ) {
+    createDay(input: $input, condition: $condition) {
+      id
+      tripId
+      date
+      activities {
+        items {
+          id
+          dayId
+          startTime
+          endTime
+          name
+          description
+          type
+          createdAt
+          updatedAt
+          dayActivitiesTripId
+          dayActivitiesDate
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      tripDaysId
+      __typename
+    }
+  }
+`;
+export const updateDay = /* GraphQL */ `
+  mutation UpdateDay(
+    $input: UpdateDayInput!
+    $condition: ModelDayConditionInput
+  ) {
+    updateDay(input: $input, condition: $condition) {
+      id
+      tripId
+      date
+      activities {
+        items {
+          id
+          dayId
+          startTime
+          endTime
+          name
+          description
+          type
+          createdAt
+          updatedAt
+          dayActivitiesTripId
+          dayActivitiesDate
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      tripDaysId
+      __typename
+    }
+  }
+`;
+export const deleteDay = /* GraphQL */ `
+  mutation DeleteDay(
+    $input: DeleteDayInput!
+    $condition: ModelDayConditionInput
+  ) {
+    deleteDay(input: $input, condition: $condition) {
+      id
+      tripId
+      date
+      activities {
+        items {
+          id
+          dayId
+          startTime
+          endTime
+          name
+          description
+          type
+          createdAt
+          updatedAt
+          dayActivitiesTripId
+          dayActivitiesDate
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      tripDaysId
+      __typename
+    }
+  }
+`;
 export const createUser = /* GraphQL */ `
   mutation CreateUser(
     $input: CreateUserInput!
@@ -23,6 +203,7 @@ export const createUser = /* GraphQL */ `
           ownerId
           createdAt
           updatedAt
+          userTripsId
           __typename
         }
         nextToken
@@ -55,6 +236,7 @@ export const updateUser = /* GraphQL */ `
           ownerId
           createdAt
           updatedAt
+          userTripsId
           __typename
         }
         nextToken
@@ -87,6 +269,7 @@ export const deleteUser = /* GraphQL */ `
           ownerId
           createdAt
           updatedAt
+          userTripsId
           __typename
         }
         nextToken
@@ -129,8 +312,22 @@ export const createTrip = /* GraphQL */ `
         __typename
       }
       ownerId
+      days {
+        items {
+          id
+          tripId
+          date
+          createdAt
+          updatedAt
+          tripDaysId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
+      userTripsId
       __typename
     }
   }
@@ -166,8 +363,22 @@ export const updateTrip = /* GraphQL */ `
         __typename
       }
       ownerId
+      days {
+        items {
+          id
+          tripId
+          date
+          createdAt
+          updatedAt
+          tripDaysId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
+      userTripsId
       __typename
     }
   }
@@ -203,8 +414,22 @@ export const deleteTrip = /* GraphQL */ `
         __typename
       }
       ownerId
+      days {
+        items {
+          id
+          tripId
+          date
+          createdAt
+          updatedAt
+          tripDaysId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
+      userTripsId
       __typename
     }
   }

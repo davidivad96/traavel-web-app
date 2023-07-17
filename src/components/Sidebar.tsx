@@ -9,13 +9,14 @@ import { Flex } from "@aws-amplify/ui-react";
 import { FaAnglesLeft, FaAnglesRight } from "react-icons/fa6";
 import { FaRoute } from "react-icons/fa";
 import dayjs from "dayjs";
+import { Day } from "@/models";
 
 interface Props {
-  dates: { id: string; date: Date }[];
-  handleOnClickItem: (id: string) => void;
+  days: Day[];
+  handleOnClickItem: (day: Day) => void;
 }
 
-export const Sidebar = ({ dates, handleOnClickItem }: Props) => {
+export const Sidebar = ({ days, handleOnClickItem }: Props) => {
   const [collapsedSidebar, setCollapsedSidebar] = useState(false);
 
   return (
@@ -23,9 +24,9 @@ export const Sidebar = ({ dates, handleOnClickItem }: Props) => {
       <Flex direction="column" justifyContent="space-between" height="100%">
         <Menu>
           <SubMenu label="Itinerary" icon={<FaRoute />}>
-            {dates.map(({ id, date }) => (
-              <MenuItem key={id} onClick={() => handleOnClickItem(id)}>
-                {dayjs(date).format("ddd DD/MM")}
+            {days.map((day) => (
+              <MenuItem key={day.id} onClick={() => handleOnClickItem(day)}>
+                {dayjs(day.date).format("ddd DD/MM")}
               </MenuItem>
             ))}
           </SubMenu>

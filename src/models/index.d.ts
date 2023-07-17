@@ -1,8 +1,20 @@
-import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-amplify/datastore";
+import { ModelInit, MutableModel, __modelMeta__, CompositeIdentifier, ManagedIdentifier } from "@aws-amplify/datastore";
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncCollection, AsyncItem } from "@aws-amplify/datastore";
 
-
+export enum ActivityType {
+  FLIGHT = "FLIGHT",
+  HOTEL = "HOTEL",
+  MUSEUM = "MUSEUM",
+  VISIT = "VISIT",
+  RESTAURANT = "RESTAURANT",
+  BAR = "BAR",
+  CONCERT = "CONCERT",
+  MEETING = "MEETING",
+  THEATER = "THEATER",
+  CRUISE = "CRUISE",
+  OTHER = "OTHER"
+}
 
 type EagerLocation = {
   readonly latitude?: number | null;
@@ -17,6 +29,84 @@ type LazyLocation = {
 export declare type Location = LazyLoading extends LazyLoadingDisabled ? EagerLocation : LazyLocation
 
 export declare const Location: (new (init: ModelInit<Location>) => Location)
+
+type EagerActivity = {
+  readonly [__modelMeta__]: {
+    identifier: CompositeIdentifier<Activity, ['dayId', 'startTime']>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly dayId: string;
+  readonly startTime: string;
+  readonly endTime: string;
+  readonly name: string;
+  readonly description?: string | null;
+  readonly location?: Location | null;
+  readonly type: ActivityType | keyof typeof ActivityType;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly dayActivitiesTripId?: string | null;
+  readonly dayActivitiesDate?: string | null;
+}
+
+type LazyActivity = {
+  readonly [__modelMeta__]: {
+    identifier: CompositeIdentifier<Activity, ['dayId', 'startTime']>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly dayId: string;
+  readonly startTime: string;
+  readonly endTime: string;
+  readonly name: string;
+  readonly description?: string | null;
+  readonly location?: Location | null;
+  readonly type: ActivityType | keyof typeof ActivityType;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly dayActivitiesTripId?: string | null;
+  readonly dayActivitiesDate?: string | null;
+}
+
+export declare type Activity = LazyLoading extends LazyLoadingDisabled ? EagerActivity : LazyActivity
+
+export declare const Activity: (new (init: ModelInit<Activity>) => Activity) & {
+  copyOf(source: Activity, mutator: (draft: MutableModel<Activity>) => MutableModel<Activity> | void): Activity;
+}
+
+type EagerDay = {
+  readonly [__modelMeta__]: {
+    identifier: CompositeIdentifier<Day, ['tripId', 'date']>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly tripId: string;
+  readonly date: string;
+  readonly activities?: (Activity | null)[] | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly tripDaysId?: string | null;
+}
+
+type LazyDay = {
+  readonly [__modelMeta__]: {
+    identifier: CompositeIdentifier<Day, ['tripId', 'date']>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly tripId: string;
+  readonly date: string;
+  readonly activities: AsyncCollection<Activity>;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+  readonly tripDaysId?: string | null;
+}
+
+export declare type Day = LazyLoading extends LazyLoadingDisabled ? EagerDay : LazyDay
+
+export declare const Day: (new (init: ModelInit<Day>) => Day) & {
+  copyOf(source: Day, mutator: (draft: MutableModel<Day>) => MutableModel<Day> | void): Day;
+}
 
 type EagerUser = {
   readonly [__modelMeta__]: {
@@ -58,16 +148,18 @@ type EagerTrip = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name?: string | null;
-  readonly destination?: string | null;
-  readonly location?: Location | null;
-  readonly startDate?: string | null;
-  readonly endDate?: string | null;
+  readonly name: string;
+  readonly destination: string;
+  readonly location: Location;
+  readonly startDate: string;
+  readonly endDate: string;
   readonly imgUrl?: string | null;
   readonly owner?: User | null;
   readonly ownerId: string;
+  readonly days?: (Day | null)[] | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly userTripsId?: string | null;
 }
 
 type LazyTrip = {
@@ -76,16 +168,18 @@ type LazyTrip = {
     readOnlyFields: 'createdAt' | 'updatedAt';
   };
   readonly id: string;
-  readonly name?: string | null;
-  readonly destination?: string | null;
-  readonly location?: Location | null;
-  readonly startDate?: string | null;
-  readonly endDate?: string | null;
+  readonly name: string;
+  readonly destination: string;
+  readonly location: Location;
+  readonly startDate: string;
+  readonly endDate: string;
   readonly imgUrl?: string | null;
   readonly owner: AsyncItem<User | undefined>;
   readonly ownerId: string;
+  readonly days: AsyncCollection<Day>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly userTripsId?: string | null;
 }
 
 export declare type Trip = LazyLoading extends LazyLoadingDisabled ? EagerTrip : LazyTrip

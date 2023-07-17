@@ -11,7 +11,7 @@ import {
   Flex,
   Heading,
   ScrollView,
-  View,
+  Text,
 } from "@aws-amplify/ui-react";
 import { ToastContainer, toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -84,6 +84,11 @@ const Home = ({ user, userTrips }: Props) => {
             large: "1fr 1fr 1fr 1fr",
           }}
           gap="20px"
+          searchNoResultsFound={
+            <Text textAlign="center">
+              No trips yet. Try creating a new one!
+            </Text>
+          }
         >
           {(trip) => (
             <Card

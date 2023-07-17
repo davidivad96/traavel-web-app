@@ -1,3 +1,35 @@
+enum ActivityType {
+  FLIGHT
+  HOTEL
+  MUSEUM
+  VISIT
+  RESTAURANT
+  BAR
+  CONCERT
+  MEETING
+  THEATER
+  CRUISE
+  OTHER
+}
+
+type Activity @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  dayId: ID! @primaryKey(sortKeyFields: ["startTime"])
+  startTime: AWSTime!
+  endTime: AWSTime!
+  name: String!
+  description: String
+  location: Location
+  type: ActivityType!
+}
+
+type Day @model @auth(rules: [{ allow: public }]) {
+  id: ID!
+  tripId: ID! @primaryKey(sortKeyFields: ["date"])
+  date: AWSDate!
+  activities: [Activity] @hasMany
+}
+
 type Location {
   latitude: Float
   longitude: Float
@@ -8,17 +40,18 @@ type User @model @auth(rules: [{ allow: public }]) {
   email: AWSEmail!
   name: String
   avatarUrl: AWSURL
-  trips: [Trip] @hasMany(indexName: "byUser", fields: ["id"])
+  trips: [Trip] @hasMany
 }
 
 type Trip @model @auth(rules: [{ allow: public }]) {
   id: ID!
-  name: String
-  destination: String
-  location: Location
-  startDate: AWSDate
-  endDate: AWSDate
+  name: String!
+  destination: String!
+  location: Location!
+  startDate: AWSDate!
+  endDate: AWSDate!
   imgUrl: String
   owner: User @belongsTo(fields: ["ownerId"])
   ownerId: ID! @index(name: "byUser")
+  days: [Day] @hasMany
 }

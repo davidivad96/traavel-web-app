@@ -2,6 +2,136 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getActivity = /* GraphQL */ `
+  query GetActivity($dayId: ID!, $startTime: AWSTime!) {
+    getActivity(dayId: $dayId, startTime: $startTime) {
+      id
+      dayId
+      startTime
+      endTime
+      name
+      description
+      location {
+        latitude
+        longitude
+        __typename
+      }
+      type
+      createdAt
+      updatedAt
+      dayActivitiesTripId
+      dayActivitiesDate
+      __typename
+    }
+  }
+`;
+export const listActivities = /* GraphQL */ `
+  query ListActivities(
+    $dayId: ID
+    $startTime: ModelStringKeyConditionInput
+    $filter: ModelActivityFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listActivities(
+      dayId: $dayId
+      startTime: $startTime
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        dayId
+        startTime
+        endTime
+        name
+        description
+        location {
+          latitude
+          longitude
+          __typename
+        }
+        type
+        createdAt
+        updatedAt
+        dayActivitiesTripId
+        dayActivitiesDate
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const getDay = /* GraphQL */ `
+  query GetDay($tripId: ID!, $date: AWSDate!) {
+    getDay(tripId: $tripId, date: $date) {
+      id
+      tripId
+      date
+      activities {
+        items {
+          id
+          dayId
+          startTime
+          endTime
+          name
+          description
+          type
+          createdAt
+          updatedAt
+          dayActivitiesTripId
+          dayActivitiesDate
+          __typename
+        }
+        nextToken
+        __typename
+      }
+      createdAt
+      updatedAt
+      tripDaysId
+      __typename
+    }
+  }
+`;
+export const listDays = /* GraphQL */ `
+  query ListDays(
+    $tripId: ID
+    $date: ModelStringKeyConditionInput
+    $filter: ModelDayFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listDays(
+      tripId: $tripId
+      date: $date
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        id
+        tripId
+        date
+        activities {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        tripDaysId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
 export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
@@ -20,6 +150,7 @@ export const getUser = /* GraphQL */ `
           ownerId
           createdAt
           updatedAt
+          userTripsId
           __typename
         }
         nextToken
@@ -84,8 +215,22 @@ export const getTrip = /* GraphQL */ `
         __typename
       }
       ownerId
+      days {
+        items {
+          id
+          tripId
+          date
+          createdAt
+          updatedAt
+          tripDaysId
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
+      userTripsId
       __typename
     }
   }
@@ -119,8 +264,13 @@ export const listTrips = /* GraphQL */ `
           __typename
         }
         ownerId
+        days {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
+        userTripsId
         __typename
       }
       nextToken
@@ -165,8 +315,13 @@ export const tripsByOwnerId = /* GraphQL */ `
           __typename
         }
         ownerId
+        days {
+          nextToken
+          __typename
+        }
         createdAt
         updatedAt
+        userTripsId
         __typename
       }
       nextToken

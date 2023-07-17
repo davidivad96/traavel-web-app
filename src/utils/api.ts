@@ -1,12 +1,11 @@
 import { AmplifyClass } from "@aws-amplify/core";
-import { getTrip, getUser } from "@/graphql/queries";
+import { getTrip, getUser, listDays } from "@/graphql/queries";
 
 export const getUserData = async ({ Auth, API }: AmplifyClass) => {
   const currentUser = await Auth.currentAuthenticatedUser();
   const response = await API.graphql({
     query: getUser,
     variables: { id: currentUser.attributes.sub },
-    authMode: "API_KEY",
   });
   if (!response.data.getUser) {
     throw new Error("User not found");
@@ -15,13 +14,22 @@ export const getUserData = async ({ Auth, API }: AmplifyClass) => {
 };
 
 export const getTripData = async ({ API }: AmplifyClass, tripId: string) => {
-  const response = await API.graphql({
+  const {
+    data: { getTrip: getTripResult },
+  } = await API.graphql({
     query: getTrip,
     variables: { id: tripId },
-    authMode: "API_KEY",
   });
-  if (!response.data.getTrip) {
+  const {
+    data: {
+      listDays: { items: listDaysResult },
+    },
+  } = await API.graphql({
+    query: listDays,
+    variables: { tripId },
+  });
+  if (!getTripResult || !listDaysResult) {
     throw new Error("Trip not found");
   }
-  return response.data.getTrip;
+  return [getTripResult, listDaysResult];
 };
