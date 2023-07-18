@@ -14,10 +14,11 @@ import { Basic } from "unsplash-js/dist/methods/photos/types";
 import { CreateDayMutation, CreateTripMutation } from "@/API";
 import { createDay, createTrip } from "@/graphql/mutations";
 import { User } from "@/models";
-import { generateDates, toISODateString } from "@/utils/functions";
+import { generateDates } from "@/utils/functions";
 import { Modal } from "./Modal";
 import "react-datepicker/dist/react-datepicker.css";
 import "react-toastify/dist/ReactToastify.css";
+import { PlacesAutocomplete } from "./PlacesAutocomplete";
 
 interface Props {
   isOpen: boolean;
@@ -46,8 +47,8 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
             name: `Trip to ${destination}`,
             destination,
             location: { latitude: location[0], longitude: location[1] },
-            startDate: toISODateString(startDate!),
-            endDate: toISODateString(endDate!),
+            startDate: startDate?.toISOString(),
+            endDate: endDate?.toISOString(),
             imgUrl: data[0].urls.raw,
             ownerId: user.id,
           },
@@ -62,7 +63,7 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
             variables: {
               input: {
                 tripId,
-                date: toISODateString(day),
+                date: day.toISOString(),
               },
             },
           });
@@ -106,29 +107,7 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
       ) : (
         <>
           <View padding="30px 0">
-            <GooglePlacesAutocomplete
-              selectProps={{
-                onChange: handleOnChangePlace,
-                placeholder: "Search destination",
-                styles: {
-                  input: (provided) => ({
-                    ...provided,
-                    backgroundColor: "transparent",
-                    height: "36px",
-                  }),
-                  control: (provided) => ({
-                    ...provided,
-                    border: "1px solid #fff",
-                    borderRadius: "4px",
-                    boxShadow: "0 0 10px 2px rgba(0, 0, 0, 0.1)",
-                  }),
-                  placeholder: (provided) => ({
-                    ...provided,
-                    color: "#828282",
-                  }),
-                },
-              }}
-            />
+            <PlacesAutocomplete handleOnChangePlace={handleOnChangePlace} />
             <DatePicker
               selected={startDate}
               onChange={(dates) => {

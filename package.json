@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^4.6.4",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.0",
+    "@mui/x-date-pickers": "^6.10.0",
     "@react-google-maps/api": "^2.18.1",
     "aws-amplify": "^5.3.3",
     "axios": "^1.4.0",

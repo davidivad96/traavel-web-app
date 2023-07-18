@@ -1,21 +1,26 @@
 import { useState } from "react";
 import { GetServerSideProps } from "next";
 import { API, withSSRContext } from "aws-amplify";
-import { Flex } from "@aws-amplify/ui-react";
+import { Flex, Loader } from "@aws-amplify/ui-react";
 import { GraphQLQuery } from "@aws-amplify/api";
 import { GoogleMap } from "@react-google-maps/api";
 import { ToastContainer, toast } from "react-toastify";
 import dayjs from "dayjs";
 import { listActivities } from "@/graphql/queries";
+import { createActivity } from "@/graphql/mutations";
 import { Trip as TripModel } from "@/models";
 import { Day as DayModel } from "@/models";
 import { Activity as ActivityModel } from "@/models";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
 import { ChangePhotoModal } from "@/components/ChangePhotoModal";
-import { CreateActivityModal } from "@/components/CreateActivityModal";
+import {
+  CreateActivityModal,
+  Activity,
+} from "@/components/CreateActivityModal";
 import { MainContent } from "@/components/MainContent";
 import { getTripData } from "@/utils/api";
+import { sortActivities } from "@/utils/functions";
 
 interface Props {
   trip: TripModel;
@@ -43,8 +48,10 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
   const [createActivityModal, setCreateActivityModal] = useState(false);
   const [currentDay, setCurrentDay] = useState<DayModel>();
   const [activities, setActivities] = useState<ActivityModel[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleOnClickDay = async (day: DayModel) => {
+    setIsLoading(true);
     setCurrentDay(day);
     try {
       const { data } = await API.graphql<GraphQLQuery<any>>({
@@ -52,6 +59,32 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
         variables: { dayId: day.id },
       });
       setActivities(data?.listActivities?.items || []);
+    } catch (error) {
+      toast.error("There was an error!", { theme: "colored" });
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleOnCreateActivity = async (activity: Activity) => {
+    try {
+      const { data } = await API.graphql<GraphQLQuery<any>>({
+        query: createActivity,
+        variables: {
+          input: {
+            dayId: currentDay?.id,
+            startTime: activity.startTime!.toISOString(),
+            endTime: activity.endTime!.toISOString(),
+            name: activity.name,
+            description: activity.description,
+            location: activity.location,
+            type: activity.type,
+          },
+        },
+      });
+      setActivities((prev) => sortActivities([...prev, data?.createActivity]));
+      toast.success("Activity created!", { theme: "colored" });
+      setCreateActivityModal(false);
     } catch (error) {
       toast.error("There was an error!", { theme: "colored" });
     }
@@ -71,6 +104,7 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
       <CreateActivityModal
         isOpen={createActivityModal}
         setIsOpen={setCreateActivityModal}
+        handleOnSubmit={handleOnCreateActivity}
       />
       <Flex
         direction="row"
@@ -90,6 +124,7 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
             openEditImageModal={() => setEditImageModal(true)}
             handleOnClickNewActivity={() => setCreateActivityModal(true)}
             activities={activities}
+            isLoadingActivities={isLoading}
           />
         </Flex>
         <Flex flex={5}>

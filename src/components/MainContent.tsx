@@ -7,14 +7,17 @@ import {
   Heading,
   Text,
   Button,
+  Loader,
 } from "@aws-amplify/ui-react";
 import { FaEdit } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
+import dayjs from "dayjs";
 import { Activity } from "@/models";
 
 interface Props {
   title?: string;
   imgUrl?: string | null;
+  isLoadingActivities?: boolean;
   openEditImageModal: () => void;
   handleOnClickNewActivity: () => void;
   activities: Activity[];
@@ -23,6 +26,7 @@ interface Props {
 export const MainContent = ({
   title,
   imgUrl,
+  isLoadingActivities = false,
   openEditImageModal,
   handleOnClickNewActivity,
   activities,
@@ -63,22 +67,29 @@ export const MainContent = ({
             activity
           </Button>
         </Flex>
-        <Expander type="single">
-          {activities.map((activity, index) => (
-            <ExpanderItem
-              key={`${activity.dayId}-${index}`}
-              title={
-                <Text>
-                  {activity.startTime} - {activity.endTime}
-                </Text>
-              }
-              value={`${activity.dayId}-${index}`}
-            >
-              <Text>{activity.name}</Text>
-              <Text>{activity.description}</Text>
-            </ExpanderItem>
-          ))}
-        </Expander>
+        {isLoadingActivities ? (
+          <Flex justifyContent="center" marginTop={20}>
+            <Loader width={50} height={50} />
+          </Flex>
+        ) : (
+          <Expander type="single">
+            {activities.map((activity, index) => (
+              <ExpanderItem
+                key={`${activity.dayId}-${index}`}
+                title={
+                  <Text>
+                    {dayjs(new Date(activity.startTime)).format("HH:mm")} -{" "}
+                    {dayjs(new Date(activity.endTime)).format("HH:mm")}
+                  </Text>
+                }
+                value={`${activity.dayId}-${index}`}
+              >
+                <Text>{activity.name}</Text>
+                <Text>{activity.description}</Text>
+              </ExpanderItem>
+            ))}
+          </Expander>
+        )}
       </View>
     ) : (
       <Text textAlign="center">Select a date on the sidebar</Text>

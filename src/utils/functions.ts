@@ -1,5 +1,4 @@
-export const toISODateString = (date: Date): string =>
-  date.toISOString().split("T")[0];
+import { Activity } from "@/models";
 
 export const generateDates = (startDate: Date, endDate: Date): Date[] => {
   const dates = [];
@@ -11,3 +10,8 @@ export const generateDates = (startDate: Date, endDate: Date): Date[] => {
   }
   return dates;
 };
+
+export const sortActivities = (activities: Activity[]): Activity[] =>
+  activities.sort(
+    (a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
+  );

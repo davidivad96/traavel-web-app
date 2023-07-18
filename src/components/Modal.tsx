@@ -39,8 +39,7 @@ export const Modal = ({
         backgroundColor="white"
         padding="1.2rem"
         borderRadius="0.5rem"
-        minWidth="300px"
-        maxWidth="500px"
+        width="500px"
         margin="2rem auto"
         onClick={(e: React.MouseEvent<HTMLElement>) => e.stopPropagation()}
       >

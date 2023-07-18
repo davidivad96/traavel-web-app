@@ -9,7 +9,7 @@ export type CreateActivityInput = {
   endTime: string,
   name: string,
   description?: string | null,
-  location?: LocationInput | null,
+  location: LocationInput,
   type: ActivityType,
   dayActivitiesTripId?: string | null,
   dayActivitiesDate?: string | null,
@@ -116,7 +116,7 @@ export type Activity = {
   endTime: string,
   name: string,
   description?: string | null,
-  location?: Location | null,
+  location: Location,
   type: ActivityType,
   createdAt: string,
   updatedAt: string,
@@ -455,11 +455,11 @@ export type CreateActivityMutation = {
     endTime: string,
     name: string,
     description?: string | null,
-    location?:  {
+    location:  {
       __typename: "Location",
       latitude?: number | null,
       longitude?: number | null,
-    } | null,
+    },
     type: ActivityType,
     createdAt: string,
     updatedAt: string,
@@ -482,11 +482,11 @@ export type UpdateActivityMutation = {
     endTime: string,
     name: string,
     description?: string | null,
-    location?:  {
+    location:  {
       __typename: "Location",
       latitude?: number | null,
       longitude?: number | null,
-    } | null,
+    },
     type: ActivityType,
     createdAt: string,
     updatedAt: string,
@@ -509,11 +509,11 @@ export type DeleteActivityMutation = {
     endTime: string,
     name: string,
     description?: string | null,
-    location?:  {
+    location:  {
       __typename: "Location",
       latitude?: number | null,
       longitude?: number | null,
-    } | null,
+    },
     type: ActivityType,
     createdAt: string,
     updatedAt: string,
@@ -899,11 +899,11 @@ export type GetActivityQuery = {
     endTime: string,
     name: string,
     description?: string | null,
-    location?:  {
+    location:  {
       __typename: "Location",
       latitude?: number | null,
       longitude?: number | null,
-    } | null,
+    },
     type: ActivityType,
     createdAt: string,
     updatedAt: string,
@@ -932,11 +932,11 @@ export type ListActivitiesQuery = {
       endTime: string,
       name: string,
       description?: string | null,
-      location?:  {
+      location:  {
         __typename: "Location",
         latitude?: number | null,
         longitude?: number | null,
-      } | null,
+      },
       type: ActivityType,
       createdAt: string,
       updatedAt: string,
@@ -1224,11 +1224,11 @@ export type OnCreateActivitySubscription = {
     endTime: string,
     name: string,
     description?: string | null,
-    location?:  {
+    location:  {
       __typename: "Location",
       latitude?: number | null,
       longitude?: number | null,
-    } | null,
+    },
     type: ActivityType,
     createdAt: string,
     updatedAt: string,
@@ -1250,11 +1250,11 @@ export type OnUpdateActivitySubscription = {
     endTime: string,
     name: string,
     description?: string | null,
-    location?:  {
+    location:  {
       __typename: "Location",
       latitude?: number | null,
       longitude?: number | null,
-    } | null,
+    },
     type: ActivityType,
     createdAt: string,
     updatedAt: string,
@@ -1276,11 +1276,11 @@ export type OnDeleteActivitySubscription = {
     endTime: string,
     name: string,
     description?: string | null,
-    location?:  {
+    location:  {
       __typename: "Location",
       latitude?: number | null,
       longitude?: number | null,
-    } | null,
+    },
     type: ActivityType,
     createdAt: string,
     updatedAt: string,

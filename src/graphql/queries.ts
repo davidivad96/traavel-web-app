@@ -3,7 +3,7 @@
 // this is an auto generated file. This will be overwritten
 
 export const getActivity = /* GraphQL */ `
-  query GetActivity($dayId: ID!, $startTime: AWSTime!) {
+  query GetActivity($dayId: ID!, $startTime: AWSDateTime!) {
     getActivity(dayId: $dayId, startTime: $startTime) {
       id
       dayId
@@ -67,7 +67,7 @@ export const listActivities = /* GraphQL */ `
   }
 `;
 export const getDay = /* GraphQL */ `
-  query GetDay($tripId: ID!, $date: AWSDate!) {
+  query GetDay($tripId: ID!, $date: AWSDateTime!) {
     getDay(tripId: $tripId, date: $date) {
       id
       tripId

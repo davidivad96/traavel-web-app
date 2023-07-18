@@ -5,6 +5,8 @@ import { Inter } from "next/font/google";
 import { Amplify } from "aws-amplify";
 import { Authenticator, Flex, Loader } from "@aws-amplify/ui-react";
 import { useJsApiLoader } from "@react-google-maps/api";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import awsconfig from "../aws-exports";
 import "@aws-amplify/ui-react/styles.css";
 import "../styles/globals.css";
@@ -40,9 +42,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return isLoaded ? (
     <Authenticator.Provider>
-      <main className={inter.className}>
-        {getLayout(<Component {...pageProps} />, pageProps)}
-      </main>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <main className={inter.className}>
+          {getLayout(<Component {...pageProps} />, pageProps)}
+        </main>
+      </LocalizationProvider>
     </Authenticator.Provider>
   ) : (
     <Flex justifyContent="center" margin="30px 0">
