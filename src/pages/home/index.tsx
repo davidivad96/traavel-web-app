@@ -13,7 +13,7 @@ import {
   ScrollView,
   Text,
 } from "@aws-amplify/ui-react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Trip, User } from "@/models";
 import { Navbar } from "@/components/Navbar";
@@ -132,7 +132,6 @@ const Home = ({ user, trips: userTrips }: Props) => {
           )}
         </Collection>
       </ScrollView>
-      <ToastContainer />
     </>
   );
 };

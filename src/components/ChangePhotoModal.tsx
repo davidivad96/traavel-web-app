@@ -4,7 +4,7 @@ import { API } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import { Collection, View } from "@aws-amplify/ui-react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { Basic } from "unsplash-js/dist/methods/photos/types";
 import { UpdateTripMutation } from "@/API";
 import { updateTrip } from "@/graphql/mutations";
@@ -92,7 +92,6 @@ export const ChangePhotoModal = ({
             )}
           </Collection>
         )}
-        <ToastContainer />
       </View>
     </Modal>
   );

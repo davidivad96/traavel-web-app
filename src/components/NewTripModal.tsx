@@ -1,14 +1,11 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import GooglePlacesAutocomplete, {
-  geocodeByPlaceId,
-  getLatLng,
-} from "react-google-places-autocomplete";
+import { geocodeByPlaceId, getLatLng } from "react-google-places-autocomplete";
 import { API } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
 import { Flex, Button, View, Loader } from "@aws-amplify/ui-react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import DatePicker from "react-datepicker";
 import { Basic } from "unsplash-js/dist/methods/photos/types";
 import { CreateDayMutation, CreateTripMutation } from "@/API";
@@ -131,7 +128,6 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
               Start planning my trip
             </Button>
           </Flex>
-          <ToastContainer />
         </>
       )}
     </Modal>

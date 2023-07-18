@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { GetServerSideProps } from "next";
 import { API, withSSRContext } from "aws-amplify";
-import { Flex, Loader } from "@aws-amplify/ui-react";
+import { Flex } from "@aws-amplify/ui-react";
 import { GraphQLQuery } from "@aws-amplify/api";
 import { GoogleMap } from "@react-google-maps/api";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { listActivities } from "@/graphql/queries";
 import { createActivity } from "@/graphql/mutations";
@@ -90,6 +90,12 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
     }
   };
 
+  const removeActivity = async (activityId: string) => {
+    setActivities((prev) =>
+      prev.filter((activity) => activity.id !== activityId)
+    );
+  };
+
   return (
     <>
       <ChangePhotoModal
@@ -125,6 +131,7 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
             handleOnClickNewActivity={() => setCreateActivityModal(true)}
             activities={activities}
             isLoadingActivities={isLoading}
+            removeActivity={removeActivity}
           />
         </Flex>
         <Flex flex={5}>
@@ -141,7 +148,6 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
           />
         </Flex>
       </Flex>
-      <ToastContainer />
     </>
   );
 };

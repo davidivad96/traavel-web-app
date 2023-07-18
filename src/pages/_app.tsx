@@ -7,8 +7,10 @@ import { Authenticator, Flex, Loader } from "@aws-amplify/ui-react";
 import { useJsApiLoader } from "@react-google-maps/api";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { ToastContainer } from "react-toastify";
 import awsconfig from "../aws-exports";
 import "@aws-amplify/ui-react/styles.css";
+import "react-toastify/dist/ReactToastify.css";
 import "../styles/globals.css";
 
 Amplify.configure({ ...awsconfig, ssr: true });
@@ -41,13 +43,16 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   });
 
   return isLoaded ? (
-    <Authenticator.Provider>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <main className={inter.className}>
-          {getLayout(<Component {...pageProps} />, pageProps)}
-        </main>
-      </LocalizationProvider>
-    </Authenticator.Provider>
+    <>
+      <ToastContainer />
+      <Authenticator.Provider>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <main className={inter.className}>
+            {getLayout(<Component {...pageProps} />, pageProps)}
+          </main>
+        </LocalizationProvider>
+      </Authenticator.Provider>
+    </>
   ) : (
     <Flex justifyContent="center" margin="30px 0">
       <Loader width={75} height={75} />
