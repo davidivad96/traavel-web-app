@@ -2,8 +2,8 @@ import { useState } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { API, withSSRContext } from "aws-amplify";
-import { GraphQLQuery } from "@aws-amplify/api";
+import { withSSRContext } from "aws-amplify";
+import { API } from "@aws-amplify/api";
 import {
   Button,
   Card,
@@ -15,13 +15,12 @@ import {
 } from "@aws-amplify/ui-react";
 import { ToastContainer, toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
-import { DeleteTripMutation } from "@/API";
-import { deleteTrip } from "@/graphql/mutations";
 import { Trip, User } from "@/models";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { NewTripModal } from "@/components/NewTripModal";
-import { getUserData } from "@/utils/api";
+import { getUserData, getUserTripsData } from "@/utils/api";
+import awsconfig from "@/aws-exports";
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   req,
@@ -29,8 +28,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   const SSR = withSSRContext({ req });
   try {
     const user = await getUserData(SSR);
-    const userTrips = user.trips.items;
-    return { props: { user, userTrips } };
+    const trips = await getUserTripsData(SSR, user.id);
+    return { props: { user, trips } };
   } catch (error) {
     return { redirect: { permanent: false, destination: "/" } };
   }
@@ -38,10 +37,10 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 
 interface Props {
   user: User;
-  userTrips: Trip[];
+  trips: Trip[];
 }
 
-const Home = ({ user, userTrips }: Props) => {
+const Home = ({ user, trips: userTrips }: Props) => {
   const router = useRouter();
   const [trips, setTrips] = useState<Trip[]>(userTrips);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -50,10 +49,12 @@ const Home = ({ user, userTrips }: Props) => {
     try {
       setTrips((trips) => trips.filter((trip) => trip.id !== tripId));
       toast.success("Trip deleted successfully", { theme: "colored" });
-      await API.graphql<GraphQLQuery<DeleteTripMutation>>({
-        query: deleteTrip,
-        variables: { input: { id: tripId } },
-      });
+      // In the background, delete all days of the trip
+      API.del(
+        awsconfig.aws_cloud_logic_custom[0].name,
+        `/trip?tripId=${tripId}`,
+        { headers: {} }
+      );
     } catch (error) {
       toast.error("There was an error!", { theme: "colored" });
     }

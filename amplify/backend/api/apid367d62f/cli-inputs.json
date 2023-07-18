@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "paths": {
+    "/trip": {
+      "name": "/trip",
+      "lambdaFunction": "traavelwebappTripDeletion",
+      "permissions": {
+        "setting": "private",
+        "auth": [
+          "create",
+          "read",
+          "update",
+          "delete"
+        ]
+      }
+    }
+  }
+}

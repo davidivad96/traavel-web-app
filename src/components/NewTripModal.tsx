@@ -6,11 +6,10 @@ import GooglePlacesAutocomplete, {
 } from "react-google-places-autocomplete";
 import { API } from "aws-amplify";
 import { GraphQLQuery } from "@aws-amplify/api";
-import { Flex, Button, View } from "@aws-amplify/ui-react";
+import { Flex, Button, View, Loader } from "@aws-amplify/ui-react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import DatePicker from "react-datepicker";
-import { Oval } from "react-loader-spinner";
 import { Basic } from "unsplash-js/dist/methods/photos/types";
 import { CreateDayMutation, CreateTripMutation } from "@/API";
 import { createDay, createTrip } from "@/graphql/mutations";
@@ -101,20 +100,9 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
       }}
     >
       {isLoading ? (
-        <Oval
-          height={60}
-          width={60}
-          color="#367b92"
-          secondaryColor="#367b92"
-          wrapperStyle={{
-            display: "flex",
-            justifyContent: "center",
-            margin: "30px",
-          }}
-          visible
-          strokeWidth={2}
-          strokeWidthSecondary={2}
-        />
+        <Flex justifyContent="center" margin="30px 0">
+          <Loader width={75} height={75} />
+        </Flex>
       ) : (
         <>
           <View padding="30px 0">

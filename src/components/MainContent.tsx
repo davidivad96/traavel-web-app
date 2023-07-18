@@ -6,21 +6,25 @@ import {
   ExpanderItem,
   Heading,
   Text,
+  Button,
 } from "@aws-amplify/ui-react";
 import { FaEdit } from "react-icons/fa";
+import { AiOutlinePlus } from "react-icons/ai";
 import { Activity } from "@/models";
 
 interface Props {
   title?: string;
   imgUrl?: string | null;
-  setEditImageModal: (value: boolean) => void;
+  openEditImageModal: () => void;
+  handleOnClickNewActivity: () => void;
   activities: Activity[];
 }
 
 export const MainContent = ({
   title,
   imgUrl,
-  setEditImageModal,
+  openEditImageModal,
+  handleOnClickNewActivity,
   activities,
 }: Props) => (
   <Flex direction="column" flex={1}>
@@ -28,7 +32,7 @@ export const MainContent = ({
       width="100%"
       minHeight={220}
       position="relative"
-      onClick={() => setEditImageModal(true)}
+      onClick={openEditImageModal}
       style={{ cursor: "pointer" }}
     >
       <Image
@@ -47,9 +51,18 @@ export const MainContent = ({
         height="calc(100vh - 70px)"
         style={{ overflowY: "scroll" }}
       >
-        <Heading level={3} textAlign="center" marginBottom={10}>
-          {title}
-        </Heading>
+        <Flex
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          margin="10px 0"
+        >
+          <Heading level={4}>{title}</Heading>
+          <Button variation="link" onClick={handleOnClickNewActivity}>
+            <AiOutlinePlus size={22} style={{ marginRight: "5px" }} /> New
+            activity
+          </Button>
+        </Flex>
         <Expander type="single">
           {activities.map((activity, index) => (
             <ExpanderItem

@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "storage": {
+      "Activity:@model(appsync)": [
+        "read",
+        "delete"
+      ],
+      "Day:@model(appsync)": [
+        "read",
+        "delete"
+      ],
+      "Trip:@model(appsync)": [
+        "read",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

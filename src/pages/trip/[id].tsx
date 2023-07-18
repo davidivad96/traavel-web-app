@@ -13,6 +13,7 @@ import { Activity as ActivityModel } from "@/models";
 import { Navbar } from "@/components/Navbar";
 import { Sidebar } from "@/components/Sidebar";
 import { ChangePhotoModal } from "@/components/ChangePhotoModal";
+import { CreateActivityModal } from "@/components/CreateActivityModal";
 import { MainContent } from "@/components/MainContent";
 import { getTripData } from "@/utils/api";
 
@@ -39,6 +40,7 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
   const [{ id, destination, imgUrl, location }, setTrip] =
     useState<TripModel>(initialTrip);
   const [editImageModal, setEditImageModal] = useState(false);
+  const [createActivityModal, setCreateActivityModal] = useState(false);
   const [currentDay, setCurrentDay] = useState<DayModel>();
   const [activities, setActivities] = useState<ActivityModel[]>([]);
 
@@ -66,6 +68,10 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
         }
         query={destination}
       />
+      <CreateActivityModal
+        isOpen={createActivityModal}
+        setIsOpen={setCreateActivityModal}
+      />
       <Flex
         direction="row"
         height="calc(100vh - 70px)"
@@ -81,7 +87,8 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
                 : ""
             }
             imgUrl={imgUrl}
-            setEditImageModal={setEditImageModal}
+            openEditImageModal={() => setEditImageModal(true)}
+            handleOnClickNewActivity={() => setCreateActivityModal(true)}
             activities={activities}
           />
         </Flex>

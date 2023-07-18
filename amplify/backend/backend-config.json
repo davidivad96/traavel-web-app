@@ -1,5 +1,19 @@
 {
   "api": {
+    "apid367d62f": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "traavelwebappTripDeletion"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "traavelwebapp": {
       "dependsOn": [],
       "output": {
@@ -75,6 +89,20 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "traavelwebappTripDeletion": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "GraphQLAPIIdOutput"
+          ],
+          "category": "api",
+          "resourceName": "traavelwebapp"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
     }
   },
   "parameters": {
@@ -91,6 +119,22 @@
         {
           "category": "function",
           "resourceName": "traavelwebappPostConfirmation"
+        }
+      ]
+    },
+    "AMPLIFY_function_traavelwebappTripDeletion_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "traavelwebappTripDeletion"
+        }
+      ]
+    },
+    "AMPLIFY_function_traavelwebappTripDeletion_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "traavelwebappTripDeletion"
         }
       ]
     }
