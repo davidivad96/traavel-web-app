@@ -47,3 +47,9 @@ body {
     opacity: 0.6;
   }
 }
+
+#activity-expander {
+  .amplify-expander__icon {
+    display: none;
+  }
+}
