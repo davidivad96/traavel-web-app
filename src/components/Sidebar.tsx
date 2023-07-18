@@ -23,7 +23,7 @@ export const Sidebar = ({ days, handleOnClickItem }: Props) => {
     <ReactProSidebar collapsed={collapsedSidebar as boolean} width="200px">
       <Flex direction="column" justifyContent="space-between" height="100%">
         <Menu>
-          <SubMenu label="Itinerary" icon={<FaRoute />}>
+          <SubMenu label="Itinerary" icon={<FaRoute />} defaultOpen>
             {days.map((day) => (
               <MenuItem key={day.id} onClick={() => handleOnClickItem(day)}>
                 {dayjs(day.date).format("ddd DD/MM")}

@@ -18,8 +18,9 @@ import { FaEdit } from "react-icons/fa";
 import { AiOutlinePlus } from "react-icons/ai";
 import { MdEdit, MdDelete } from "react-icons/md";
 import dayjs from "dayjs";
-import { Activity } from "@/models";
+import { Activity as ActivityModel } from "@/models";
 import { IconButton } from "@mui/material";
+import { Activity } from "./CreateActivityModal";
 
 interface Props {
   title?: string;
@@ -27,7 +28,8 @@ interface Props {
   isLoadingActivities?: boolean;
   openEditImageModal: () => void;
   handleOnClickNewActivity: () => void;
-  activities: Activity[];
+  handleOnClickEditActivity: (activity: ActivityModel) => void;
+  activities: ActivityModel[];
   removeActivity: (activityId: string) => void;
 }
 
@@ -37,16 +39,11 @@ export const MainContent = ({
   isLoadingActivities = false,
   openEditImageModal,
   handleOnClickNewActivity,
+  handleOnClickEditActivity,
   activities,
   removeActivity,
 }: Props) => {
-  const handleOnClickEditActivityButton = (
-    e: React.MouseEvent<HTMLElement>
-  ) => {
-    e.stopPropagation();
-  };
-
-  const handleOnremoveButton = async (
+  const handleOnRemoveActivityButton = async (
     activityId: string,
     dayId: string,
     startTime: string
@@ -127,7 +124,7 @@ export const MainContent = ({
                               "HH:mm"
                             )}{" "}
                             -{" "}
-                            {dayjs(new Date(activity.endTime)).format("HH:mm")}:{" "}
+                            {dayjs(new Date(activity.endTime)).format("HH:mm")}
                           </Text>
                           <Text fontWeight="bold">{activity.name}</Text>
                         </Flex>
@@ -135,7 +132,10 @@ export const MainContent = ({
                           <IconButton
                             size="small"
                             style={{ color: "#367B92" }}
-                            onClick={handleOnClickEditActivityButton}
+                            onClick={(e: React.MouseEvent<HTMLElement>) => {
+                              e.stopPropagation();
+                              handleOnClickEditActivity(activity);
+                            }}
                           >
                             <MdEdit />
                           </IconButton>
@@ -144,7 +144,7 @@ export const MainContent = ({
                             style={{ color: "#D65745" }}
                             onClick={(e: React.MouseEvent<HTMLElement>) => {
                               e.stopPropagation();
-                              handleOnremoveButton(
+                              handleOnRemoveActivityButton(
                                 activity.id,
                                 activity.dayId,
                                 activity.startTime

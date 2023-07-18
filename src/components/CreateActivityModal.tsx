@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { geocodeByPlaceId, getLatLng } from "react-google-places-autocomplete";
 import {
   Button,
@@ -8,6 +8,7 @@ import {
   TextField,
 } from "@aws-amplify/ui-react";
 import { TimePicker } from "@mui/x-date-pickers";
+import dayjs from "dayjs";
 import { Location, ActivityType } from "@/models";
 import { Modal } from "./Modal";
 import { PlacesAutocomplete } from "./PlacesAutocomplete";
@@ -25,14 +26,26 @@ interface Props {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   handleOnSubmit: (activity: Activity) => void;
+  initialActivity?: Activity;
+  setCurrentActivityId: (activityId: string) => void;
+  setCurrentActivity: (activity: Activity | undefined) => void;
 }
 
 export const CreateActivityModal = ({
   isOpen,
   setIsOpen,
   handleOnSubmit,
+  initialActivity,
+  setCurrentActivityId,
+  setCurrentActivity,
 }: Props) => {
-  const [activity, setActivity] = useState<Activity>({});
+  const [activity, setActivity] = useState<Activity | undefined>(
+    initialActivity
+  );
+
+  useEffect(() => {
+    setActivity(initialActivity);
+  }, [initialActivity]);
 
   const handleOnChangeActivity = (e: any) => {
     setActivity((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -58,9 +71,12 @@ export const CreateActivityModal = ({
 
   const handleOnCloseModal = () => {
     setIsOpen(false);
-    setActivity({});
+    setActivity(undefined);
+    setCurrentActivityId("");
+    setCurrentActivity(undefined);
   };
 
+  console.log(activity?.startTime);
   return (
     <Modal
       isOpen={isOpen}
@@ -78,6 +94,7 @@ export const CreateActivityModal = ({
           label=""
           placeholder="Select an activity type"
           onChange={handleOnChangeActivity}
+          value={activity?.type}
         >
           {Object.keys(ActivityType).map((key) => (
             <option key={key} value={key}>
@@ -90,34 +107,24 @@ export const CreateActivityModal = ({
           label="Name"
           placeholder="Name your activity"
           onChange={handleOnChangeActivity}
+          value={activity?.name}
         />
         <TextAreaField
           name="description"
           label="Description"
           placeholder="Describe your activity"
           onChange={handleOnChangeActivity}
+          value={activity?.description}
         />
         <TimePicker
           label="Start time"
           onChange={handleOnChangeStartTime}
-          slotProps={{
-            textField: {
-              onBeforeInput: (e) => {
-                e.preventDefault();
-              },
-            },
-          }}
+          value={activity?.startTime ? dayjs(activity.startTime) : undefined}
         />
         <TimePicker
           label="End time"
           onChange={handleOnChangeEndTime}
-          slotProps={{
-            textField: {
-              onBeforeInput: (e) => {
-                e.preventDefault();
-              },
-            },
-          }}
+          value={activity?.endTime ? dayjs(activity.endTime) : undefined}
         />
         <PlacesAutocomplete
           handleOnChangePlace={handleOnChangePlace}
@@ -138,15 +145,15 @@ export const CreateActivityModal = ({
         <Button
           variation="primary"
           disabled={
-            !activity.type ||
-            !activity.name ||
-            !activity.startTime ||
-            !activity.endTime ||
-            !activity.location
+            !activity?.type ||
+            !activity?.name ||
+            !activity?.startTime ||
+            !activity?.endTime ||
+            !activity?.location
           }
-          onClick={() => handleOnSubmit(activity)}
+          onClick={() => handleOnSubmit(activity!)}
         >
-          Add
+          {initialActivity ? "Edit" : "Create"}
         </Button>
       </Flex>
     </Modal>

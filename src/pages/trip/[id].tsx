@@ -7,8 +7,8 @@ import { GoogleMap } from "@react-google-maps/api";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { listActivities } from "@/graphql/queries";
-import { createActivity } from "@/graphql/mutations";
-import { Trip as TripModel } from "@/models";
+import { createActivity, deleteActivity } from "@/graphql/mutations";
+import { ActivityType, Trip as TripModel } from "@/models";
 import { Day as DayModel } from "@/models";
 import { Activity as ActivityModel } from "@/models";
 import { Navbar } from "@/components/Navbar";
@@ -21,6 +21,7 @@ import {
 import { MainContent } from "@/components/MainContent";
 import { getTripData } from "@/utils/api";
 import { sortActivities } from "@/utils/functions";
+import { DeleteActivityMutation } from "@/API";
 
 interface Props {
   trip: TripModel;
@@ -47,6 +48,8 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
   const [editImageModal, setEditImageModal] = useState(false);
   const [createActivityModal, setCreateActivityModal] = useState(false);
   const [currentDay, setCurrentDay] = useState<DayModel>();
+  const [currentActivityId, setCurrentActivityId] = useState<string>("");
+  const [currentActivity, setCurrentActivity] = useState<Activity>();
   const [activities, setActivities] = useState<ActivityModel[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -83,8 +86,37 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
         },
       });
       setActivities((prev) => sortActivities([...prev, data?.createActivity]));
-      toast.success("Activity created!", { theme: "colored" });
+      toast.success(`Activity ${currentActivity ? "updated" : "created"}!`, {
+        theme: "colored",
+      });
       setCreateActivityModal(false);
+    } catch (error) {
+      toast.error("There was an error!", { theme: "colored" });
+    }
+  };
+
+  const handleOnEditActivity = async (activity: Activity) => {
+    try {
+      // In DynamoDB, you can't update the primary key of an item ("startTime" is the sort key).
+      // So we need to delete the old item and create a new one.
+      await API.graphql<GraphQLQuery<DeleteActivityMutation>>({
+        query: deleteActivity,
+        variables: {
+          input: {
+            dayId: currentDay?.id,
+            startTime: currentActivity?.startTime!.toISOString(),
+          },
+        },
+      });
+      setActivities((prev) => {
+        const index = prev.findIndex(
+          (activity) => activity.id === currentActivityId
+        );
+        const newActivities = [...prev];
+        newActivities.splice(index, 1);
+        return newActivities;
+      });
+      handleOnCreateActivity(activity);
     } catch (error) {
       toast.error("There was an error!", { theme: "colored" });
     }
@@ -110,7 +142,14 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
       <CreateActivityModal
         isOpen={createActivityModal}
         setIsOpen={setCreateActivityModal}
-        handleOnSubmit={handleOnCreateActivity}
+        handleOnSubmit={(activity) =>
+          currentActivity
+            ? handleOnEditActivity(activity)
+            : handleOnCreateActivity(activity)
+        }
+        initialActivity={currentActivity}
+        setCurrentActivity={setCurrentActivity}
+        setCurrentActivityId={setCurrentActivityId}
       />
       <Flex
         direction="row"
@@ -129,6 +168,21 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
             imgUrl={imgUrl}
             openEditImageModal={() => setEditImageModal(true)}
             handleOnClickNewActivity={() => setCreateActivityModal(true)}
+            handleOnClickEditActivity={(activity: ActivityModel) => {
+              setCurrentActivityId(activity.id);
+              setCurrentActivity({
+                type: activity.type as ActivityType,
+                name: activity.name,
+                description: activity.description || "",
+                startTime: new Date(activity.startTime),
+                endTime: new Date(activity.endTime),
+                location: {
+                  latitude: activity.location?.latitude,
+                  longitude: activity.location?.longitude,
+                },
+              });
+              setCreateActivityModal(true);
+            }}
             activities={activities}
             isLoadingActivities={isLoading}
             removeActivity={removeActivity}
