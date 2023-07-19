@@ -108,7 +108,7 @@ export const MainContent = ({
                 <Loader width={50} height={50} />
               </Flex>
             ) : (
-              <Expander id="activity-expander" type="single">
+              <Expander id="activity-expander" type="multiple">
                 {activities.map((activity, index) => (
                   <ExpanderItem
                     key={`${activity.dayId}-${index}`}

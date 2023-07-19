@@ -86,9 +86,7 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
         },
       });
       setActivities((prev) => sortActivities([...prev, data?.createActivity]));
-      toast.success(`Activity ${currentActivity ? "updated" : "created"}!`, {
-        theme: "colored",
-      });
+      toast.success("Activity created!", { theme: "colored" });
     } catch (error) {
       toast.error("There was an error!", { theme: "colored" });
     }
@@ -98,21 +96,33 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
     try {
       // In DynamoDB, you can't update the primary key of an item ("startTime" is the sort key).
       // So we need to delete the old item and create a new one.
+      const { data } = await API.graphql<GraphQLQuery<any>>({
+        query: createActivity,
+        variables: {
+          input: {
+            dayId: currentDay?.id,
+            startTime: activity.startTime!.toISOString(),
+            endTime: activity.endTime!.toISOString(),
+            name: activity.name,
+            description: activity.description,
+            location: activity.location,
+            type: activity.type,
+          },
+        },
+      });
+      setActivities((prev) => {
+        const newActivities = prev.filter(
+          (activity) => activity.id !== currentActivityId
+        );
+        return sortActivities([...newActivities, data?.createActivity]);
+      });
+      toast.success("Activity updated!", { theme: "colored" });
       await API.graphql<GraphQLQuery<DeleteActivityMutation>>({
         query: deleteActivity,
         variables: {
           input: { id: currentActivityId },
         },
       });
-      setActivities((prev) => {
-        const index = prev.findIndex(
-          (activity) => activity.id === currentActivityId
-        );
-        const newActivities = [...prev];
-        newActivities.splice(index, 1);
-        return newActivities;
-      });
-      handleOnCreateActivity(activity);
     } catch (error) {
       toast.error("There was an error!", { theme: "colored" });
     }
