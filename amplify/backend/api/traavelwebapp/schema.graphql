@@ -44,14 +44,13 @@ type User @model @auth(rules: [{ allow: public }]) {
 }
 
 type Trip @model @auth(rules: [{ allow: public }]) {
-  id: ID! @primaryKey(sortKeyFields: ["startDate"])
+  id: ID!
+  userId: ID! @primaryKey(sortKeyFields: ["startDate"])
   name: String!
   destination: String!
   location: Location!
   startDate: AWSDateTime!
   endDate: AWSDateTime!
   imgUrl: String
-  owner: User @belongsTo(fields: ["ownerId"])
-  ownerId: ID! @index(name: "byUser")
   days: [Day] @hasMany
 }
