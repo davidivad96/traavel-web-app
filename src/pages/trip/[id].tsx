@@ -3,10 +3,10 @@ import { GetServerSideProps } from "next";
 import { API, withSSRContext } from "aws-amplify";
 import { Flex } from "@aws-amplify/ui-react";
 import { GraphQLQuery } from "@aws-amplify/api";
-import { GoogleMap } from "@react-google-maps/api";
+import { GoogleMap, MarkerF } from "@react-google-maps/api";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
-import { listActivities } from "@/graphql/queries";
+import { activitiesByDayIdAndStartTime } from "@/graphql/queries";
 import { createActivity, deleteActivity } from "@/graphql/mutations";
 import { ActivityType, Trip as TripModel } from "@/models";
 import { Day as DayModel } from "@/models";
@@ -22,6 +22,28 @@ import { MainContent } from "@/components/MainContent";
 import { getTripData } from "@/utils/api";
 import { sortActivities } from "@/utils/functions";
 import { DeleteActivityMutation } from "@/API";
+
+const mapStyles = [
+  {
+    featureType: "poi",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "poi",
+    elementType: "labels.text",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "road",
+    elementType: "labels.icon",
+    stylers: [{ visibility: "off" }],
+  },
+  {
+    featureType: "road.local",
+    elementType: "labels",
+    stylers: [{ visibility: "off" }],
+  },
+];
 
 interface Props {
   trip: TripModel;
@@ -58,10 +80,10 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
     setCurrentDay(day);
     try {
       const { data } = await API.graphql<GraphQLQuery<any>>({
-        query: listActivities,
+        query: activitiesByDayIdAndStartTime,
         variables: { dayId: day.id },
       });
-      setActivities(data?.listActivities?.items || []);
+      setActivities(data?.activitiesByDayIdAndStartTime?.items || []);
     } catch (error) {
       toast.error("There was an error!", { theme: "colored" });
     } finally {
@@ -202,10 +224,19 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
               lng: location?.longitude || 0,
             }}
             zoom={13}
-            onClick={(e) => {
-              console.log(e);
-            }}
-          />
+            options={{ styles: mapStyles }}
+          >
+            {activities.map((activity) => (
+              <MarkerF
+                key={activity.id}
+                position={{
+                  lat: activity.location?.latitude || 0,
+                  lng: activity.location?.longitude || 0,
+                }}
+                animation={google.maps.Animation.DROP}
+              />
+            ))}
+          </GoogleMap>
         </Flex>
       </Flex>
     </>
