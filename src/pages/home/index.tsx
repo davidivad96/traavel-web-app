@@ -120,7 +120,14 @@ const Home = ({ user, trips: userTrips }: Props) => {
                     alignItems="center"
                     style={{ top: 20, right: 20 }}
                   >
-                    <MdDelete width="100%" color="#FFF" />
+                    <MdDelete
+                      width="100%"
+                      color="#FFF"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteTrip(trip.id);
+                      }}
+                    />
                   </Flex>
                 )}
                 <View minHeight="15rem" position="relative" marginBottom={15}>
