@@ -101,7 +101,6 @@ export const MainContent = ({
             id="edit-image-button"
             justifyContent="center"
             alignItems="center"
-            style={{ top: 15, right: 15 }}
           >
             <FaEdit width="100%" color="#FFF" />
           </Flex>

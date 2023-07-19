@@ -71,18 +71,52 @@ const Home = ({ user, trips: userTrips }: Props) => {
   return (
     <>
       <NewTripModal isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
-      <ScrollView height="calc(100vh - 140px)" padding="40px 60px">
-        <Flex
-          justifyContent="space-between"
-          alignItems="center"
-          height={50}
-          marginBottom={15}
-        >
-          <Heading level={4}>My trips</Heading>
-          <Button variation="primary" onClick={() => setIsOpen(true)}>
-            <AiOutlinePlus size={22} style={{ marginRight: "5px" }} /> New trip
-          </Button>
-        </Flex>
+      <ScrollView
+        height="calc(100vh - 140px)"
+        padding="40px 60px"
+        style={
+          trips.length === 0
+            ? {
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }
+            : {}
+        }
+      >
+        {trips.length === 0 ? (
+          <>
+            <Image
+              src="/images/empty_state_image.svg"
+              width={500}
+              height={500}
+              alt="Main page empty state image"
+            />
+            <Heading level={4} marginBottom={15}>
+              You don&apos;t have any trips yet
+            </Heading>
+            <Text marginBottom={15}>
+              Create your first trip and start planning your next adventure!
+            </Text>
+            <Button variation="primary" onClick={() => setIsOpen(true)}>
+              <AiOutlinePlus size={22} style={{ marginRight: "5px" }} /> Create
+              my first trip
+            </Button>
+          </>
+        ) : (
+          <Flex
+            justifyContent="space-between"
+            alignItems="center"
+            height={50}
+            marginBottom={15}
+          >
+            <Heading level={4}>My trips</Heading>
+            <Button variation="primary" onClick={() => setIsOpen(true)}>
+              <AiOutlinePlus size={22} style={{ marginRight: "5px" }} /> New
+              trip
+            </Button>
+          </Flex>
+        )}
         <Collection
           items={trips}
           type="grid"
@@ -93,11 +127,7 @@ const Home = ({ user, trips: userTrips }: Props) => {
             large: "1fr 1fr 1fr 1fr",
           }}
           gap="20px"
-          searchNoResultsFound={
-            <Text textAlign="center">
-              No trips yet. Try creating a new one!
-            </Text>
-          }
+          searchNoResultsFound={<></>}
         >
           {(trip) => {
             const totalDays = getNumberOfDays(
@@ -107,7 +137,7 @@ const Home = ({ user, trips: userTrips }: Props) => {
             return (
               <Card
                 key={trip.id}
-                style={{ cursor: "pointer", position: "relative" }}
+                style={{ cursor: "pointer", position: "relative", padding: 0 }}
                 onClick={() => router.push(`/trip/${trip.id}`)}
                 onMouseEnter={() => setIsHovered({ [trip.id]: true })}
                 onMouseLeave={() => setIsHovered({ [trip.id]: false })}
@@ -117,7 +147,6 @@ const Home = ({ user, trips: userTrips }: Props) => {
                     id="edit-image-button"
                     justifyContent="center"
                     alignItems="center"
-                    style={{ top: 20, right: 20 }}
                   >
                     <MdDelete
                       width="100%"
