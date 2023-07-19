@@ -11,19 +11,17 @@ import {
 import { BiArrowBack } from "react-icons/bi";
 
 interface Props {
-  title: string;
-  showAvatar?: boolean;
+  title?: string;
+  showLogo?: boolean;
   showGoBack?: boolean;
   showSignOut?: boolean;
-  avatarUrl?: string | null;
 }
 
 export const Navbar = ({
   title,
-  showAvatar = false,
+  showLogo = false,
   showGoBack = false,
   showSignOut = false,
-  avatarUrl,
 }: Props) => {
   const { signOut } = useAuthenticator((context) => [context.signOut]);
   const router = useRouter();
@@ -34,16 +32,17 @@ export const Navbar = ({
   };
 
   return (
-    <View height={70}>
+    <View height={100}>
       <Flex
         direction="row"
         justifyContent={
-          showAvatar ? "space-between" : showGoBack ? "flex-start" : "center"
+          showLogo ? "space-between" : showGoBack ? "flex-start" : "center"
         }
         alignItems="center"
         backgroundColor="#FFF"
         padding="9px 15px"
         gap={30}
+        height="98%"
       >
         <Flex direction="row">
           {showGoBack && (
@@ -51,15 +50,15 @@ export const Navbar = ({
               <BiArrowBack />
             </Button>
           )}
-          <Heading level={2}>{title}</Heading>
-          {showAvatar && (
+          {showLogo && (
             <Image
-              src={avatarUrl || "/images/default_avatar_image.png"}
-              alt="Profile image"
-              width={50}
-              height={50}
+              src={"/images/traavel_logo.png"}
+              alt="Logo image"
+              width={275}
+              height={80}
             />
           )}
+          {title && <Heading level={2}>{title}</Heading>}
         </Flex>
         {showSignOut && <Button onClick={handleSignOut}>Sign out</Button>}
       </Flex>

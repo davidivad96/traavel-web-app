@@ -72,8 +72,8 @@ const Home = ({ user, trips: userTrips }: Props) => {
     <>
       <NewTripModal isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
       <ScrollView
-        height="calc(100vh - 140px)"
-        padding="40px 60px"
+        height="calc(100vh - 250px)"
+        padding="20px 60px"
         style={
           trips.length === 0
             ? {
@@ -88,8 +88,8 @@ const Home = ({ user, trips: userTrips }: Props) => {
           <>
             <Image
               src="/images/empty_state_image.svg"
-              width={500}
-              height={500}
+              width={350}
+              height={350}
               alt="Main page empty state image"
             />
             <Heading level={4} marginBottom={15}>
@@ -98,7 +98,11 @@ const Home = ({ user, trips: userTrips }: Props) => {
             <Text marginBottom={15}>
               Create your first trip and start planning your next adventure!
             </Text>
-            <Button variation="primary" onClick={() => setIsOpen(true)}>
+            <Button
+              variation="primary"
+              onClick={() => setIsOpen(true)}
+              marginBottom={30}
+            >
               <AiOutlinePlus size={22} style={{ marginRight: "5px" }} /> Create
               my first trip
             </Button>
@@ -189,31 +193,17 @@ const Home = ({ user, trips: userTrips }: Props) => {
 };
 
 interface LayoutProps {
-  userName: string;
-  userAvatarUrl: string;
   children: React.ReactNode;
 }
 
-const Layout = ({ userName, userAvatarUrl, children }: LayoutProps) => (
+const Layout = ({ children }: LayoutProps) => (
   <>
-    <Navbar
-      title={`Hello, ${userName}`}
-      showAvatar
-      avatarUrl={userAvatarUrl}
-      showSignOut
-    />
+    <Navbar showLogo showSignOut />
     <Footer />
     {children}
   </>
 );
 
-Home.getLayout = (page: React.ReactNode, { user }: Props) => (
-  <Layout
-    userName={user.name || "anonymous user"}
-    userAvatarUrl={user.avatarUrl || "/images/default_avatar_image.png"}
-  >
-    {page}
-  </Layout>
-);
+Home.getLayout = (page: React.ReactNode) => <Layout>{page}</Layout>;
 
 export default Home;

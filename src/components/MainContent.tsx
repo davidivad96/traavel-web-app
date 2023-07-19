@@ -108,7 +108,7 @@ export const MainContent = ({
         {title ? (
           <View
             padding="0 30px 20px 30px"
-            height="calc(100vh - 70px)"
+            height="calc(100vh - 110px)"
             style={{ overflowY: "scroll" }}
           >
             <Flex

@@ -181,7 +181,7 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
       />
       <Flex
         direction="row"
-        height="calc(100vh - 70px)"
+        height="calc(100vh - 110px)"
         overflow="hidden"
         style={{ gap: 0 }}
       >
