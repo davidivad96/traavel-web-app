@@ -41,10 +41,10 @@ exports.handler = async (event) => {
     // Query to get all Days associated with the Trip.
     const queryDaysParams = {
       TableName: process.env.API_TRAAVELWEBAPP_DAYTABLE_NAME,
+      IndexName: "byTrip",
       KeyConditionExpression: "tripId = :tripId",
       ExpressionAttributeValues: { ":tripId": tripId },
-      ProjectionExpression: "id, #date",
-      ExpressionAttributeNames: { "#date": "date" },
+      ProjectionExpression: "id",
     };
     const { Items: days } = await client.query(queryDaysParams).promise();
     console.log(`DAYS: ${JSON.stringify(days)}`);
@@ -55,9 +55,10 @@ exports.handler = async (event) => {
     for (const day of days) {
       const queryActivitiesParams = {
         TableName: process.env.API_TRAAVELWEBAPP_ACTIVITYTABLE_NAME,
+        IndexName: "byDay",
         KeyConditionExpression: "dayId = :dayId",
         ExpressionAttributeValues: { ":dayId": day.id },
-        ProjectionExpression: "startTime",
+        ProjectionExpression: "id",
       };
 
       const { Items: activities } = await client
@@ -69,7 +70,7 @@ exports.handler = async (event) => {
       for (const activity of activities) {
         const deleteActivityParams = {
           TableName: process.env.API_TRAAVELWEBAPP_ACTIVITYTABLE_NAME,
-          Key: { dayId: day.id, startTime: activity.startTime },
+          Key: { id: activity.id },
         };
         activityDeletionPromises.push(
           client.delete(deleteActivityParams).promise()
@@ -79,7 +80,7 @@ exports.handler = async (event) => {
       // Delete this day
       const deleteDayParams = {
         TableName: process.env.API_TRAAVELWEBAPP_DAYTABLE_NAME,
-        Key: { tripId, date: day.date },
+        Key: { id: day.id },
       };
       dayDeletionPromises.push(client.delete(deleteDayParams).promise());
     }

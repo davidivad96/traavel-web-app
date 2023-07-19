@@ -52,7 +52,7 @@ export const MainContent = ({
       removeActivity(activityId);
       await API.graphql<GraphQLQuery<DeleteActivityMutation>>({
         query: deleteActivity,
-        variables: { input: { dayId, startTime } },
+        variables: { input: { id: activityId } },
       });
       toast.success("Activity deleted!", { theme: "colored" });
     } catch (error) {

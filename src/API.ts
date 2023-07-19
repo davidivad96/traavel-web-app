@@ -11,8 +11,7 @@ export type CreateActivityInput = {
   description?: string | null,
   location: LocationInput,
   type: ActivityType,
-  dayActivitiesTripId?: string | null,
-  dayActivitiesDate?: string | null,
+  dayActivitiesId?: string | null,
 };
 
 export type LocationInput = {
@@ -36,6 +35,8 @@ export enum ActivityType {
 
 
 export type ModelActivityConditionInput = {
+  dayId?: ModelIDInput | null,
+  startTime?: ModelStringInput | null,
   endTime?: ModelStringInput | null,
   name?: ModelStringInput | null,
   description?: ModelStringInput | null,
@@ -43,11 +44,10 @@ export type ModelActivityConditionInput = {
   and?: Array< ModelActivityConditionInput | null > | null,
   or?: Array< ModelActivityConditionInput | null > | null,
   not?: ModelActivityConditionInput | null,
-  dayActivitiesTripId?: ModelIDInput | null,
-  dayActivitiesDate?: ModelStringInput | null,
+  dayActivitiesId?: ModelIDInput | null,
 };
 
-export type ModelStringInput = {
+export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -87,12 +87,7 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelActivityTypeInput = {
-  eq?: ActivityType | null,
-  ne?: ActivityType | null,
-};
-
-export type ModelIDInput = {
+export type ModelStringInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -108,6 +103,11 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
+export type ModelActivityTypeInput = {
+  eq?: ActivityType | null,
+  ne?: ActivityType | null,
+};
+
 export type Activity = {
   __typename: "Activity",
   id: string,
@@ -120,8 +120,7 @@ export type Activity = {
   type: ActivityType,
   createdAt: string,
   updatedAt: string,
-  dayActivitiesTripId?: string | null,
-  dayActivitiesDate?: string | null,
+  dayActivitiesId?: string | null,
 };
 
 export type Location = {
@@ -131,21 +130,19 @@ export type Location = {
 };
 
 export type UpdateActivityInput = {
-  id?: string | null,
-  dayId: string,
-  startTime: string,
+  id: string,
+  dayId?: string | null,
+  startTime?: string | null,
   endTime?: string | null,
   name?: string | null,
   description?: string | null,
   location?: LocationInput | null,
   type?: ActivityType | null,
-  dayActivitiesTripId?: string | null,
-  dayActivitiesDate?: string | null,
+  dayActivitiesId?: string | null,
 };
 
 export type DeleteActivityInput = {
-  dayId: string,
-  startTime: string,
+  id: string,
 };
 
 export type CreateDayInput = {
@@ -153,15 +150,15 @@ export type CreateDayInput = {
   tripId: string,
   date: string,
   tripDaysId?: string | null,
-  tripDaysStartDate?: string | null,
 };
 
 export type ModelDayConditionInput = {
+  tripId?: ModelIDInput | null,
+  date?: ModelStringInput | null,
   and?: Array< ModelDayConditionInput | null > | null,
   or?: Array< ModelDayConditionInput | null > | null,
   not?: ModelDayConditionInput | null,
   tripDaysId?: ModelIDInput | null,
-  tripDaysStartDate?: ModelStringInput | null,
 };
 
 export type Day = {
@@ -173,7 +170,6 @@ export type Day = {
   createdAt: string,
   updatedAt: string,
   tripDaysId?: string | null,
-  tripDaysStartDate?: string | null,
 };
 
 export type ModelActivityConnection = {
@@ -183,16 +179,14 @@ export type ModelActivityConnection = {
 };
 
 export type UpdateDayInput = {
-  id?: string | null,
-  tripId: string,
-  date: string,
+  id: string,
+  tripId?: string | null,
+  date?: string | null,
   tripDaysId?: string | null,
-  tripDaysStartDate?: string | null,
 };
 
 export type DeleteDayInput = {
-  tripId: string,
-  date: string,
+  id: string,
 };
 
 export type CreateUserInput = {
@@ -231,14 +225,13 @@ export type ModelTripConnection = {
 export type Trip = {
   __typename: "Trip",
   id: string,
+  userId: string,
   name: string,
   destination: string,
   location: Location,
   startDate: string,
   endDate: string,
   imgUrl?: string | null,
-  owner?: User | null,
-  ownerId: string,
   days?: ModelDayConnection | null,
   createdAt: string,
   updatedAt: string,
@@ -264,22 +257,23 @@ export type DeleteUserInput = {
 
 export type CreateTripInput = {
   id?: string | null,
+  userId: string,
   name: string,
   destination: string,
   location: LocationInput,
   startDate: string,
   endDate: string,
   imgUrl?: string | null,
-  ownerId: string,
   userTripsId?: string | null,
 };
 
 export type ModelTripConditionInput = {
+  userId?: ModelIDInput | null,
   name?: ModelStringInput | null,
   destination?: ModelStringInput | null,
+  startDate?: ModelStringInput | null,
   endDate?: ModelStringInput | null,
   imgUrl?: ModelStringInput | null,
-  ownerId?: ModelIDInput | null,
   and?: Array< ModelTripConditionInput | null > | null,
   or?: Array< ModelTripConditionInput | null > | null,
   not?: ModelTripConditionInput | null,
@@ -288,29 +282,18 @@ export type ModelTripConditionInput = {
 
 export type UpdateTripInput = {
   id: string,
+  userId?: string | null,
   name?: string | null,
   destination?: string | null,
   location?: LocationInput | null,
-  startDate: string,
+  startDate?: string | null,
   endDate?: string | null,
   imgUrl?: string | null,
-  ownerId?: string | null,
   userTripsId?: string | null,
 };
 
 export type DeleteTripInput = {
   id: string,
-  startDate: string,
-};
-
-export type ModelStringKeyConditionInput = {
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
 };
 
 export type ModelActivityFilterInput = {
@@ -324,8 +307,7 @@ export type ModelActivityFilterInput = {
   and?: Array< ModelActivityFilterInput | null > | null,
   or?: Array< ModelActivityFilterInput | null > | null,
   not?: ModelActivityFilterInput | null,
-  dayActivitiesTripId?: ModelIDInput | null,
-  dayActivitiesDate?: ModelStringInput | null,
+  dayActivitiesId?: ModelIDInput | null,
 };
 
 export enum ModelSortDirection {
@@ -333,6 +315,16 @@ export enum ModelSortDirection {
   DESC = "DESC",
 }
 
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
 
 export type ModelDayFilterInput = {
   id?: ModelIDInput | null,
@@ -342,7 +334,6 @@ export type ModelDayFilterInput = {
   or?: Array< ModelDayFilterInput | null > | null,
   not?: ModelDayFilterInput | null,
   tripDaysId?: ModelIDInput | null,
-  tripDaysStartDate?: ModelStringInput | null,
 };
 
 export type ModelUserFilterInput = {
@@ -363,12 +354,12 @@ export type ModelUserConnection = {
 
 export type ModelTripFilterInput = {
   id?: ModelIDInput | null,
+  userId?: ModelIDInput | null,
   name?: ModelStringInput | null,
   destination?: ModelStringInput | null,
   startDate?: ModelStringInput | null,
   endDate?: ModelStringInput | null,
   imgUrl?: ModelStringInput | null,
-  ownerId?: ModelIDInput | null,
   and?: Array< ModelTripFilterInput | null > | null,
   or?: Array< ModelTripFilterInput | null > | null,
   not?: ModelTripFilterInput | null,
@@ -436,12 +427,12 @@ export type ModelSubscriptionUserFilterInput = {
 
 export type ModelSubscriptionTripFilterInput = {
   id?: ModelSubscriptionIDInput | null,
+  userId?: ModelSubscriptionIDInput | null,
   name?: ModelSubscriptionStringInput | null,
   destination?: ModelSubscriptionStringInput | null,
   startDate?: ModelSubscriptionStringInput | null,
   endDate?: ModelSubscriptionStringInput | null,
   imgUrl?: ModelSubscriptionStringInput | null,
-  ownerId?: ModelSubscriptionIDInput | null,
   and?: Array< ModelSubscriptionTripFilterInput | null > | null,
   or?: Array< ModelSubscriptionTripFilterInput | null > | null,
 };
@@ -468,8 +459,7 @@ export type CreateActivityMutation = {
     type: ActivityType,
     createdAt: string,
     updatedAt: string,
-    dayActivitiesTripId?: string | null,
-    dayActivitiesDate?: string | null,
+    dayActivitiesId?: string | null,
   } | null,
 };
 
@@ -495,8 +485,7 @@ export type UpdateActivityMutation = {
     type: ActivityType,
     createdAt: string,
     updatedAt: string,
-    dayActivitiesTripId?: string | null,
-    dayActivitiesDate?: string | null,
+    dayActivitiesId?: string | null,
   } | null,
 };
 
@@ -522,8 +511,7 @@ export type DeleteActivityMutation = {
     type: ActivityType,
     createdAt: string,
     updatedAt: string,
-    dayActivitiesTripId?: string | null,
-    dayActivitiesDate?: string | null,
+    dayActivitiesId?: string | null,
   } | null,
 };
 
@@ -551,15 +539,13 @@ export type CreateDayMutation = {
         type: ActivityType,
         createdAt: string,
         updatedAt: string,
-        dayActivitiesTripId?: string | null,
-        dayActivitiesDate?: string | null,
+        dayActivitiesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
-    tripDaysStartDate?: string | null,
   } | null,
 };
 
@@ -587,15 +573,13 @@ export type UpdateDayMutation = {
         type: ActivityType,
         createdAt: string,
         updatedAt: string,
-        dayActivitiesTripId?: string | null,
-        dayActivitiesDate?: string | null,
+        dayActivitiesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
-    tripDaysStartDate?: string | null,
   } | null,
 };
 
@@ -623,15 +607,13 @@ export type DeleteDayMutation = {
         type: ActivityType,
         createdAt: string,
         updatedAt: string,
-        dayActivitiesTripId?: string | null,
-        dayActivitiesDate?: string | null,
+        dayActivitiesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
-    tripDaysStartDate?: string | null,
   } | null,
 };
 
@@ -652,12 +634,12 @@ export type CreateUserMutation = {
       items:  Array< {
         __typename: "Trip",
         id: string,
+        userId: string,
         name: string,
         destination: string,
         startDate: string,
         endDate: string,
         imgUrl?: string | null,
-        ownerId: string,
         createdAt: string,
         updatedAt: string,
         userTripsId?: string | null,
@@ -686,12 +668,12 @@ export type UpdateUserMutation = {
       items:  Array< {
         __typename: "Trip",
         id: string,
+        userId: string,
         name: string,
         destination: string,
         startDate: string,
         endDate: string,
         imgUrl?: string | null,
-        ownerId: string,
         createdAt: string,
         updatedAt: string,
         userTripsId?: string | null,
@@ -720,12 +702,12 @@ export type DeleteUserMutation = {
       items:  Array< {
         __typename: "Trip",
         id: string,
+        userId: string,
         name: string,
         destination: string,
         startDate: string,
         endDate: string,
         imgUrl?: string | null,
-        ownerId: string,
         createdAt: string,
         updatedAt: string,
         userTripsId?: string | null,
@@ -746,6 +728,7 @@ export type CreateTripMutation = {
   createTrip?:  {
     __typename: "Trip",
     id: string,
+    userId: string,
     name: string,
     destination: string,
     location:  {
@@ -756,20 +739,6 @@ export type CreateTripMutation = {
     startDate: string,
     endDate: string,
     imgUrl?: string | null,
-    owner?:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name?: string | null,
-      avatarUrl?: string | null,
-      trips?:  {
-        __typename: "ModelTripConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    ownerId: string,
     days?:  {
       __typename: "ModelDayConnection",
       items:  Array< {
@@ -780,7 +749,6 @@ export type CreateTripMutation = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
-        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -799,6 +767,7 @@ export type UpdateTripMutation = {
   updateTrip?:  {
     __typename: "Trip",
     id: string,
+    userId: string,
     name: string,
     destination: string,
     location:  {
@@ -809,20 +778,6 @@ export type UpdateTripMutation = {
     startDate: string,
     endDate: string,
     imgUrl?: string | null,
-    owner?:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name?: string | null,
-      avatarUrl?: string | null,
-      trips?:  {
-        __typename: "ModelTripConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    ownerId: string,
     days?:  {
       __typename: "ModelDayConnection",
       items:  Array< {
@@ -833,7 +788,6 @@ export type UpdateTripMutation = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
-        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -852,6 +806,7 @@ export type DeleteTripMutation = {
   deleteTrip?:  {
     __typename: "Trip",
     id: string,
+    userId: string,
     name: string,
     destination: string,
     location:  {
@@ -862,20 +817,6 @@ export type DeleteTripMutation = {
     startDate: string,
     endDate: string,
     imgUrl?: string | null,
-    owner?:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name?: string | null,
-      avatarUrl?: string | null,
-      trips?:  {
-        __typename: "ModelTripConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    ownerId: string,
     days?:  {
       __typename: "ModelDayConnection",
       items:  Array< {
@@ -886,7 +827,6 @@ export type DeleteTripMutation = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
-        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -897,8 +837,7 @@ export type DeleteTripMutation = {
 };
 
 export type GetActivityQueryVariables = {
-  dayId: string,
-  startTime: string,
+  id: string,
 };
 
 export type GetActivityQuery = {
@@ -918,14 +857,12 @@ export type GetActivityQuery = {
     type: ActivityType,
     createdAt: string,
     updatedAt: string,
-    dayActivitiesTripId?: string | null,
-    dayActivitiesDate?: string | null,
+    dayActivitiesId?: string | null,
   } | null,
 };
 
 export type ListActivitiesQueryVariables = {
-  dayId?: string | null,
-  startTime?: ModelStringKeyConditionInput | null,
+  id?: string | null,
   filter?: ModelActivityFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
@@ -951,16 +888,48 @@ export type ListActivitiesQuery = {
       type: ActivityType,
       createdAt: string,
       updatedAt: string,
-      dayActivitiesTripId?: string | null,
-      dayActivitiesDate?: string | null,
+      dayActivitiesId?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ActivitiesByDayIdAndStartTimeQueryVariables = {
+  dayId: string,
+  startTime?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelActivityFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ActivitiesByDayIdAndStartTimeQuery = {
+  activitiesByDayIdAndStartTime?:  {
+    __typename: "ModelActivityConnection",
+    items:  Array< {
+      __typename: "Activity",
+      id: string,
+      dayId: string,
+      startTime: string,
+      endTime: string,
+      name: string,
+      description?: string | null,
+      location:  {
+        __typename: "Location",
+        latitude?: number | null,
+        longitude?: number | null,
+      },
+      type: ActivityType,
+      createdAt: string,
+      updatedAt: string,
+      dayActivitiesId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
 export type GetDayQueryVariables = {
-  tripId: string,
-  date: string,
+  id: string,
 };
 
 export type GetDayQuery = {
@@ -982,21 +951,18 @@ export type GetDayQuery = {
         type: ActivityType,
         createdAt: string,
         updatedAt: string,
-        dayActivitiesTripId?: string | null,
-        dayActivitiesDate?: string | null,
+        dayActivitiesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
-    tripDaysStartDate?: string | null,
   } | null,
 };
 
 export type ListDaysQueryVariables = {
-  tripId?: string | null,
-  date?: ModelStringKeyConditionInput | null,
+  id?: string | null,
   filter?: ModelDayFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
@@ -1018,7 +984,35 @@ export type ListDaysQuery = {
       createdAt: string,
       updatedAt: string,
       tripDaysId?: string | null,
-      tripDaysStartDate?: string | null,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type DaysByTripIdAndDateQueryVariables = {
+  tripId: string,
+  date?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelDayFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type DaysByTripIdAndDateQuery = {
+  daysByTripIdAndDate?:  {
+    __typename: "ModelDayConnection",
+    items:  Array< {
+      __typename: "Day",
+      id: string,
+      tripId: string,
+      date: string,
+      activities?:  {
+        __typename: "ModelActivityConnection",
+        nextToken?: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+      tripDaysId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1040,12 +1034,12 @@ export type GetUserQuery = {
       items:  Array< {
         __typename: "Trip",
         id: string,
+        userId: string,
         name: string,
         destination: string,
         startDate: string,
         endDate: string,
         imgUrl?: string | null,
-        ownerId: string,
         createdAt: string,
         updatedAt: string,
         userTripsId?: string | null,
@@ -1058,9 +1052,11 @@ export type GetUserQuery = {
 };
 
 export type ListUsersQueryVariables = {
+  id?: string | null,
   filter?: ModelUserFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListUsersQuery = {
@@ -1085,13 +1081,13 @@ export type ListUsersQuery = {
 
 export type GetTripQueryVariables = {
   id: string,
-  startDate: string,
 };
 
 export type GetTripQuery = {
   getTrip?:  {
     __typename: "Trip",
     id: string,
+    userId: string,
     name: string,
     destination: string,
     location:  {
@@ -1102,20 +1098,6 @@ export type GetTripQuery = {
     startDate: string,
     endDate: string,
     imgUrl?: string | null,
-    owner?:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name?: string | null,
-      avatarUrl?: string | null,
-      trips?:  {
-        __typename: "ModelTripConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    ownerId: string,
     days?:  {
       __typename: "ModelDayConnection",
       items:  Array< {
@@ -1126,7 +1108,6 @@ export type GetTripQuery = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
-        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1138,7 +1119,6 @@ export type GetTripQuery = {
 
 export type ListTripsQueryVariables = {
   id?: string | null,
-  startDate?: ModelStringKeyConditionInput | null,
   filter?: ModelTripFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
@@ -1151,6 +1131,7 @@ export type ListTripsQuery = {
     items:  Array< {
       __typename: "Trip",
       id: string,
+      userId: string,
       name: string,
       destination: string,
       location:  {
@@ -1161,16 +1142,6 @@ export type ListTripsQuery = {
       startDate: string,
       endDate: string,
       imgUrl?: string | null,
-      owner?:  {
-        __typename: "User",
-        id: string,
-        email: string,
-        name?: string | null,
-        avatarUrl?: string | null,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      ownerId: string,
       days?:  {
         __typename: "ModelDayConnection",
         nextToken?: string | null,
@@ -1183,20 +1154,22 @@ export type ListTripsQuery = {
   } | null,
 };
 
-export type TripsByOwnerIdQueryVariables = {
-  ownerId: string,
+export type TripsByUserIdAndStartDateQueryVariables = {
+  userId: string,
+  startDate?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelTripFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type TripsByOwnerIdQuery = {
-  tripsByOwnerId?:  {
+export type TripsByUserIdAndStartDateQuery = {
+  tripsByUserIdAndStartDate?:  {
     __typename: "ModelTripConnection",
     items:  Array< {
       __typename: "Trip",
       id: string,
+      userId: string,
       name: string,
       destination: string,
       location:  {
@@ -1207,16 +1180,6 @@ export type TripsByOwnerIdQuery = {
       startDate: string,
       endDate: string,
       imgUrl?: string | null,
-      owner?:  {
-        __typename: "User",
-        id: string,
-        email: string,
-        name?: string | null,
-        avatarUrl?: string | null,
-        createdAt: string,
-        updatedAt: string,
-      } | null,
-      ownerId: string,
       days?:  {
         __typename: "ModelDayConnection",
         nextToken?: string | null,
@@ -1250,8 +1213,7 @@ export type OnCreateActivitySubscription = {
     type: ActivityType,
     createdAt: string,
     updatedAt: string,
-    dayActivitiesTripId?: string | null,
-    dayActivitiesDate?: string | null,
+    dayActivitiesId?: string | null,
   } | null,
 };
 
@@ -1276,8 +1238,7 @@ export type OnUpdateActivitySubscription = {
     type: ActivityType,
     createdAt: string,
     updatedAt: string,
-    dayActivitiesTripId?: string | null,
-    dayActivitiesDate?: string | null,
+    dayActivitiesId?: string | null,
   } | null,
 };
 
@@ -1302,8 +1263,7 @@ export type OnDeleteActivitySubscription = {
     type: ActivityType,
     createdAt: string,
     updatedAt: string,
-    dayActivitiesTripId?: string | null,
-    dayActivitiesDate?: string | null,
+    dayActivitiesId?: string | null,
   } | null,
 };
 
@@ -1330,15 +1290,13 @@ export type OnCreateDaySubscription = {
         type: ActivityType,
         createdAt: string,
         updatedAt: string,
-        dayActivitiesTripId?: string | null,
-        dayActivitiesDate?: string | null,
+        dayActivitiesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
-    tripDaysStartDate?: string | null,
   } | null,
 };
 
@@ -1365,15 +1323,13 @@ export type OnUpdateDaySubscription = {
         type: ActivityType,
         createdAt: string,
         updatedAt: string,
-        dayActivitiesTripId?: string | null,
-        dayActivitiesDate?: string | null,
+        dayActivitiesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
-    tripDaysStartDate?: string | null,
   } | null,
 };
 
@@ -1400,15 +1356,13 @@ export type OnDeleteDaySubscription = {
         type: ActivityType,
         createdAt: string,
         updatedAt: string,
-        dayActivitiesTripId?: string | null,
-        dayActivitiesDate?: string | null,
+        dayActivitiesId?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
-    tripDaysStartDate?: string | null,
   } | null,
 };
 
@@ -1428,12 +1382,12 @@ export type OnCreateUserSubscription = {
       items:  Array< {
         __typename: "Trip",
         id: string,
+        userId: string,
         name: string,
         destination: string,
         startDate: string,
         endDate: string,
         imgUrl?: string | null,
-        ownerId: string,
         createdAt: string,
         updatedAt: string,
         userTripsId?: string | null,
@@ -1461,12 +1415,12 @@ export type OnUpdateUserSubscription = {
       items:  Array< {
         __typename: "Trip",
         id: string,
+        userId: string,
         name: string,
         destination: string,
         startDate: string,
         endDate: string,
         imgUrl?: string | null,
-        ownerId: string,
         createdAt: string,
         updatedAt: string,
         userTripsId?: string | null,
@@ -1494,12 +1448,12 @@ export type OnDeleteUserSubscription = {
       items:  Array< {
         __typename: "Trip",
         id: string,
+        userId: string,
         name: string,
         destination: string,
         startDate: string,
         endDate: string,
         imgUrl?: string | null,
-        ownerId: string,
         createdAt: string,
         updatedAt: string,
         userTripsId?: string | null,
@@ -1519,6 +1473,7 @@ export type OnCreateTripSubscription = {
   onCreateTrip?:  {
     __typename: "Trip",
     id: string,
+    userId: string,
     name: string,
     destination: string,
     location:  {
@@ -1529,20 +1484,6 @@ export type OnCreateTripSubscription = {
     startDate: string,
     endDate: string,
     imgUrl?: string | null,
-    owner?:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name?: string | null,
-      avatarUrl?: string | null,
-      trips?:  {
-        __typename: "ModelTripConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    ownerId: string,
     days?:  {
       __typename: "ModelDayConnection",
       items:  Array< {
@@ -1553,7 +1494,6 @@ export type OnCreateTripSubscription = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
-        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1571,6 +1511,7 @@ export type OnUpdateTripSubscription = {
   onUpdateTrip?:  {
     __typename: "Trip",
     id: string,
+    userId: string,
     name: string,
     destination: string,
     location:  {
@@ -1581,20 +1522,6 @@ export type OnUpdateTripSubscription = {
     startDate: string,
     endDate: string,
     imgUrl?: string | null,
-    owner?:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name?: string | null,
-      avatarUrl?: string | null,
-      trips?:  {
-        __typename: "ModelTripConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    ownerId: string,
     days?:  {
       __typename: "ModelDayConnection",
       items:  Array< {
@@ -1605,7 +1532,6 @@ export type OnUpdateTripSubscription = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
-        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1623,6 +1549,7 @@ export type OnDeleteTripSubscription = {
   onDeleteTrip?:  {
     __typename: "Trip",
     id: string,
+    userId: string,
     name: string,
     destination: string,
     location:  {
@@ -1633,20 +1560,6 @@ export type OnDeleteTripSubscription = {
     startDate: string,
     endDate: string,
     imgUrl?: string | null,
-    owner?:  {
-      __typename: "User",
-      id: string,
-      email: string,
-      name?: string | null,
-      avatarUrl?: string | null,
-      trips?:  {
-        __typename: "ModelTripConnection",
-        nextToken?: string | null,
-      } | null,
-      createdAt: string,
-      updatedAt: string,
-    } | null,
-    ownerId: string,
     days?:  {
       __typename: "ModelDayConnection",
       items:  Array< {
@@ -1657,7 +1570,6 @@ export type OnDeleteTripSubscription = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
-        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,

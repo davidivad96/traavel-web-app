@@ -76,7 +76,6 @@ export const CreateActivityModal = ({
     setCurrentActivity(undefined);
   };
 
-  console.log(activity?.startTime);
   return (
     <Modal
       isOpen={isOpen}
@@ -151,7 +150,10 @@ export const CreateActivityModal = ({
             !activity?.endTime ||
             !activity?.location
           }
-          onClick={() => handleOnSubmit(activity!)}
+          onClick={() => {
+            handleOnSubmit(activity!);
+            handleOnCloseModal();
+          }}
         >
           {initialActivity ? "Edit" : "Create"}
         </Button>

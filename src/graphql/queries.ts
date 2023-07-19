@@ -3,8 +3,8 @@
 // this is an auto generated file. This will be overwritten
 
 export const getActivity = /* GraphQL */ `
-  query GetActivity($dayId: ID!, $startTime: AWSDateTime!) {
-    getActivity(dayId: $dayId, startTime: $startTime) {
+  query GetActivity($id: ID!) {
+    getActivity(id: $id) {
       id
       dayId
       startTime
@@ -19,24 +19,21 @@ export const getActivity = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      dayActivitiesTripId
-      dayActivitiesDate
+      dayActivitiesId
       __typename
     }
   }
 `;
 export const listActivities = /* GraphQL */ `
   query ListActivities(
-    $dayId: ID
-    $startTime: ModelStringKeyConditionInput
+    $id: ID
     $filter: ModelActivityFilterInput
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
     listActivities(
-      dayId: $dayId
-      startTime: $startTime
+      id: $id
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -57,8 +54,47 @@ export const listActivities = /* GraphQL */ `
         type
         createdAt
         updatedAt
-        dayActivitiesTripId
-        dayActivitiesDate
+        dayActivitiesId
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const activitiesByDayIdAndStartTime = /* GraphQL */ `
+  query ActivitiesByDayIdAndStartTime(
+    $dayId: ID!
+    $startTime: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelActivityFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    activitiesByDayIdAndStartTime(
+      dayId: $dayId
+      startTime: $startTime
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        dayId
+        startTime
+        endTime
+        name
+        description
+        location {
+          latitude
+          longitude
+          __typename
+        }
+        type
+        createdAt
+        updatedAt
+        dayActivitiesId
         __typename
       }
       nextToken
@@ -67,8 +103,8 @@ export const listActivities = /* GraphQL */ `
   }
 `;
 export const getDay = /* GraphQL */ `
-  query GetDay($tripId: ID!, $date: AWSDateTime!) {
-    getDay(tripId: $tripId, date: $date) {
+  query GetDay($id: ID!) {
+    getDay(id: $id) {
       id
       tripId
       date
@@ -83,8 +119,7 @@ export const getDay = /* GraphQL */ `
           type
           createdAt
           updatedAt
-          dayActivitiesTripId
-          dayActivitiesDate
+          dayActivitiesId
           __typename
         }
         nextToken
@@ -93,23 +128,20 @@ export const getDay = /* GraphQL */ `
       createdAt
       updatedAt
       tripDaysId
-      tripDaysStartDate
       __typename
     }
   }
 `;
 export const listDays = /* GraphQL */ `
   query ListDays(
-    $tripId: ID
-    $date: ModelStringKeyConditionInput
+    $id: ID
     $filter: ModelDayFilterInput
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
     listDays(
-      tripId: $tripId
-      date: $date
+      id: $id
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -126,7 +158,41 @@ export const listDays = /* GraphQL */ `
         createdAt
         updatedAt
         tripDaysId
-        tripDaysStartDate
+        __typename
+      }
+      nextToken
+      __typename
+    }
+  }
+`;
+export const daysByTripIdAndDate = /* GraphQL */ `
+  query DaysByTripIdAndDate(
+    $tripId: ID!
+    $date: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelDayFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    daysByTripIdAndDate(
+      tripId: $tripId
+      date: $date
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        tripId
+        date
+        activities {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        tripDaysId
         __typename
       }
       nextToken
@@ -144,12 +210,12 @@ export const getUser = /* GraphQL */ `
       trips {
         items {
           id
+          userId
           name
           destination
           startDate
           endDate
           imgUrl
-          ownerId
           createdAt
           updatedAt
           userTripsId
@@ -166,11 +232,19 @@ export const getUser = /* GraphQL */ `
 `;
 export const listUsers = /* GraphQL */ `
   query ListUsers(
+    $id: ID
     $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listUsers(
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
         email
@@ -190,9 +264,10 @@ export const listUsers = /* GraphQL */ `
   }
 `;
 export const getTrip = /* GraphQL */ `
-  query GetTrip($id: ID!, $startDate: AWSDateTime!) {
-    getTrip(id: $id, startDate: $startDate) {
+  query GetTrip($id: ID!) {
+    getTrip(id: $id) {
       id
+      userId
       name
       destination
       location {
@@ -203,20 +278,6 @@ export const getTrip = /* GraphQL */ `
       startDate
       endDate
       imgUrl
-      owner {
-        id
-        email
-        name
-        avatarUrl
-        trips {
-          nextToken
-          __typename
-        }
-        createdAt
-        updatedAt
-        __typename
-      }
-      ownerId
       days {
         items {
           id
@@ -225,7 +286,6 @@ export const getTrip = /* GraphQL */ `
           createdAt
           updatedAt
           tripDaysId
-          tripDaysStartDate
           __typename
         }
         nextToken
@@ -241,7 +301,6 @@ export const getTrip = /* GraphQL */ `
 export const listTrips = /* GraphQL */ `
   query ListTrips(
     $id: ID
-    $startDate: ModelStringKeyConditionInput
     $filter: ModelTripFilterInput
     $limit: Int
     $nextToken: String
@@ -249,7 +308,6 @@ export const listTrips = /* GraphQL */ `
   ) {
     listTrips(
       id: $id
-      startDate: $startDate
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -257,6 +315,7 @@ export const listTrips = /* GraphQL */ `
     ) {
       items {
         id
+        userId
         name
         destination
         location {
@@ -267,16 +326,6 @@ export const listTrips = /* GraphQL */ `
         startDate
         endDate
         imgUrl
-        owner {
-          id
-          email
-          name
-          avatarUrl
-          createdAt
-          updatedAt
-          __typename
-        }
-        ownerId
         days {
           nextToken
           __typename
@@ -291,16 +340,18 @@ export const listTrips = /* GraphQL */ `
     }
   }
 `;
-export const tripsByOwnerId = /* GraphQL */ `
-  query TripsByOwnerId(
-    $ownerId: ID!
+export const tripsByUserIdAndStartDate = /* GraphQL */ `
+  query TripsByUserIdAndStartDate(
+    $userId: ID!
+    $startDate: ModelStringKeyConditionInput
     $sortDirection: ModelSortDirection
     $filter: ModelTripFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    tripsByOwnerId(
-      ownerId: $ownerId
+    tripsByUserIdAndStartDate(
+      userId: $userId
+      startDate: $startDate
       sortDirection: $sortDirection
       filter: $filter
       limit: $limit
@@ -308,6 +359,7 @@ export const tripsByOwnerId = /* GraphQL */ `
     ) {
       items {
         id
+        userId
         name
         destination
         location {
@@ -318,16 +370,6 @@ export const tripsByOwnerId = /* GraphQL */ `
         startDate
         endDate
         imgUrl
-        owner {
-          id
-          email
-          name
-          avatarUrl
-          createdAt
-          updatedAt
-          __typename
-        }
-        ownerId
         days {
           nextToken
           __typename

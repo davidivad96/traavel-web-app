@@ -47,7 +47,7 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
             startDate: startDate?.toISOString(),
             endDate: endDate?.toISOString(),
             imgUrl: data[0].urls.raw,
-            ownerId: user.id,
+            userId: user.id,
           },
         },
       });

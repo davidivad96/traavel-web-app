@@ -22,8 +22,7 @@ export const createActivity = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      dayActivitiesTripId
-      dayActivitiesDate
+      dayActivitiesId
       __typename
     }
   }
@@ -48,8 +47,7 @@ export const updateActivity = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      dayActivitiesTripId
-      dayActivitiesDate
+      dayActivitiesId
       __typename
     }
   }
@@ -74,8 +72,7 @@ export const deleteActivity = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      dayActivitiesTripId
-      dayActivitiesDate
+      dayActivitiesId
       __typename
     }
   }
@@ -100,8 +97,7 @@ export const createDay = /* GraphQL */ `
           type
           createdAt
           updatedAt
-          dayActivitiesTripId
-          dayActivitiesDate
+          dayActivitiesId
           __typename
         }
         nextToken
@@ -110,7 +106,6 @@ export const createDay = /* GraphQL */ `
       createdAt
       updatedAt
       tripDaysId
-      tripDaysStartDate
       __typename
     }
   }
@@ -135,8 +130,7 @@ export const updateDay = /* GraphQL */ `
           type
           createdAt
           updatedAt
-          dayActivitiesTripId
-          dayActivitiesDate
+          dayActivitiesId
           __typename
         }
         nextToken
@@ -145,7 +139,6 @@ export const updateDay = /* GraphQL */ `
       createdAt
       updatedAt
       tripDaysId
-      tripDaysStartDate
       __typename
     }
   }
@@ -170,8 +163,7 @@ export const deleteDay = /* GraphQL */ `
           type
           createdAt
           updatedAt
-          dayActivitiesTripId
-          dayActivitiesDate
+          dayActivitiesId
           __typename
         }
         nextToken
@@ -180,7 +172,6 @@ export const deleteDay = /* GraphQL */ `
       createdAt
       updatedAt
       tripDaysId
-      tripDaysStartDate
       __typename
     }
   }
@@ -198,12 +189,12 @@ export const createUser = /* GraphQL */ `
       trips {
         items {
           id
+          userId
           name
           destination
           startDate
           endDate
           imgUrl
-          ownerId
           createdAt
           updatedAt
           userTripsId
@@ -231,12 +222,12 @@ export const updateUser = /* GraphQL */ `
       trips {
         items {
           id
+          userId
           name
           destination
           startDate
           endDate
           imgUrl
-          ownerId
           createdAt
           updatedAt
           userTripsId
@@ -264,12 +255,12 @@ export const deleteUser = /* GraphQL */ `
       trips {
         items {
           id
+          userId
           name
           destination
           startDate
           endDate
           imgUrl
-          ownerId
           createdAt
           updatedAt
           userTripsId
@@ -291,6 +282,7 @@ export const createTrip = /* GraphQL */ `
   ) {
     createTrip(input: $input, condition: $condition) {
       id
+      userId
       name
       destination
       location {
@@ -301,20 +293,6 @@ export const createTrip = /* GraphQL */ `
       startDate
       endDate
       imgUrl
-      owner {
-        id
-        email
-        name
-        avatarUrl
-        trips {
-          nextToken
-          __typename
-        }
-        createdAt
-        updatedAt
-        __typename
-      }
-      ownerId
       days {
         items {
           id
@@ -323,7 +301,6 @@ export const createTrip = /* GraphQL */ `
           createdAt
           updatedAt
           tripDaysId
-          tripDaysStartDate
           __typename
         }
         nextToken
@@ -343,6 +320,7 @@ export const updateTrip = /* GraphQL */ `
   ) {
     updateTrip(input: $input, condition: $condition) {
       id
+      userId
       name
       destination
       location {
@@ -353,20 +331,6 @@ export const updateTrip = /* GraphQL */ `
       startDate
       endDate
       imgUrl
-      owner {
-        id
-        email
-        name
-        avatarUrl
-        trips {
-          nextToken
-          __typename
-        }
-        createdAt
-        updatedAt
-        __typename
-      }
-      ownerId
       days {
         items {
           id
@@ -375,7 +339,6 @@ export const updateTrip = /* GraphQL */ `
           createdAt
           updatedAt
           tripDaysId
-          tripDaysStartDate
           __typename
         }
         nextToken
@@ -395,6 +358,7 @@ export const deleteTrip = /* GraphQL */ `
   ) {
     deleteTrip(input: $input, condition: $condition) {
       id
+      userId
       name
       destination
       location {
@@ -405,20 +369,6 @@ export const deleteTrip = /* GraphQL */ `
       startDate
       endDate
       imgUrl
-      owner {
-        id
-        email
-        name
-        avatarUrl
-        trips {
-          nextToken
-          __typename
-        }
-        createdAt
-        updatedAt
-        __typename
-      }
-      ownerId
       days {
         items {
           id
@@ -427,7 +377,6 @@ export const deleteTrip = /* GraphQL */ `
           createdAt
           updatedAt
           tripDaysId
-          tripDaysStartDate
           __typename
         }
         nextToken

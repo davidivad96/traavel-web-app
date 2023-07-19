@@ -19,8 +19,7 @@ export const onCreateActivity = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      dayActivitiesTripId
-      dayActivitiesDate
+      dayActivitiesId
       __typename
     }
   }
@@ -42,8 +41,7 @@ export const onUpdateActivity = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      dayActivitiesTripId
-      dayActivitiesDate
+      dayActivitiesId
       __typename
     }
   }
@@ -65,8 +63,7 @@ export const onDeleteActivity = /* GraphQL */ `
       type
       createdAt
       updatedAt
-      dayActivitiesTripId
-      dayActivitiesDate
+      dayActivitiesId
       __typename
     }
   }
@@ -88,8 +85,7 @@ export const onCreateDay = /* GraphQL */ `
           type
           createdAt
           updatedAt
-          dayActivitiesTripId
-          dayActivitiesDate
+          dayActivitiesId
           __typename
         }
         nextToken
@@ -98,7 +94,6 @@ export const onCreateDay = /* GraphQL */ `
       createdAt
       updatedAt
       tripDaysId
-      tripDaysStartDate
       __typename
     }
   }
@@ -120,8 +115,7 @@ export const onUpdateDay = /* GraphQL */ `
           type
           createdAt
           updatedAt
-          dayActivitiesTripId
-          dayActivitiesDate
+          dayActivitiesId
           __typename
         }
         nextToken
@@ -130,7 +124,6 @@ export const onUpdateDay = /* GraphQL */ `
       createdAt
       updatedAt
       tripDaysId
-      tripDaysStartDate
       __typename
     }
   }
@@ -152,8 +145,7 @@ export const onDeleteDay = /* GraphQL */ `
           type
           createdAt
           updatedAt
-          dayActivitiesTripId
-          dayActivitiesDate
+          dayActivitiesId
           __typename
         }
         nextToken
@@ -162,7 +154,6 @@ export const onDeleteDay = /* GraphQL */ `
       createdAt
       updatedAt
       tripDaysId
-      tripDaysStartDate
       __typename
     }
   }
@@ -177,12 +168,12 @@ export const onCreateUser = /* GraphQL */ `
       trips {
         items {
           id
+          userId
           name
           destination
           startDate
           endDate
           imgUrl
-          ownerId
           createdAt
           updatedAt
           userTripsId
@@ -207,12 +198,12 @@ export const onUpdateUser = /* GraphQL */ `
       trips {
         items {
           id
+          userId
           name
           destination
           startDate
           endDate
           imgUrl
-          ownerId
           createdAt
           updatedAt
           userTripsId
@@ -237,12 +228,12 @@ export const onDeleteUser = /* GraphQL */ `
       trips {
         items {
           id
+          userId
           name
           destination
           startDate
           endDate
           imgUrl
-          ownerId
           createdAt
           updatedAt
           userTripsId
@@ -261,6 +252,7 @@ export const onCreateTrip = /* GraphQL */ `
   subscription OnCreateTrip($filter: ModelSubscriptionTripFilterInput) {
     onCreateTrip(filter: $filter) {
       id
+      userId
       name
       destination
       location {
@@ -271,20 +263,6 @@ export const onCreateTrip = /* GraphQL */ `
       startDate
       endDate
       imgUrl
-      owner {
-        id
-        email
-        name
-        avatarUrl
-        trips {
-          nextToken
-          __typename
-        }
-        createdAt
-        updatedAt
-        __typename
-      }
-      ownerId
       days {
         items {
           id
@@ -293,7 +271,6 @@ export const onCreateTrip = /* GraphQL */ `
           createdAt
           updatedAt
           tripDaysId
-          tripDaysStartDate
           __typename
         }
         nextToken
@@ -310,6 +287,7 @@ export const onUpdateTrip = /* GraphQL */ `
   subscription OnUpdateTrip($filter: ModelSubscriptionTripFilterInput) {
     onUpdateTrip(filter: $filter) {
       id
+      userId
       name
       destination
       location {
@@ -320,20 +298,6 @@ export const onUpdateTrip = /* GraphQL */ `
       startDate
       endDate
       imgUrl
-      owner {
-        id
-        email
-        name
-        avatarUrl
-        trips {
-          nextToken
-          __typename
-        }
-        createdAt
-        updatedAt
-        __typename
-      }
-      ownerId
       days {
         items {
           id
@@ -342,7 +306,6 @@ export const onUpdateTrip = /* GraphQL */ `
           createdAt
           updatedAt
           tripDaysId
-          tripDaysStartDate
           __typename
         }
         nextToken
@@ -359,6 +322,7 @@ export const onDeleteTrip = /* GraphQL */ `
   subscription OnDeleteTrip($filter: ModelSubscriptionTripFilterInput) {
     onDeleteTrip(filter: $filter) {
       id
+      userId
       name
       destination
       location {
@@ -369,20 +333,6 @@ export const onDeleteTrip = /* GraphQL */ `
       startDate
       endDate
       imgUrl
-      owner {
-        id
-        email
-        name
-        avatarUrl
-        trips {
-          nextToken
-          __typename
-        }
-        createdAt
-        updatedAt
-        __typename
-      }
-      ownerId
       days {
         items {
           id
@@ -391,7 +341,6 @@ export const onDeleteTrip = /* GraphQL */ `
           createdAt
           updatedAt
           tripDaysId
-          tripDaysStartDate
           __typename
         }
         nextToken

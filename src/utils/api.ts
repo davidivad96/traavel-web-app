@@ -1,5 +1,10 @@
 import { AmplifyClass } from "@aws-amplify/core";
-import { getTrip, getUser, listDays, tripsByOwnerId } from "@/graphql/queries";
+import {
+  getTrip,
+  getUser,
+  listDays,
+  tripsByUserIdAndStartDate,
+} from "@/graphql/queries";
 
 export const getUserData = async ({ Auth, API }: AmplifyClass) => {
   const currentUser = await Auth.currentAuthenticatedUser();
@@ -15,16 +20,16 @@ export const getUserData = async ({ Auth, API }: AmplifyClass) => {
 
 export const getUserTripsData = async (
   { API }: AmplifyClass,
-  ownerId: string
+  userId: string
 ) => {
   const response = await API.graphql({
-    query: tripsByOwnerId,
-    variables: { ownerId },
+    query: tripsByUserIdAndStartDate,
+    variables: { userId },
   });
-  if (!response.data.tripsByOwnerId) {
+  if (!response.data.tripsByUserIdAndStartDate) {
     throw new Error("Trips not found");
   }
-  return response.data.tripsByOwnerId.items;
+  return response.data.tripsByUserIdAndStartDate.items;
 };
 
 export const getTripData = async ({ API }: AmplifyClass, tripId: string) => {

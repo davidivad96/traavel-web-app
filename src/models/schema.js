@@ -79,17 +79,10 @@ export const schema = {
                     "attributes": [],
                     "isReadOnly": true
                 },
-                "dayActivitiesTripId": {
-                    "name": "dayActivitiesTripId",
+                "dayActivitiesId": {
+                    "name": "dayActivitiesId",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "dayActivitiesDate": {
-                    "name": "dayActivitiesDate",
-                    "isArray": false,
-                    "type": "AWSDateTime",
                     "isRequired": false,
                     "attributes": []
                 }
@@ -105,6 +98,15 @@ export const schema = {
                     "type": "key",
                     "properties": {
                         "fields": [
+                            "id"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byDay",
+                        "fields": [
                             "dayId",
                             "startTime"
                         ]
@@ -115,8 +117,7 @@ export const schema = {
                     "properties": {
                         "name": "gsi-Day.activities",
                         "fields": [
-                            "dayActivitiesTripId",
-                            "dayActivitiesDate"
+                            "dayActivitiesId"
                         ]
                     }
                 },
@@ -174,8 +175,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "dayActivitiesTripId",
-                            "dayActivitiesDate"
+                            "dayActivitiesId"
                         ]
                     }
                 },
@@ -201,13 +201,6 @@ export const schema = {
                     "type": "ID",
                     "isRequired": false,
                     "attributes": []
-                },
-                "tripDaysStartDate": {
-                    "name": "tripDaysStartDate",
-                    "isArray": false,
-                    "type": "AWSDateTime",
-                    "isRequired": false,
-                    "attributes": []
                 }
             },
             "syncable": true,
@@ -221,6 +214,15 @@ export const schema = {
                     "type": "key",
                     "properties": {
                         "fields": [
+                            "id"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "byTrip",
+                        "fields": [
                             "tripId",
                             "date"
                         ]
@@ -231,8 +233,7 @@ export const schema = {
                     "properties": {
                         "name": "gsi-Trip.days",
                         "fields": [
-                            "tripDaysId",
-                            "tripDaysStartDate"
+                            "tripDaysId"
                         ]
                     }
                 },
@@ -326,6 +327,14 @@ export const schema = {
                     "properties": {}
                 },
                 {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "id"
+                        ]
+                    }
+                },
+                {
                     "type": "auth",
                     "properties": {
                         "rules": [
@@ -348,6 +357,13 @@ export const schema = {
             "fields": {
                 "id": {
                     "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "userId": {
+                    "name": "userId",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": true,
@@ -397,28 +413,6 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
-                "owner": {
-                    "name": "owner",
-                    "isArray": false,
-                    "type": {
-                        "model": "User"
-                    },
-                    "isRequired": false,
-                    "attributes": [],
-                    "association": {
-                        "connectionType": "BELONGS_TO",
-                        "targetNames": [
-                            "ownerId"
-                        ]
-                    }
-                },
-                "ownerId": {
-                    "name": "ownerId",
-                    "isArray": false,
-                    "type": "ID",
-                    "isRequired": true,
-                    "attributes": []
-                },
                 "days": {
                     "name": "days",
                     "isArray": true,
@@ -431,8 +425,7 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "tripDaysId",
-                            "tripDaysStartDate"
+                            "tripDaysId"
                         ]
                     }
                 },
@@ -471,8 +464,7 @@ export const schema = {
                     "type": "key",
                     "properties": {
                         "fields": [
-                            "id",
-                            "startDate"
+                            "id"
                         ]
                     }
                 },
@@ -481,7 +473,17 @@ export const schema = {
                     "properties": {
                         "name": "byUser",
                         "fields": [
-                            "ownerId"
+                            "userId",
+                            "startDate"
+                        ]
+                    }
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "name": "gsi-User.trips",
+                        "fields": [
+                            "userTripsId"
                         ]
                     }
                 },
@@ -544,5 +546,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "e88d49fef1e3ce5e91ebb23ad54e533e"
+    "version": "0c4c90bc99d92bc164e12e1e45be86b9"
 };

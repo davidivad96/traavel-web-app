@@ -89,7 +89,6 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
       toast.success(`Activity ${currentActivity ? "updated" : "created"}!`, {
         theme: "colored",
       });
-      setCreateActivityModal(false);
     } catch (error) {
       toast.error("There was an error!", { theme: "colored" });
     }
@@ -102,10 +101,7 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
       await API.graphql<GraphQLQuery<DeleteActivityMutation>>({
         query: deleteActivity,
         variables: {
-          input: {
-            dayId: currentDay?.id,
-            startTime: currentActivity?.startTime!.toISOString(),
-          },
+          input: { id: currentActivityId },
         },
       });
       setActivities((prev) => {

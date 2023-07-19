@@ -18,7 +18,6 @@ import { toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
 import { FiCalendar } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
-import { IconButton } from "@mui/material";
 import dayjs from "dayjs";
 import { Trip, User } from "@/models";
 import { Navbar } from "@/components/Navbar";
@@ -69,7 +68,6 @@ const Home = ({ user, trips: userTrips }: Props) => {
     }
   };
 
-  console.log(trips);
   return (
     <>
       <NewTripModal isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
@@ -108,6 +106,7 @@ const Home = ({ user, trips: userTrips }: Props) => {
             );
             return (
               <Card
+                key={trip.id}
                 style={{ cursor: "pointer", position: "relative" }}
                 onClick={() => router.push(`/trip/${trip.id}`)}
                 onMouseEnter={() => setIsHovered({ [trip.id]: true })}
