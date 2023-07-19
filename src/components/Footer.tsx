@@ -19,7 +19,9 @@ export const Footer = () => (
         width={275}
         height={80}
       />
-      <Text>This is the best app</Text>
+      <Text color="#8b8b8b">
+        Traavel is the best way to plan your next trip. Give it a chance!
+      </Text>
     </Flex>
   </Flex>
 );

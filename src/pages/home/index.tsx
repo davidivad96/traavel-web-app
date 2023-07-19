@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 import Image from "next/image";
@@ -25,7 +25,7 @@ import { Footer } from "@/components/Footer";
 import { NewTripModal } from "@/components/NewTripModal";
 import { getUserData, getUserTripsData } from "@/utils/api";
 import awsconfig from "@/aws-exports";
-import { getNumberOfDays } from "@/utils/functions";
+import { addDaysToDate, getNumberOfDays } from "@/utils/functions";
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   req,
@@ -67,6 +67,18 @@ const Home = ({ user, trips: userTrips }: Props) => {
       toast.error("There was an error!", { theme: "colored" });
     }
   };
+
+  const [pastTrips, upcomingTrips] = useMemo(
+    () => [
+      trips.filter(
+        (trip) => addDaysToDate(new Date(trip.endDate), 1) < new Date()
+      ),
+      trips.filter(
+        (trip) => addDaysToDate(new Date(trip.endDate), 1) >= new Date()
+      ),
+    ],
+    [trips]
+  );
 
   return (
     <>
@@ -114,7 +126,9 @@ const Home = ({ user, trips: userTrips }: Props) => {
             height={50}
             marginBottom={15}
           >
-            <Heading level={4}>My trips</Heading>
+            <Heading level={3} opacity={upcomingTrips.length === 0 ? 0.5 : 1}>
+              My trips
+            </Heading>
             <Button variation="primary" onClick={() => setIsOpen(true)}>
               <AiOutlinePlus size={22} style={{ marginRight: "5px" }} /> New
               trip
@@ -122,7 +136,7 @@ const Home = ({ user, trips: userTrips }: Props) => {
           </Flex>
         )}
         <Collection
-          items={trips}
+          items={upcomingTrips}
           type="grid"
           templateColumns={{
             base: "1fr",
@@ -149,17 +163,15 @@ const Home = ({ user, trips: userTrips }: Props) => {
                 {isHovered[trip.id] && (
                   <Flex
                     id="edit-image-button"
+                    flex={1}
                     justifyContent="center"
                     alignItems="center"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteTrip(trip.id);
+                    }}
                   >
-                    <MdDelete
-                      width="100%"
-                      color="#FFF"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteTrip(trip.id);
-                      }}
-                    />
+                    <MdDelete width="100%" color="#FFF" />
                   </Flex>
                 )}
                 <View minHeight="15rem" position="relative" marginBottom={15}>
@@ -187,6 +199,89 @@ const Home = ({ user, trips: userTrips }: Props) => {
             );
           }}
         </Collection>
+        {pastTrips.length !== 0 && (
+          <View marginTop={50}>
+            <Heading level={3} marginBottom={15}>
+              Past trips
+            </Heading>
+            <Collection
+              items={pastTrips}
+              type="grid"
+              templateColumns={{
+                base: "1fr",
+                small: "1fr 1fr",
+                medium: "1fr 1fr 1fr",
+                large: "1fr 1fr 1fr 1fr",
+              }}
+              gap="20px"
+              searchNoResultsFound={<></>}
+            >
+              {(trip) => {
+                const totalDays = getNumberOfDays(
+                  new Date(trip.startDate),
+                  new Date(trip.endDate)
+                );
+                return (
+                  <Card
+                    key={trip.id}
+                    style={{
+                      cursor: "pointer",
+                      position: "relative",
+                      padding: 0,
+                    }}
+                    onClick={() => router.push(`/trip/${trip.id}`)}
+                    onMouseEnter={() => setIsHovered({ [trip.id]: true })}
+                    onMouseLeave={() => setIsHovered({ [trip.id]: false })}
+                  >
+                    {isHovered[trip.id] && (
+                      <Flex
+                        id="edit-image-button"
+                        justifyContent="center"
+                        alignItems="center"
+                        flex={1}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteTrip(trip.id);
+                        }}
+                      >
+                        <MdDelete width="100%" color="#FFF" />
+                      </Flex>
+                    )}
+                    <View
+                      minHeight="15rem"
+                      position="relative"
+                      marginBottom={15}
+                    >
+                      <Image
+                        src={trip.imgUrl || "/images/default_trip_image.png"}
+                        fill
+                        alt="Trip image"
+                        style={{ objectFit: "cover", borderRadius: "5px" }}
+                        placeholder="blur"
+                        blurDataURL="/images/default_trip_image.png"
+                      />
+                    </View>
+                    <Heading level={5}>{trip.destination}</Heading>
+                    <Flex
+                      direction="row"
+                      alignItems="center"
+                      style={{ gap: 8 }}
+                    >
+                      <FiCalendar />
+                      <Text>
+                        {dayjs(trip.startDate).format("DD MMM YYYY")}{" "}
+                        <span style={{ fontWeight: 100 }}>•</span>{" "}
+                        <span>
+                          {totalDays} {totalDays === 1 ? "day" : "days"}
+                        </span>
+                      </Text>
+                    </Flex>
+                  </Card>
+                );
+              }}
+            </Collection>
+          </View>
+        )}
       </ScrollView>
     </>
   );

@@ -18,6 +18,12 @@ export const getNumberOfDays = (startDate: Date, endDate: Date): number => {
   );
 };
 
+export const addDaysToDate = (date: Date, days: number): Date => {
+  const newDate = new Date(date);
+  newDate.setDate(newDate.getDate() + days);
+  return newDate;
+};
+
 export const sortActivities = (activities: Activity[]): Activity[] =>
   activities.sort(
     (a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
