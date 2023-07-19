@@ -75,9 +75,7 @@
               "Ref": "AWS::Region"
             },
             "API_TRAAVELWEBAPP_ACTIVITYTABLE_NAME": {
-              "Fn::ImportValue": {
-                "Fn::Sub": "${apitraavelwebappGraphQLAPIIdOutput}:GetAtt:ActivityTable:Name"
-              }
+              "Fn::Sub": "TemporaryPlaceholderValue"
             },
             "API_TRAAVELWEBAPP_ACTIVITYTABLE_ARN": {
               "Fn::Join": [
@@ -93,9 +91,7 @@
                   },
                   ":table/",
                   {
-                    "Fn::ImportValue": {
-                      "Fn::Sub": "${apitraavelwebappGraphQLAPIIdOutput}:GetAtt:ActivityTable:Name"
-                    }
+                    "Fn::Sub": "TemporaryPlaceholderValue"
                   }
                 ]
               ]
@@ -104,9 +100,7 @@
               "Ref": "apitraavelwebappGraphQLAPIIdOutput"
             },
             "API_TRAAVELWEBAPP_DAYTABLE_NAME": {
-              "Fn::ImportValue": {
-                "Fn::Sub": "${apitraavelwebappGraphQLAPIIdOutput}:GetAtt:DayTable:Name"
-              }
+              "Fn::Sub": "TemporaryPlaceholderValue"
             },
             "API_TRAAVELWEBAPP_DAYTABLE_ARN": {
               "Fn::Join": [
@@ -122,17 +116,13 @@
                   },
                   ":table/",
                   {
-                    "Fn::ImportValue": {
-                      "Fn::Sub": "${apitraavelwebappGraphQLAPIIdOutput}:GetAtt:DayTable:Name"
-                    }
+                    "Fn::Sub": "TemporaryPlaceholderValue"
                   }
                 ]
               ]
             },
             "API_TRAAVELWEBAPP_TRIPTABLE_NAME": {
-              "Fn::ImportValue": {
-                "Fn::Sub": "${apitraavelwebappGraphQLAPIIdOutput}:GetAtt:TripTable:Name"
-              }
+              "Fn::Sub": "TemporaryPlaceholderValue"
             },
             "API_TRAAVELWEBAPP_TRIPTABLE_ARN": {
               "Fn::Join": [
@@ -148,9 +138,7 @@
                   },
                   ":table/",
                   {
-                    "Fn::ImportValue": {
-                      "Fn::Sub": "${apitraavelwebappGraphQLAPIIdOutput}:GetAtt:TripTable:Name"
-                    }
+                    "Fn::Sub": "TemporaryPlaceholderValue"
                   }
                 ]
               ]
@@ -291,9 +279,7 @@
                       },
                       ":table/",
                       {
-                        "Fn::ImportValue": {
-                          "Fn::Sub": "${apitraavelwebappGraphQLAPIIdOutput}:GetAtt:ActivityTable:Name"
-                        }
+                        "Fn::Sub": "TemporaryPlaceholderValue"
                       }
                     ]
                   ]
@@ -312,9 +298,7 @@
                       },
                       ":table/",
                       {
-                        "Fn::ImportValue": {
-                          "Fn::Sub": "${apitraavelwebappGraphQLAPIIdOutput}:GetAtt:ActivityTable:Name"
-                        }
+                        "Fn::Sub": "TemporaryPlaceholderValue"
                       },
                       "/index/*"
                     ]
@@ -348,9 +332,7 @@
                       },
                       ":table/",
                       {
-                        "Fn::ImportValue": {
-                          "Fn::Sub": "${apitraavelwebappGraphQLAPIIdOutput}:GetAtt:DayTable:Name"
-                        }
+                        "Fn::Sub": "TemporaryPlaceholderValue"
                       }
                     ]
                   ]
@@ -369,9 +351,7 @@
                       },
                       ":table/",
                       {
-                        "Fn::ImportValue": {
-                          "Fn::Sub": "${apitraavelwebappGraphQLAPIIdOutput}:GetAtt:DayTable:Name"
-                        }
+                        "Fn::Sub": "TemporaryPlaceholderValue"
                       },
                       "/index/*"
                     ]
@@ -405,9 +385,7 @@
                       },
                       ":table/",
                       {
-                        "Fn::ImportValue": {
-                          "Fn::Sub": "${apitraavelwebappGraphQLAPIIdOutput}:GetAtt:TripTable:Name"
-                        }
+                        "Fn::Sub": "TemporaryPlaceholderValue"
                       }
                     ]
                   ]
@@ -426,9 +404,7 @@
                       },
                       ":table/",
                       {
-                        "Fn::ImportValue": {
-                          "Fn::Sub": "${apitraavelwebappGraphQLAPIIdOutput}:GetAtt:TripTable:Name"
-                        }
+                        "Fn::Sub": "TemporaryPlaceholderValue"
                       },
                       "/index/*"
                     ]

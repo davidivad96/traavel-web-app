@@ -110,6 +110,7 @@ export const createDay = /* GraphQL */ `
       createdAt
       updatedAt
       tripDaysId
+      tripDaysStartDate
       __typename
     }
   }
@@ -144,6 +145,7 @@ export const updateDay = /* GraphQL */ `
       createdAt
       updatedAt
       tripDaysId
+      tripDaysStartDate
       __typename
     }
   }
@@ -178,6 +180,7 @@ export const deleteDay = /* GraphQL */ `
       createdAt
       updatedAt
       tripDaysId
+      tripDaysStartDate
       __typename
     }
   }
@@ -320,6 +323,7 @@ export const createTrip = /* GraphQL */ `
           createdAt
           updatedAt
           tripDaysId
+          tripDaysStartDate
           __typename
         }
         nextToken
@@ -371,6 +375,7 @@ export const updateTrip = /* GraphQL */ `
           createdAt
           updatedAt
           tripDaysId
+          tripDaysStartDate
           __typename
         }
         nextToken
@@ -422,6 +427,7 @@ export const deleteTrip = /* GraphQL */ `
           createdAt
           updatedAt
           tripDaysId
+          tripDaysStartDate
           __typename
         }
         nextToken

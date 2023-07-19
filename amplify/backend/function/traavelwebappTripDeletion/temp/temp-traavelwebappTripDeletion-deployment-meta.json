@@ -1,0 +1,16 @@
+{
+  "stackTemplatePathOrUrl": "amplify-cfn-templates/function/temp/temp-traavelwebappTripDeletion-cloudformation-template.json",
+  "parameters": {
+    "CloudWatchRule": "NONE",
+    "s3Key": "amplify-builds/traavelwebappTripDeletion-466d7841457451526b79-build.zip",
+    "deploymentBucketName": "amplify-traavelwebapp-main-93929-deployment",
+    "env": "main",
+    "apitraavelwebappGraphQLAPIIdOutput": "t5qwbtkhdvegtc26chqkehxh2m"
+  },
+  "stackName": "arn:aws:cloudformation:us-east-1:399438669542:stack/amplify-traavelwebapp-main-93929-functiontraavelwebappTripDeletion-ZLJNJ5154JSI/c5aca280-2618-11ee-bd07-0a652628d9c5",
+  "capabilities": [
+    "CAPABILITY_NAMED_IAM",
+    "CAPABILITY_AUTO_EXPAND"
+  ],
+  "tableNames": []
+}

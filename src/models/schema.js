@@ -20,14 +20,14 @@ export const schema = {
                 "startTime": {
                     "name": "startTime",
                     "isArray": false,
-                    "type": "AWSTime",
+                    "type": "AWSDateTime",
                     "isRequired": true,
                     "attributes": []
                 },
                 "endTime": {
                     "name": "endTime",
                     "isArray": false,
-                    "type": "AWSTime",
+                    "type": "AWSDateTime",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -51,7 +51,7 @@ export const schema = {
                     "type": {
                         "nonModel": "Location"
                     },
-                    "isRequired": false,
+                    "isRequired": true,
                     "attributes": []
                 },
                 "type": {
@@ -89,7 +89,7 @@ export const schema = {
                 "dayActivitiesDate": {
                     "name": "dayActivitiesDate",
                     "isArray": false,
-                    "type": "AWSDate",
+                    "type": "AWSDateTime",
                     "isRequired": false,
                     "attributes": []
                 }
@@ -158,7 +158,7 @@ export const schema = {
                 "date": {
                     "name": "date",
                     "isArray": false,
-                    "type": "AWSDate",
+                    "type": "AWSDateTime",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -201,6 +201,13 @@ export const schema = {
                     "type": "ID",
                     "isRequired": false,
                     "attributes": []
+                },
+                "tripDaysStartDate": {
+                    "name": "tripDaysStartDate",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -224,7 +231,8 @@ export const schema = {
                     "properties": {
                         "name": "gsi-Trip.days",
                         "fields": [
-                            "tripDaysId"
+                            "tripDaysId",
+                            "tripDaysStartDate"
                         ]
                     }
                 },
@@ -371,14 +379,14 @@ export const schema = {
                 "startDate": {
                     "name": "startDate",
                     "isArray": false,
-                    "type": "AWSDate",
+                    "type": "AWSDateTime",
                     "isRequired": true,
                     "attributes": []
                 },
                 "endDate": {
                     "name": "endDate",
                     "isArray": false,
-                    "type": "AWSDate",
+                    "type": "AWSDateTime",
                     "isRequired": true,
                     "attributes": []
                 },
@@ -423,7 +431,8 @@ export const schema = {
                     "association": {
                         "connectionType": "HAS_MANY",
                         "associatedWith": [
-                            "tripDaysId"
+                            "tripDaysId",
+                            "tripDaysStartDate"
                         ]
                     }
                 },
@@ -457,6 +466,15 @@ export const schema = {
                 {
                     "type": "model",
                     "properties": {}
+                },
+                {
+                    "type": "key",
+                    "properties": {
+                        "fields": [
+                            "id",
+                            "startDate"
+                        ]
+                    }
                 },
                 {
                     "type": "key",
@@ -526,5 +544,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "0c01ca81388f2551589e05e98526e971"
+    "version": "e88d49fef1e3ce5e91ebb23ad54e533e"
 };

@@ -153,6 +153,7 @@ export type CreateDayInput = {
   tripId: string,
   date: string,
   tripDaysId?: string | null,
+  tripDaysStartDate?: string | null,
 };
 
 export type ModelDayConditionInput = {
@@ -160,6 +161,7 @@ export type ModelDayConditionInput = {
   or?: Array< ModelDayConditionInput | null > | null,
   not?: ModelDayConditionInput | null,
   tripDaysId?: ModelIDInput | null,
+  tripDaysStartDate?: ModelStringInput | null,
 };
 
 export type Day = {
@@ -171,6 +173,7 @@ export type Day = {
   createdAt: string,
   updatedAt: string,
   tripDaysId?: string | null,
+  tripDaysStartDate?: string | null,
 };
 
 export type ModelActivityConnection = {
@@ -184,6 +187,7 @@ export type UpdateDayInput = {
   tripId: string,
   date: string,
   tripDaysId?: string | null,
+  tripDaysStartDate?: string | null,
 };
 
 export type DeleteDayInput = {
@@ -273,7 +277,6 @@ export type CreateTripInput = {
 export type ModelTripConditionInput = {
   name?: ModelStringInput | null,
   destination?: ModelStringInput | null,
-  startDate?: ModelStringInput | null,
   endDate?: ModelStringInput | null,
   imgUrl?: ModelStringInput | null,
   ownerId?: ModelIDInput | null,
@@ -288,7 +291,7 @@ export type UpdateTripInput = {
   name?: string | null,
   destination?: string | null,
   location?: LocationInput | null,
-  startDate?: string | null,
+  startDate: string,
   endDate?: string | null,
   imgUrl?: string | null,
   ownerId?: string | null,
@@ -297,6 +300,7 @@ export type UpdateTripInput = {
 
 export type DeleteTripInput = {
   id: string,
+  startDate: string,
 };
 
 export type ModelStringKeyConditionInput = {
@@ -338,6 +342,7 @@ export type ModelDayFilterInput = {
   or?: Array< ModelDayFilterInput | null > | null,
   not?: ModelDayFilterInput | null,
   tripDaysId?: ModelIDInput | null,
+  tripDaysStartDate?: ModelStringInput | null,
 };
 
 export type ModelUserFilterInput = {
@@ -554,6 +559,7 @@ export type CreateDayMutation = {
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
+    tripDaysStartDate?: string | null,
   } | null,
 };
 
@@ -589,6 +595,7 @@ export type UpdateDayMutation = {
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
+    tripDaysStartDate?: string | null,
   } | null,
 };
 
@@ -624,6 +631,7 @@ export type DeleteDayMutation = {
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
+    tripDaysStartDate?: string | null,
   } | null,
 };
 
@@ -772,6 +780,7 @@ export type CreateTripMutation = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
+        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -824,6 +833,7 @@ export type UpdateTripMutation = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
+        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -876,6 +886,7 @@ export type DeleteTripMutation = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
+        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -979,6 +990,7 @@ export type GetDayQuery = {
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
+    tripDaysStartDate?: string | null,
   } | null,
 };
 
@@ -1006,6 +1018,7 @@ export type ListDaysQuery = {
       createdAt: string,
       updatedAt: string,
       tripDaysId?: string | null,
+      tripDaysStartDate?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -1072,6 +1085,7 @@ export type ListUsersQuery = {
 
 export type GetTripQueryVariables = {
   id: string,
+  startDate: string,
 };
 
 export type GetTripQuery = {
@@ -1112,6 +1126,7 @@ export type GetTripQuery = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
+        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1122,9 +1137,12 @@ export type GetTripQuery = {
 };
 
 export type ListTripsQueryVariables = {
+  id?: string | null,
+  startDate?: ModelStringKeyConditionInput | null,
   filter?: ModelTripFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListTripsQuery = {
@@ -1320,6 +1338,7 @@ export type OnCreateDaySubscription = {
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
+    tripDaysStartDate?: string | null,
   } | null,
 };
 
@@ -1354,6 +1373,7 @@ export type OnUpdateDaySubscription = {
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
+    tripDaysStartDate?: string | null,
   } | null,
 };
 
@@ -1388,6 +1408,7 @@ export type OnDeleteDaySubscription = {
     createdAt: string,
     updatedAt: string,
     tripDaysId?: string | null,
+    tripDaysStartDate?: string | null,
   } | null,
 };
 
@@ -1532,6 +1553,7 @@ export type OnCreateTripSubscription = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
+        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1583,6 +1605,7 @@ export type OnUpdateTripSubscription = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
+        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
@@ -1634,6 +1657,7 @@ export type OnDeleteTripSubscription = {
         createdAt: string,
         updatedAt: string,
         tripDaysId?: string | null,
+        tripDaysStartDate?: string | null,
       } | null >,
       nextToken?: string | null,
     } | null,
