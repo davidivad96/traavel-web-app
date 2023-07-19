@@ -6,8 +6,6 @@ import { withSSRContext } from "aws-amplify";
 import { API } from "@aws-amplify/api";
 import {
   Button,
-  Card,
-  Collection,
   Flex,
   Heading,
   ScrollView,
@@ -16,16 +14,14 @@ import {
 } from "@aws-amplify/ui-react";
 import { toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
-import { FiCalendar } from "react-icons/fi";
-import { MdDelete } from "react-icons/md";
-import dayjs from "dayjs";
 import { Trip, User } from "@/models";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
+import { TripsCollection } from "@/components/TripsCollection";
 import { NewTripModal } from "@/components/NewTripModal";
 import { getUserData, getUserTripsData } from "@/utils/api";
 import awsconfig from "@/aws-exports";
-import { addDaysToDate, getNumberOfDays } from "@/utils/functions";
+import { addDaysToDate } from "@/utils/functions";
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   req,
@@ -135,151 +131,19 @@ const Home = ({ user, trips: userTrips }: Props) => {
             </Button>
           </Flex>
         )}
-        <Collection
-          items={upcomingTrips}
-          type="grid"
-          templateColumns={{
-            base: "1fr",
-            small: "1fr 1fr",
-            medium: "1fr 1fr 1fr",
-            large: "1fr 1fr 1fr 1fr",
-          }}
-          gap="20px"
-          searchNoResultsFound={<></>}
-        >
-          {(trip) => {
-            const totalDays = getNumberOfDays(
-              new Date(trip.startDate),
-              new Date(trip.endDate)
-            );
-            return (
-              <Card
-                key={trip.id}
-                style={{ cursor: "pointer", position: "relative", padding: 0 }}
-                onClick={() => router.push(`/trip/${trip.id}`)}
-                onMouseEnter={() => setIsHovered({ [trip.id]: true })}
-                onMouseLeave={() => setIsHovered({ [trip.id]: false })}
-              >
-                {isHovered[trip.id] && (
-                  <Flex
-                    id="edit-image-button"
-                    flex={1}
-                    justifyContent="center"
-                    alignItems="center"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteTrip(trip.id);
-                    }}
-                  >
-                    <MdDelete width="100%" color="#FFF" />
-                  </Flex>
-                )}
-                <View minHeight="15rem" position="relative" marginBottom={15}>
-                  <Image
-                    src={trip.imgUrl || "/images/default_trip_image.png"}
-                    fill
-                    alt="Trip image"
-                    style={{ objectFit: "cover", borderRadius: "5px" }}
-                    placeholder="blur"
-                    blurDataURL="/images/default_trip_image.png"
-                  />
-                </View>
-                <Heading level={5}>{trip.destination}</Heading>
-                <Flex direction="row" alignItems="center" style={{ gap: 8 }}>
-                  <FiCalendar />
-                  <Text>
-                    {dayjs(trip.startDate).format("DD MMM YYYY")}{" "}
-                    <span style={{ fontWeight: 100 }}>•</span>{" "}
-                    <span>
-                      {totalDays} {totalDays === 1 ? "day" : "days"}
-                    </span>
-                  </Text>
-                </Flex>
-              </Card>
-            );
-          }}
-        </Collection>
+        <TripsCollection
+          trips={upcomingTrips}
+          handleDeleteTrip={handleDeleteTrip}
+        />
         {pastTrips.length !== 0 && (
           <View marginTop={50}>
             <Heading level={3} marginBottom={15}>
               Past trips
             </Heading>
-            <Collection
-              items={pastTrips}
-              type="grid"
-              templateColumns={{
-                base: "1fr",
-                small: "1fr 1fr",
-                medium: "1fr 1fr 1fr",
-                large: "1fr 1fr 1fr 1fr",
-              }}
-              gap="20px"
-              searchNoResultsFound={<></>}
-            >
-              {(trip) => {
-                const totalDays = getNumberOfDays(
-                  new Date(trip.startDate),
-                  new Date(trip.endDate)
-                );
-                return (
-                  <Card
-                    key={trip.id}
-                    style={{
-                      cursor: "pointer",
-                      position: "relative",
-                      padding: 0,
-                    }}
-                    onClick={() => router.push(`/trip/${trip.id}`)}
-                    onMouseEnter={() => setIsHovered({ [trip.id]: true })}
-                    onMouseLeave={() => setIsHovered({ [trip.id]: false })}
-                  >
-                    {isHovered[trip.id] && (
-                      <Flex
-                        id="edit-image-button"
-                        justifyContent="center"
-                        alignItems="center"
-                        flex={1}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteTrip(trip.id);
-                        }}
-                      >
-                        <MdDelete width="100%" color="#FFF" />
-                      </Flex>
-                    )}
-                    <View
-                      minHeight="15rem"
-                      position="relative"
-                      marginBottom={15}
-                    >
-                      <Image
-                        src={trip.imgUrl || "/images/default_trip_image.png"}
-                        fill
-                        alt="Trip image"
-                        style={{ objectFit: "cover", borderRadius: "5px" }}
-                        placeholder="blur"
-                        blurDataURL="/images/default_trip_image.png"
-                      />
-                    </View>
-                    <Heading level={5}>{trip.destination}</Heading>
-                    <Flex
-                      direction="row"
-                      alignItems="center"
-                      style={{ gap: 8 }}
-                    >
-                      <FiCalendar />
-                      <Text>
-                        {dayjs(trip.startDate).format("DD MMM YYYY")}{" "}
-                        <span style={{ fontWeight: 100 }}>•</span>{" "}
-                        <span>
-                          {totalDays} {totalDays === 1 ? "day" : "days"}
-                        </span>
-                      </Text>
-                    </Flex>
-                  </Card>
-                );
-              }}
-            </Collection>
+            <TripsCollection
+              trips={pastTrips}
+              handleDeleteTrip={handleDeleteTrip}
+            />
           </View>
         )}
       </ScrollView>
