@@ -13,8 +13,8 @@ enum ActivityType {
 }
 
 type Activity @model @auth(rules: [{ allow: public }]) {
-  id: ID!
-  dayId: ID! @primaryKey(sortKeyFields: ["startTime"])
+  id: ID! @primaryKey
+  dayId: ID! @index(name: "byDay", sortKeyFields: ["startTime"])
   startTime: AWSDateTime!
   endTime: AWSDateTime!
   name: String!
@@ -24,8 +24,8 @@ type Activity @model @auth(rules: [{ allow: public }]) {
 }
 
 type Day @model @auth(rules: [{ allow: public }]) {
-  id: ID!
-  tripId: ID! @primaryKey(sortKeyFields: ["date"])
+  id: ID! @primaryKey
+  tripId: ID! @index(name: "byTrip", sortKeyFields: ["date"])
   date: AWSDateTime!
   activities: [Activity] @hasMany
 }
@@ -36,7 +36,7 @@ type Location {
 }
 
 type User @model @auth(rules: [{ allow: public }]) {
-  id: ID!
+  id: ID! @primaryKey
   email: AWSEmail!
   name: String
   avatarUrl: AWSURL
@@ -44,8 +44,8 @@ type User @model @auth(rules: [{ allow: public }]) {
 }
 
 type Trip @model @auth(rules: [{ allow: public }]) {
-  id: ID!
-  userId: ID! @primaryKey(sortKeyFields: ["startDate"])
+  id: ID! @primaryKey
+  userId: ID! @index(name: "byUser", sortKeyFields: ["startDate"])
   name: String!
   destination: String!
   location: Location!
