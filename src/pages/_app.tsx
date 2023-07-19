@@ -44,7 +44,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   return isLoaded ? (
     <>
-      <ToastContainer />
+      <ToastContainer position="top-center" />
       <Authenticator.Provider>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <main className={inter.className}>

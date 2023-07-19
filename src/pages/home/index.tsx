@@ -12,15 +12,21 @@ import {
   Heading,
   ScrollView,
   Text,
+  View,
 } from "@aws-amplify/ui-react";
 import { toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
+import { FiCalendar } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
+import { IconButton } from "@mui/material";
+import dayjs from "dayjs";
 import { Trip, User } from "@/models";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { NewTripModal } from "@/components/NewTripModal";
 import { getUserData, getUserTripsData } from "@/utils/api";
 import awsconfig from "@/aws-exports";
+import { getNumberOfDays } from "@/utils/functions";
 
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   req,
@@ -44,12 +50,15 @@ const Home = ({ user, trips: userTrips }: Props) => {
   const router = useRouter();
   const [trips, setTrips] = useState<Trip[]>(userTrips);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [isHovered, setIsHovered] = useState<{
+    [id: string]: boolean;
+  }>({});
 
   const handleDeleteTrip = async (tripId: string) => {
     try {
       setTrips((trips) => trips.filter((trip) => trip.id !== tripId));
       toast.success("Trip deleted successfully", { theme: "colored" });
-      // In the background, delete all days of the trip
+      // In the background, delete all days, activities and the own trip
       API.del(
         awsconfig.aws_cloud_logic_custom[0].name,
         `/trip?tripId=${tripId}`,
@@ -60,6 +69,7 @@ const Home = ({ user, trips: userTrips }: Props) => {
     }
   };
 
+  console.log(trips);
   return (
     <>
       <NewTripModal isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
@@ -91,45 +101,52 @@ const Home = ({ user, trips: userTrips }: Props) => {
             </Text>
           }
         >
-          {(trip) => (
-            <Card
-              key={trip.id}
-              borderRadius="medium"
-              variation="outlined"
-              onClick={() => router.push(`/trip/${trip.id}`)}
-              display="flex"
-              style={{
-                cursor: "pointer",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <>
-                <Heading level={5}>{trip.name}</Heading>
-                <Image
-                  src={trip.imgUrl || "/images/default_trip_image.png"}
-                  width={200}
-                  height={200}
-                  alt="Trip image"
-                  style={{ objectFit: "cover" }}
-                  placeholder="blur"
-                  blurDataURL="/images/default_trip_image.png"
-                />
-                <Button
-                  variation="destructive"
-                  isFullWidth
-                  marginTop={10}
-                  onClick={(e: React.MouseEvent<HTMLElement>) => {
-                    e.stopPropagation();
-                    handleDeleteTrip(trip.id);
-                  }}
-                >
-                  Delete trip
-                </Button>
-              </>
-            </Card>
-          )}
+          {(trip) => {
+            const totalDays = getNumberOfDays(
+              new Date(trip.startDate),
+              new Date(trip.endDate)
+            );
+            return (
+              <Card
+                style={{ cursor: "pointer", position: "relative" }}
+                onClick={() => router.push(`/trip/${trip.id}`)}
+                onMouseEnter={() => setIsHovered({ [trip.id]: true })}
+                onMouseLeave={() => setIsHovered({ [trip.id]: false })}
+              >
+                {isHovered[trip.id] && (
+                  <Flex
+                    id="edit-image-button"
+                    justifyContent="center"
+                    alignItems="center"
+                    style={{ top: 20, right: 20 }}
+                  >
+                    <MdDelete width="100%" color="#FFF" />
+                  </Flex>
+                )}
+                <View minHeight="15rem" position="relative" marginBottom={15}>
+                  <Image
+                    src={trip.imgUrl || "/images/default_trip_image.png"}
+                    fill
+                    alt="Trip image"
+                    style={{ objectFit: "cover", borderRadius: "5px" }}
+                    placeholder="blur"
+                    blurDataURL="/images/default_trip_image.png"
+                  />
+                </View>
+                <Heading level={5}>{trip.destination}</Heading>
+                <Flex direction="row" alignItems="center" style={{ gap: 8 }}>
+                  <FiCalendar />
+                  <Text>
+                    {dayjs(trip.startDate).format("DD MMM YYYY")}{" "}
+                    <span style={{ fontWeight: 100 }}>•</span>{" "}
+                    <span>
+                      {totalDays} {totalDays === 1 ? "day" : "days"}
+                    </span>
+                  </Text>
+                </Flex>
+              </Card>
+            );
+          }}
         </Collection>
       </ScrollView>
     </>

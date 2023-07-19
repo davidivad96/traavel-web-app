@@ -30,13 +30,12 @@ body {
 
 #edit-image-button {
   position: absolute;
-  right: 15px;
-  top: 15px;
   background-color: rgba(0, 0, 0, 0.4);
   width: 40px;
   height: 40px;
   border-radius: 20px;
   cursor: pointer;
+  z-index: 100;
   &:hover {
     background-color: rgba(0, 0, 0, 0.6);
   }
@@ -52,4 +51,16 @@ body {
   .amplify-expander__icon {
     display: none;
   }
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--success {
+  background-color: #367b92;
+}
+
+.Toastify__toast-theme--colored.Toastify__toast--error {
+  background-color: #d65745;
+}
+
+.MuiListItem-root .MuiTouchRipple-child {
+  background-color: red;
 }
