@@ -15,12 +15,37 @@ import { DeleteActivityMutation } from "@/API";
 import { deleteActivity } from "@/graphql/mutations";
 import { toast } from "react-toastify";
 import { FaEdit } from "react-icons/fa";
+import { FaMasksTheater } from "react-icons/fa6";
 import { AiOutlinePlus } from "react-icons/ai";
-import { MdEdit, MdDelete } from "react-icons/md";
+import { IoBeer, IoBoat } from "react-icons/io5";
+import {
+  MdEdit,
+  MdDelete,
+  MdFlight,
+  MdHotel,
+  MdMuseum,
+  MdRestaurant,
+  MdPeople,
+  MdQuestionMark,
+} from "react-icons/md";
+import { IoMdEye, IoMdMicrophone } from "react-icons/io";
 import dayjs from "dayjs";
-import { Activity as ActivityModel } from "@/models";
+import { Activity as ActivityModel, ActivityType } from "@/models";
 import { IconButton } from "@mui/material";
-import { Activity } from "./CreateActivityModal";
+
+const ACTIVITY_TYPE_TO_ICON: Record<ActivityType, React.ReactNode> = {
+  [ActivityType.FLIGHT]: <MdFlight />,
+  [ActivityType.HOTEL]: <MdHotel />,
+  [ActivityType.MUSEUM]: <MdMuseum />,
+  [ActivityType.VISIT]: <IoMdEye />,
+  [ActivityType.RESTAURANT]: <MdRestaurant />,
+  [ActivityType.BAR]: <IoBeer />,
+  [ActivityType.CONCERT]: <IoMdMicrophone />,
+  [ActivityType.MEETING]: <MdPeople />,
+  [ActivityType.THEATER]: <FaMasksTheater />,
+  [ActivityType.CRUISE]: <IoBoat />,
+  [ActivityType.OTHER]: <MdQuestionMark />,
+};
 
 interface Props {
   title?: string;
@@ -43,11 +68,7 @@ export const MainContent = ({
   activities,
   removeActivity,
 }: Props) => {
-  const handleOnRemoveActivityButton = async (
-    activityId: string,
-    dayId: string,
-    startTime: string
-  ) => {
+  const handleOnRemoveActivityButton = async (activityId: string) => {
     try {
       removeActivity(activityId);
       await API.graphql<GraphQLQuery<DeleteActivityMutation>>({
@@ -119,15 +140,22 @@ export const MainContent = ({
                         justifyContent="space-between"
                         alignItems="center"
                       >
-                        <Flex direction="row">
-                          <Text>
-                            {dayjs(new Date(activity.startTime)).format(
-                              "HH:mm"
-                            )}{" "}
-                            -{" "}
-                            {dayjs(new Date(activity.endTime)).format("HH:mm")}
+                        <Flex direction="row" alignItems="center">
+                          <Flex alignItems="center">
+                            {ACTIVITY_TYPE_TO_ICON[activity.type]}
+                            <Text>
+                              {dayjs(new Date(activity.startTime)).format(
+                                "HH:mm"
+                              )}{" "}
+                              -{" "}
+                              {dayjs(new Date(activity.endTime)).format(
+                                "HH:mm"
+                              )}
+                            </Text>
+                          </Flex>
+                          <Text fontWeight="bold" isTruncated>
+                            {activity.name}
                           </Text>
-                          <Text fontWeight="bold">{activity.name}</Text>
                         </Flex>
                         <Flex direction="row" style={{ gap: 0 }}>
                           <IconButton
@@ -145,11 +173,7 @@ export const MainContent = ({
                             style={{ color: "#D65745" }}
                             onClick={(e: React.MouseEvent<HTMLElement>) => {
                               e.stopPropagation();
-                              handleOnRemoveActivityButton(
-                                activity.id,
-                                activity.dayId,
-                                activity.startTime
-                              );
+                              handleOnRemoveActivityButton(activity.id);
                             }}
                           >
                             <MdDelete />
