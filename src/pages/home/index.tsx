@@ -1,17 +1,9 @@
 import { useMemo, useState } from "react";
 import { GetServerSideProps } from "next";
-import { useRouter } from "next/router";
 import Image from "next/image";
 import { withSSRContext } from "aws-amplify";
 import { API } from "@aws-amplify/api";
-import {
-  Button,
-  Flex,
-  Heading,
-  ScrollView,
-  Text,
-  View,
-} from "@aws-amplify/ui-react";
+import { Button, Flex, Heading, ScrollView, View } from "@aws-amplify/ui-react";
 import { toast } from "react-toastify";
 import { AiOutlinePlus } from "react-icons/ai";
 import { Trip, User } from "@/models";
@@ -42,12 +34,8 @@ interface Props {
 }
 
 const Home = ({ user, trips: userTrips }: Props) => {
-  const router = useRouter();
   const [trips, setTrips] = useState<Trip[]>(userTrips);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isHovered, setIsHovered] = useState<{
-    [id: string]: boolean;
-  }>({});
 
   const handleDeleteTrip = async (tripId: string) => {
     try {
@@ -101,12 +89,15 @@ const Home = ({ user, trips: userTrips }: Props) => {
               height={350}
               alt="Main page empty state image"
             />
-            <Heading level={4} marginBottom={15}>
-              You don&apos;t have any trips yet
-            </Heading>
-            <Text marginBottom={15}>
+            <Heading
+              level={4}
+              marginTop={15}
+              marginBottom={20}
+              maxWidth={460}
+              textAlign="center"
+            >
               Create your first trip and start planning your next adventure!
-            </Text>
+            </Heading>
             <Button
               variation="primary"
               onClick={() => setIsOpen(true)}
