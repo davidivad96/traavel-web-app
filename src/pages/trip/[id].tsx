@@ -1,9 +1,14 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { GetServerSideProps } from "next";
 import { API, withSSRContext } from "aws-amplify";
 import { Flex } from "@aws-amplify/ui-react";
 import { GraphQLQuery } from "@aws-amplify/api";
-import { GoogleMap, MarkerF } from "@react-google-maps/api";
+import {
+  DirectionsRenderer,
+  DirectionsService,
+  GoogleMap,
+  MarkerF,
+} from "@react-google-maps/api";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { activitiesByDayIdAndStartTime } from "@/graphql/queries";
@@ -78,6 +83,21 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
     lat: location?.latitude || 0,
     lng: location?.longitude || 0,
   });
+  const [directions, setDirections] =
+    useState<google.maps.DirectionsResult | null>();
+  const count = useRef(0);
+
+  const directionsCallback = (
+    result: google.maps.DirectionsResult | null,
+    status: google.maps.DirectionsStatus
+  ) => {
+    // Workaround to avoid multiple calls to this function
+    // https://github.com/JustFly1984/react-google-maps-api/issues/447
+    if (status === "OK" && count.current < 1) {
+      count.current++;
+      setDirections(result);
+    }
+  };
 
   const handleOnClickDay = async (day: DayModel) => {
     setIsLoading(true);
@@ -228,26 +248,50 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
             zoom={13}
             options={{ styles: mapStyles }}
           >
-            {activities.map((activity) => (
-              <MarkerF
-                key={activity.id}
-                position={{
-                  lat: activity.location?.latitude || 0,
-                  lng: activity.location?.longitude || 0,
-                }}
-                animation={google.maps.Animation.DROP}
-                icon={{
-                  url: `/icons/map-pin-${activity.type.toLowerCase()}.svg`,
-                  scaledSize: new google.maps.Size(50, 50),
-                }}
-                onClick={() => {
-                  setMapCenter({
+            <>
+              {activities.map((activity) => (
+                <MarkerF
+                  key={activity.id}
+                  position={{
                     lat: activity.location?.latitude || 0,
                     lng: activity.location?.longitude || 0,
-                  });
+                  }}
+                  animation={google.maps.Animation.DROP}
+                  icon={{
+                    url: `/icons/map-pin-${activity.type.toLowerCase()}.svg`,
+                    scaledSize: new google.maps.Size(50, 50),
+                  }}
+                  onClick={() => {
+                    setMapCenter({
+                      lat: activity.location?.latitude || 0,
+                      lng: activity.location?.longitude || 0,
+                    });
+                  }}
+                />
+              ))}
+              <DirectionsService
+                options={{
+                  origin: {
+                    lat: 37.21978,
+                    lng: -3.78108,
+                  },
+                  destination: {
+                    lat: 37.18817,
+                    lng: -3.60667,
+                  },
+                  travelMode: google.maps.TravelMode.DRIVING,
                 }}
+                callback={directionsCallback}
               />
-            ))}
+              {directions && (
+                <DirectionsRenderer
+                  options={{
+                    directions,
+                    suppressMarkers: true,
+                  }}
+                />
+              )}
+            </>
           </GoogleMap>
         </Flex>
       </Flex>
