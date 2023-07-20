@@ -234,6 +234,10 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
                   lng: activity.location?.longitude || 0,
                 }}
                 animation={google.maps.Animation.DROP}
+                icon={{
+                  url: `/icons/map-pin-${activity.type.toLowerCase()}.svg`,
+                  scaledSize: new google.maps.Size(50, 50),
+                }}
               />
             ))}
           </GoogleMap>

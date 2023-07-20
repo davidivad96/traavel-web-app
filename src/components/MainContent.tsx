@@ -15,33 +15,30 @@ import { DeleteActivityMutation } from "@/API";
 import { deleteActivity } from "@/graphql/mutations";
 import { toast } from "react-toastify";
 import { FaEdit } from "react-icons/fa";
-import { FaMasksTheater } from "react-icons/fa6";
-import { AiOutlinePlus } from "react-icons/ai";
-import { IoBeer, IoBoat } from "react-icons/io5";
+import { FaMasksTheater, FaPeopleGroup } from "react-icons/fa6";
+import { AiOutlinePlus, AiFillStar, AiFillHome } from "react-icons/ai";
+import { IoBeer, IoBoat, IoMusicalNotes } from "react-icons/io5";
+import { ImLibrary } from "react-icons/im";
 import {
   MdEdit,
   MdDelete,
   MdFlight,
-  MdHotel,
-  MdMuseum,
   MdRestaurant,
-  MdPeople,
   MdQuestionMark,
 } from "react-icons/md";
-import { IoMdEye, IoMdMicrophone } from "react-icons/io";
 import dayjs from "dayjs";
 import { Activity as ActivityModel, ActivityType } from "@/models";
 import { IconButton } from "@mui/material";
 
 const ACTIVITY_TYPE_TO_ICON: Record<ActivityType, React.ReactNode> = {
   [ActivityType.FLIGHT]: <MdFlight />,
-  [ActivityType.HOTEL]: <MdHotel />,
-  [ActivityType.MUSEUM]: <MdMuseum />,
-  [ActivityType.VISIT]: <IoMdEye />,
+  [ActivityType.HOTEL]: <AiFillHome />,
+  [ActivityType.MUSEUM]: <ImLibrary />,
+  [ActivityType.VISIT]: <AiFillStar />,
   [ActivityType.RESTAURANT]: <MdRestaurant />,
   [ActivityType.BAR]: <IoBeer />,
-  [ActivityType.CONCERT]: <IoMdMicrophone />,
-  [ActivityType.MEETING]: <MdPeople />,
+  [ActivityType.CONCERT]: <IoMusicalNotes />,
+  [ActivityType.MEETING]: <FaPeopleGroup />,
   [ActivityType.THEATER]: <FaMasksTheater />,
   [ActivityType.CRUISE]: <IoBoat />,
   [ActivityType.OTHER]: <MdQuestionMark />,
