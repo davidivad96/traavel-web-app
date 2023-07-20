@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import { API, withSSRContext } from "aws-amplify";
-import { Flex } from "@aws-amplify/ui-react";
+import { Card, Divider, Flex, SelectField, Text } from "@aws-amplify/ui-react";
 import { GraphQLQuery } from "@aws-amplify/api";
 import {
   DirectionsRenderer,
@@ -10,6 +10,7 @@ import {
   MarkerF,
 } from "@react-google-maps/api";
 import { toast } from "react-toastify";
+import { TbRoute, TbRouteOff } from "react-icons/tb";
 import dayjs from "dayjs";
 import { activitiesByDayIdAndStartTime } from "@/graphql/queries";
 import { createActivity, deleteActivity } from "@/graphql/mutations";
@@ -27,6 +28,7 @@ import { MainContent } from "@/components/MainContent";
 import { getTripData } from "@/utils/api";
 import { sortActivities } from "@/utils/functions";
 import { DeleteActivityMutation } from "@/API";
+import { IconButton } from "@mui/material";
 
 const mapStyles = [
   {
@@ -80,12 +82,20 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
   const [activities, setActivities] = useState<ActivityModel[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [directions, setDirections] =
-    useState<google.maps.DirectionsResult | null>();
+    useState<google.maps.DirectionsResult | null>(null);
   const [callDirectionsApi, setCallDirectionsApi] = useState(true);
+  const [displayDirections, setDisplayDirections] = useState(true);
+  const [travelMode, setTravelMode] = useState<google.maps.TravelMode>(
+    google.maps.TravelMode.DRIVING
+  );
 
   useEffect(() => {
-    setCallDirectionsApi(true);
-  }, [activities]);
+    if (activities.length > 1) {
+      setCallDirectionsApi(true);
+    } else {
+      setDirections(null);
+    }
+  }, [activities, travelMode]);
 
   const directionsCallback = (
     result: google.maps.DirectionsResult | null,
@@ -286,12 +296,12 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
                           lng: activity.location?.longitude!,
                         },
                       })),
-                    travelMode: google.maps.TravelMode.DRIVING,
+                    travelMode,
                   }}
                   callback={directionsCallback}
                 />
               )}
-              {directions && (
+              {displayDirections && directions && (
                 <DirectionsRenderer
                   options={{
                     directions,
@@ -299,6 +309,43 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
                   }}
                 />
               )}
+              <Card
+                position="absolute"
+                top={10}
+                right={75}
+                padding="8px 18px"
+                backgroundColor="#FFF"
+              >
+                <Flex direction="row">
+                  <IconButton
+                    size="small"
+                    style={{ width: 40, height: 40 }}
+                    onClick={() =>
+                      setDisplayDirections(
+                        (displayDirections) => !displayDirections
+                      )
+                    }
+                  >
+                    {displayDirections ? <TbRouteOff /> : <TbRoute />}
+                  </IconButton>
+                  <Divider orientation="vertical" />
+                  <SelectField
+                    label=""
+                    size="small"
+                    value={travelMode}
+                    onChange={(e) =>
+                      setTravelMode(e.target.value as google.maps.TravelMode)
+                    }
+                    minWidth={120}
+                    options={[
+                      google.maps.TravelMode.DRIVING,
+                      google.maps.TravelMode.WALKING,
+                      google.maps.TravelMode.BICYCLING,
+                      google.maps.TravelMode.TRANSIT,
+                    ]}
+                  />
+                </Flex>
+              </Card>
             </>
           </GoogleMap>
         </Flex>
