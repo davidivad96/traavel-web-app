@@ -74,6 +74,10 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
   const [currentActivity, setCurrentActivity] = useState<Activity>();
   const [activities, setActivities] = useState<ActivityModel[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [mapCenter, setMapCenter] = useState({
+    lat: location?.latitude || 0,
+    lng: location?.longitude || 0,
+  });
 
   const handleOnClickDay = async (day: DayModel) => {
     setIsLoading(true);
@@ -214,15 +218,13 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
             activities={activities}
             isLoadingActivities={isLoading}
             removeActivity={removeActivity}
+            setMapCenter={setMapCenter}
           />
         </Flex>
         <Flex flex={5}>
           <GoogleMap
             mapContainerStyle={{ width: "100%", height: "100%" }}
-            center={{
-              lat: location?.latitude || 0,
-              lng: location?.longitude || 0,
-            }}
+            center={mapCenter}
             zoom={13}
             options={{ styles: mapStyles }}
           >
@@ -237,6 +239,12 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
                 icon={{
                   url: `/icons/map-pin-${activity.type.toLowerCase()}.svg`,
                   scaledSize: new google.maps.Size(50, 50),
+                }}
+                onClick={() => {
+                  setMapCenter({
+                    lat: activity.location?.latitude || 0,
+                    lng: activity.location?.longitude || 0,
+                  });
                 }}
               />
             ))}
