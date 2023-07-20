@@ -106,7 +106,16 @@ export const MainContent = ({
           <View
             padding="0 30px 20px 30px"
             height="calc(100vh - 110px)"
-            style={{ overflowY: "scroll" }}
+            style={{
+              overflowY: "scroll",
+              ...(activities.length === 0
+                ? {
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }
+                : {}),
+            }}
           >
             <Flex
               direction="row"
@@ -124,6 +133,13 @@ export const MainContent = ({
               <Flex justifyContent="center" marginTop={20}>
                 <Loader width={50} height={50} />
               </Flex>
+            ) : activities.length === 0 ? (
+              <Image
+                src="/images/no_activities_image.svg"
+                width={350}
+                height={350}
+                alt="No activities image"
+              />
             ) : (
               <Expander id="activity-expander" type="multiple">
                 {activities.map((activity, index) => (
