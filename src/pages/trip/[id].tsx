@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
 import { API, withSSRContext } from "aws-amplify";
 import { Flex } from "@aws-amplify/ui-react";
@@ -81,7 +81,11 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const [directions, setDirections] =
     useState<google.maps.DirectionsResult | null>();
-  const count = useRef(0);
+  const [callDirectionsApi, setCallDirectionsApi] = useState(true);
+
+  useEffect(() => {
+    setCallDirectionsApi(true);
+  }, [activities]);
 
   const directionsCallback = (
     result: google.maps.DirectionsResult | null,
@@ -89,9 +93,9 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
   ) => {
     // Workaround to avoid multiple calls to this function
     // https://github.com/JustFly1984/react-google-maps-api/issues/447
-    if (status === "OK" && count.current < 1) {
-      count.current++;
+    if (status === "OK" && callDirectionsApi) {
       setDirections(result);
+      setCallDirectionsApi(false);
     }
   };
 
@@ -261,20 +265,32 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
                   }}
                 />
               ))}
-              <DirectionsService
-                options={{
-                  origin: {
-                    lat: 37.21978,
-                    lng: -3.78108,
-                  },
-                  destination: {
-                    lat: 37.18817,
-                    lng: -3.60667,
-                  },
-                  travelMode: google.maps.TravelMode.DRIVING,
-                }}
-                callback={directionsCallback}
-              />
+              {activities.length > 1 && (
+                <DirectionsService
+                  options={{
+                    origin: {
+                      lat: activities[0].location?.latitude!,
+                      lng: activities[0].location?.longitude!,
+                    },
+                    destination: {
+                      lat: activities[activities.length - 1].location
+                        ?.latitude!,
+                      lng: activities[activities.length - 1].location
+                        ?.longitude!,
+                    },
+                    waypoints: activities
+                      .slice(1, activities.length - 1)
+                      .map((activity) => ({
+                        location: {
+                          lat: activity.location?.latitude!,
+                          lng: activity.location?.longitude!,
+                        },
+                      })),
+                    travelMode: google.maps.TravelMode.DRIVING,
+                  }}
+                  callback={directionsCallback}
+                />
+              )}
               {directions && (
                 <DirectionsRenderer
                   options={{
