@@ -62,11 +62,11 @@ export const CreateActivityModal = ({
   };
 
   const handleOnChangeStartTime = (value: any) => {
-    setActivity((prev) => ({ ...prev, startTime: value["$d"] }));
+    setActivity((prev) => ({ ...prev, startTime: value?.["$d"] }));
   };
 
   const handleOnChangeEndTime = (value: any) => {
-    setActivity((prev) => ({ ...prev, endTime: value["$d"] }));
+    setActivity((prev) => ({ ...prev, endTime: value?.["$d"] }));
   };
 
   const handleOnCloseModal = () => {
