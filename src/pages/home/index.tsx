@@ -53,6 +53,7 @@ const Home = ({ user, trips: userTrips }: Props) => {
     try {
       setTrips((trips) => trips.filter((trip) => trip.id !== tripId));
       toast.success("Trip deleted successfully", { theme: "colored" });
+      localStorage.removeItem(`photos-${tripId}`);
       // In the background, delete all days, activities and the own trip
       API.del(
         awsconfig.aws_cloud_logic_custom[0].name,
