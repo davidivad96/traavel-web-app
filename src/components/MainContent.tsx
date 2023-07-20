@@ -53,7 +53,6 @@ interface Props {
   handleOnClickEditActivity: (activity: ActivityModel) => void;
   activities: ActivityModel[];
   removeActivity: (activityId: string) => void;
-  setMapCenter: (center: google.maps.LatLngLiteral) => void;
 }
 
 export const MainContent = ({
@@ -65,7 +64,6 @@ export const MainContent = ({
   handleOnClickEditActivity,
   activities,
   removeActivity,
-  setMapCenter,
 }: Props) => {
   const handleOnRemoveActivityButton = async (activityId: string) => {
     try {
@@ -181,12 +179,6 @@ export const MainContent = ({
                     }
                     value={`${activity.dayId}-${index}`}
                     style={{ cursor: "pointer" }}
-                    onClick={() => {
-                      setMapCenter({
-                        lat: activity.location.latitude!,
-                        lng: activity.location.longitude!,
-                      });
-                    }}
                   >
                     {activity.description ? (
                       <Text>{activity.description}</Text>
