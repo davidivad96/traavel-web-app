@@ -83,21 +83,15 @@ const Home = ({ user, trips: userTrips }: Props) => {
       >
         {trips.length === 0 ? (
           <>
+            <Heading level={4} marginTop={15} maxWidth={460} textAlign="center">
+              Create your first trip and start planning your next adventure!
+            </Heading>
             <Image
               src="/images/empty_state_image.svg"
               width={350}
               height={350}
               alt="Main page empty state image"
             />
-            <Heading
-              level={4}
-              marginTop={15}
-              marginBottom={20}
-              maxWidth={460}
-              textAlign="center"
-            >
-              Create your first trip and start planning your next adventure!
-            </Heading>
             <Button
               variation="primary"
               onClick={() => setIsOpen(true)}
