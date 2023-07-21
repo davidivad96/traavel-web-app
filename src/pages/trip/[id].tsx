@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import { API, withSSRContext } from "aws-amplify";
 import { Card, Divider, Flex, SelectField, Text } from "@aws-amplify/ui-react";
 import { GraphQLQuery } from "@aws-amplify/api";
@@ -72,7 +73,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 };
 
 const Trip = ({ trip: initialTrip, days }: Props) => {
-  const [{ id, destination, imgUrl, location }, setTrip] =
+  const [{ id, name, destination, imgUrl, location }, setTrip] =
     useState<TripModel>(initialTrip);
   const [editImageModal, setEditImageModal] = useState(false);
   const [createActivityModal, setCreateActivityModal] = useState(false);
@@ -192,6 +193,10 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
 
   return (
     <>
+      <Head>
+        <title>Traavel App - {name}</title>
+        <meta name="description" content={`Trip to ${destination}`} />
+      </Head>
       <ChangePhotoModal
         isOpen={editImageModal}
         setIsOpen={setEditImageModal}

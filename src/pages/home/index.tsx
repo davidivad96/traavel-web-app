@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { GetServerSideProps } from "next";
+import Head from "next/head";
 import Image from "next/image";
 import { withSSRContext } from "aws-amplify";
 import { API } from "@aws-amplify/api";
@@ -67,6 +68,10 @@ const Home = ({ user, trips: userTrips }: Props) => {
 
   return (
     <>
+      <Head>
+        <title>Traavel App - Home</title>
+        <meta name="description" content="Home page" />
+      </Head>
       <NewTripModal isOpen={isOpen} setIsOpen={setIsOpen} user={user} />
       <ScrollView
         height="calc(100vh - 250px)"

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { Authenticator, useAuthenticator } from "@aws-amplify/ui-react";
 
@@ -12,7 +13,15 @@ const Auth = () => {
     }
   }, [route, router]);
 
-  return <Authenticator variation="modal" />;
+  return (
+    <>
+      <Head>
+        <title>Traavel App - Login</title>
+        <meta name="description" content="Login to your account" />
+      </Head>
+      <Authenticator variation="modal" />
+    </>
+  );
 };
 
 export default Auth;
