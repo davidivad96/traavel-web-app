@@ -95,7 +95,7 @@ const Home = ({ user, trips: userTrips }: Props) => {
             <Button
               variation="primary"
               onClick={() => setIsOpen(true)}
-              marginBottom={30}
+              margin="30px 0"
             >
               <AiOutlinePlus size={22} style={{ marginRight: "5px" }} /> Create
               my first trip
