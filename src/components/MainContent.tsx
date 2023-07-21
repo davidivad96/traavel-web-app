@@ -122,6 +122,7 @@ export const MainContent = ({
               justifyContent="space-between"
               alignItems="center"
               margin="10px 0"
+              width="100%"
             >
               <Heading level={4}>{title}</Heading>
               <Button variation="link" onClick={handleOnClickNewActivity}>
