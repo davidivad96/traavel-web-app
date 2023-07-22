@@ -75,7 +75,9 @@ export const NewTripModal = ({ isOpen, setIsOpen, user }: Props) => {
   const handleOnCloseModal = () => {
     setStartDate(null);
     setEndDate(null);
-    setIsOpen(false);
+    if (!isLoading) {
+      setIsOpen(false);
+    }
   };
 
   const handleOnChangePlace = async (e: any) => {
