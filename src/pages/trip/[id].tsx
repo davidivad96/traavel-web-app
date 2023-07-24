@@ -87,7 +87,7 @@ const Trip = ({ trip: initialTrip, days }: Props) => {
   const [callDirectionsApi, setCallDirectionsApi] = useState(true);
   const [displayDirections, setDisplayDirections] = useState(true);
   const [travelMode, setTravelMode] = useState<google.maps.TravelMode>(
-    google.maps.TravelMode.DRIVING
+    google.maps.TravelMode.WALKING
   );
 
   useEffect(() => {
